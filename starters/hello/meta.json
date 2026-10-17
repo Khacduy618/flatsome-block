@@ -1,7 +1,0 @@
-{
-  "name": "Hộp chào",
-  "tag": "fbm_hello",
-  "category": "Content",
-  "description": "Ví dụ ngắn nhất: tiêu đề, màu nền, căn lề và đoạn văn.",
-  "sample": "{\n  \"title\": \"Xin chào Flatsome\",\n  \"text\": \"Nội dung bên trong element.\"\n}"
-}

@@ -1,0 +1,137 @@
+/* Before / After: chỉ CSS cơ chế; màu lấy từ token của theme/site, tay nắm và nhãn dùng class của theme. */
+.fbm-ba {
+	position: relative;
+	margin: 0 0 1.5em;
+}
+.fbm-ba__stage {
+	position: relative;
+	overflow: hidden;
+	line-height: 0;
+	user-select: none;
+	-webkit-user-select: none;
+	cursor: ew-resize;
+	touch-action: pan-y;
+	border-radius: var(--global-radius, 4px);
+}
+.fbm-ba--v .fbm-ba__stage {
+	cursor: ns-resize;
+	touch-action: pan-x;
+}
+.fbm-ba .fbm-ba__img {
+	display: block;
+	width: 100%;
+	height: auto;
+	pointer-events: none;
+}
+.fbm-ba__after {
+	position: absolute;
+	inset: 0;
+	clip-path: inset(0 0 0 var(--fbm-pos, 50%));
+}
+.fbm-ba--v .fbm-ba__after {
+	clip-path: inset(var(--fbm-pos, 50%) 0 0 0);
+}
+.fbm-ba__after .fbm-ba__img {
+	height: 100%;
+	object-fit: cover;
+}
+.fbm-ba__divider {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: var(--fbm-pos, 50%);
+	width: 2px;
+	margin-left: -1px;
+	background: var(--secondary-color, #f8f8f8);
+	pointer-events: none;
+}
+.fbm-ba--v .fbm-ba__divider {
+	top: var(--fbm-pos, 50%);
+	bottom: auto;
+	left: 0;
+	right: 0;
+	width: auto;
+	height: 2px;
+	margin: -1px 0 0;
+}
+.fbm-ba .fbm-ba__handle {
+	position: absolute;
+	top: 50%;
+	left: var(--fbm-pos, 50%);
+	width: 44px;
+	height: 44px;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	box-shadow: none;
+	line-height: 0;
+	color: var(--primary-color);
+	transform: translate(-50%, -50%);
+	cursor: inherit;
+}
+/* Nền tròn của icon lấy từ .flickity-button-icon của theme / site. */
+.fbm-ba .fbm-ba__handle .flickity-button-icon {
+	width: 100%;
+	height: 100%;
+	padding: 22%;
+	fill: currentColor;
+	background-color: var(--secondary-color, #f8f8f8);
+	border-radius: 50%;
+}
+.fbm-ba--v .fbm-ba__handle {
+	top: var(--fbm-pos, 50%);
+	left: 50%;
+	transform: translate(-50%, -50%) rotate(90deg);
+}
+.fbm-ba--no-handle .fbm-ba__handle {
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+}
+.fbm-ba .fbm-ba__handle:focus-visible {
+	outline: 2px solid var(--primary-color);
+	outline-offset: 2px;
+}
+/* Nhãn dùng .badge-inner của theme (màu, chữ); theme cho nó table-cell cao 100%, nên đặt lại khối. */
+.fbm-ba .fbm-ba__label {
+	position: absolute;
+	top: 12px;
+	display: inline-block;
+	width: auto;
+	height: auto;
+	line-height: 1.4;
+	pointer-events: none;
+}
+.fbm-ba__label--before {
+	left: 12px;
+}
+.fbm-ba__label--after {
+	right: 12px;
+}
+.fbm-ba--v .fbm-ba__label--after {
+	top: auto;
+	right: auto;
+	bottom: 12px;
+	left: 12px;
+}
+.fbm-ba__caption {
+	margin-top: 0.6em;
+	text-align: center;
+}
+.fbm-ba--animating .fbm-ba__after {
+	transition: clip-path 0.9s ease;
+}
+.fbm-ba--animating .fbm-ba__divider,
+.fbm-ba--animating .fbm-ba__handle {
+	transition: left 0.9s ease, top 0.9s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+	.fbm-ba--animating .fbm-ba__after,
+	.fbm-ba--animating .fbm-ba__divider,
+	.fbm-ba--animating .fbm-ba__handle {
+		transition: none;
+	}
+}

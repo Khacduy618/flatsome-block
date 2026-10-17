@@ -1,7 +1,0 @@
-{
-  "name": "Product Slider Pro",
-  "tag": "fbm_product_slider",
-  "category": "Shop",
-  "description": "Slider sản phẩm WooCommerce: nguồn (mới, nổi bật, giảm giá, bán chạy, đánh giá cao, chọn tay), lọc danh mục / tag / giá / còn hàng, số cột theo thiết bị, autoplay, loop, nút, chấm, thẻ sản phẩm tuỳ chỉnh.",
-  "sample": "{\n  \"title\": \"Sản phẩm mới\",\n  \"link_text\": \"Xem tất cả\",\n  \"link_url\": \"/shop/\",\n  \"limit\": \"8\"\n}"
-}

@@ -1,7 +1,0 @@
-{
-  "name": "Before / After",
-  "tag": "fbm_before_after",
-  "category": "Media",
-  "description": "So sánh 2 ảnh trước/sau: ngang hoặc dọc, kéo hoặc rê chuột, nhãn, caption, badge, tự trượt, tuỳ chỉnh đường chia và tay nắm.",
-  "sample": "{\n  \"label_before\": \"Trước\",\n  \"label_after\": \"Sau\",\n  \"caption\": \"Kéo thanh giữa để so sánh\",\n  \"badge\": \"Mới\"\n}"
-}
