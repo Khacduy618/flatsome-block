@@ -243,7 +243,7 @@ Ký hiệu: **[F]** option lấy từ Flatsome (`commons/*.php`), **[P]** option
 > **Đổi hướng (2026-10-17, trả lời Q2: site dùng Judge.me).** Đánh giá nằm trên máy chủ Judge.me, WordPress không có dữ liệu để tự dựng thẻ. Block 8 chuyển thành khung Flatsome bọc widget của Judge.me.
 
 - **Element:** `[fbm_reviews]` = element bọc, chỉ in ra 1 shortcode Judge.me nằm trong danh sách cho phép.
-- **Option:** [P] widget: chọn trong whitelist (ứng viên: `jgm-featured-carousel`, `jgm-preview-badge`, `jgm-popup-widget`, `jgm-ugc-media-grid`; danh sách cuối đọc từ code plugin Judge.me ở bước B7) · [P] tiêu đề (dùng `[title]` style của Flatsome) · [F] `advanced`. Không có ô nhập shortcode tự do.
+- **Option:** [P] widget: chọn trong whitelist, đọc từ code plugin Judge.me 1.3.29 (`class-jgm-widget.php`, 14 shortcode): `jgm-featured-carousel` (nhận `title`, `all-reviews-page`), `jgm-all-reviews`, `jgm-review-widget` (nhận `id`), `jgm-preview-badge` (nhận `id`), `jgm-ugc-media-grid`, `jgm-verified-badge`. Bỏ các alias (`jgm-feature-carousel`, `jgm-reviews-widget`, `jgm-star-badge`, `jgm-reviews-tab`), tab nổi `jgm-review-tab` và `jgm-popup-widget` vì không phải nội dung đặt trong trang; bỏ `jgm-review-count`/`jgm-review-rating` vì chỉ là con số · [P] tiêu đề (dùng `[title]` style của Flatsome) · [F] `advanced`. Không có ô nhập shortcode tự do.
 - **Lưu ý:** carousel của Judge.me chỉ hiện đánh giá được đánh dấu "featured" (tự động: tối đa 50 đánh giá 5 sao mới nhất).
 - **Trống:** plugin Judge.me không bật thì không xuất gì; trong UX Builder hiện ghi chú "Cần plugin Judge.me".
 - **Không làm:** lọc sao, "đã mua hàng", phân bố sao. Những phần này do Judge.me quản lý.
