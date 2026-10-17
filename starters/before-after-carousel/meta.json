@@ -1,0 +1,8 @@
+{
+  "name": "Before / After Carousel",
+  "tag": "fbm_ba_carousel",
+  "category": "Media",
+  "description": "Element cha chứa nhiều Before / After, trượt ngang có nút điều hướng. Ví dụ cho element container + element con.",
+  "requires": "before-after",
+  "sample": "{\n  \"per_view\": \"2\",\n  \"$content\": \"[fbm_before_after label_before=\\\"A\\\" label_after=\\\"B\\\"][fbm_before_after label_before=\\\"C\\\" label_after=\\\"D\\\"]\"\n}"
+}
