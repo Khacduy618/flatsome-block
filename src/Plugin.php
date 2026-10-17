@@ -34,6 +34,9 @@ final class Plugin {
 		$catalog                    = new Catalog();
 		self::$services['catalog'] = $catalog;
 		self::$services['states']  = new States( $catalog );
+		$usage                      = new Usage\UsageIndex();
+		self::$services['usage']        = $usage;
+		self::$services['block_states'] = new BlockStates( $usage );
 
 		foreach ( self::$services as $service ) {
 			if ( method_exists( $service, 'boot' ) ) {

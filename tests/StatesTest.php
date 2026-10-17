@@ -2,6 +2,10 @@
 use FBM\Catalog;
 use FBM\States;
 
+// Giữ snapshot thật của site; khôi phục ở test cuối.
+$GLOBALS['fbm_saved_catalog'] = get_option( Catalog::OPTION, null );
+$GLOBALS['fbm_saved_states']  = get_option( States::OPTION, null );
+
 function fbm_states_test_setup() {
 	update_option(
 		Catalog::OPTION,
@@ -98,4 +102,11 @@ fbm_test( 'test_catalog_records_builder_elements', function () {
 	apply_filters( 'ux_builder_shortcode_data', array( 'hidden' => true, 'name' => 'Col', 'category' => 'Layout' ), 'col_inner' );
 	$c->persist();
 	fbm_assert_same( array( 'ux_lottie' => array( 'name' => 'Lottie', 'category' => 'Content' ) ), get_option( Catalog::OPTION ) );
+} );
+
+fbm_test( 'zz_restore_site_options', function () {
+	foreach ( array( Catalog::OPTION => 'fbm_saved_catalog', States::OPTION => 'fbm_saved_states' ) as $opt => $key ) {
+		null === $GLOBALS[ $key ] ? delete_option( $opt ) : update_option( $opt, $GLOBALS[ $key ], false );
+	}
+	fbm_assert_true( true );
 } );

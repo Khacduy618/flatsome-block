@@ -120,7 +120,7 @@ function fbm_fixtures_up() {
 function fbm_fixtures_down() {
 	$ids = get_posts(
 		array(
-			'post_type'   => 'any',
+			'post_type'   => array_values( get_post_types() ), // 'any' bỏ qua post type exclude_from_search như blocks
 			'post_status' => 'any',
 			'meta_key'    => '_fbm_qa',
 			'numberposts' => -1,
