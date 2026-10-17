@@ -1,0 +1,15 @@
+[section padding="30px"]
+
+[row]
+
+[col span__sm="12"]
+
+[title text="Bán chạy" tag_name="h2" link_text="Xem tất cả" link="/shop/"]
+
+[fbm_products source="best_selling" products="8" type="slider" columns="4" columns__md="3" columns__sm="2"]
+
+[/col]
+
+[/row]
+
+[/section]

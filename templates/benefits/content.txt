@@ -1,0 +1,51 @@
+[section padding="40px"]
+
+[row class="readable-text"]
+
+[col span__sm="12"]
+
+<h2 class="h2-title">Vì sao chọn dây da khâu tay</h2>
+<p>Mỗi chiếc dây được cắt, vạt mép và khâu bằng tay, nên bền hơn và đẹp dần theo thời gian.</p>
+
+[/col]
+
+[/row]
+
+[row]
+
+[col span="4" span__sm="12"]
+
+[featured_box img_width="40" pos="center" class="icon-box_bg"]
+
+<h3>Khâu tay từng mũi</h3>
+<p>Hai kim, một sợi chỉ sáp: đường chỉ không bung kể cả khi một mũi bị đứt.</p>
+
+[/featured_box]
+
+[/col]
+
+[col span="4" span__sm="12"]
+
+[featured_box img_width="40" pos="center" class="icon-box_bg"]
+
+<h3>Da thuộc chọn lọc</h3>
+<p>Da bò, da cá sấu và da dê thuộc thảo mộc, lên màu patina tự nhiên khi đeo.</p>
+
+[/featured_box]
+
+[/col]
+
+[col span="4" span__sm="12"]
+
+[featured_box img_width="40" pos="center" class="icon-box_bg"]
+
+<h3>Bản rộng 16–24 mm</h3>
+<p>Làm theo bản rộng và cỡ cổ tay của bạn, kèm khoá theo màu vỏ đồng hồ.</p>
+
+[/featured_box]
+
+[/col]
+
+[/row]
+
+[/section]

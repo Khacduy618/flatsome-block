@@ -38,6 +38,7 @@ final class Plugin {
 		$usage                      = new Usage\UsageIndex();
 		self::$services['usage']        = $usage;
 		self::$services['block_states'] = new BlockStates( $usage );
+		self::$services['templates']    = new Templates();
 
 		foreach ( self::$services as $service ) {
 			if ( method_exists( $service, 'boot' ) ) {

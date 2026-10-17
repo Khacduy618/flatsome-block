@@ -1,0 +1,12 @@
+[ux_banner height="560px" height__sm="440px" bg=""]
+
+[text_box width="45" width__sm="90" position_x="5" position_x__sm="50" position_y="85" position_y__sm="90" text_align="left" text_align__sm="center"]
+
+<h1 class="h1-title">Dây da khâu tay cho chiếc đồng hồ bạn yêu</h1>
+<p>Da thuộc chọn lọc, khâu tay từng mũi, làm theo bản rộng của bạn.</p>
+
+[button text="Xem bộ sưu tập" link="/shop/"]
+
+[/text_box]
+
+[/ux_banner]

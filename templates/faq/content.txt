@@ -1,0 +1,44 @@
+[row class="readable-text"]
+
+[col span__sm="12"]
+
+[title text="Câu hỏi thường gặp" tag_name="h2"]
+
+[accordion]
+
+[accordion-item title="Chọn bản rộng dây thế nào?"]
+
+<p>Bản rộng dây bằng khoảng cách giữa hai càng đồng hồ, thường ghi ở mặt sau dây cũ (ví dụ 20 mm). Nếu không chắc, đo bằng thước kẹp hoặc gửi ảnh cho chúng tôi.</p>
+
+[/accordion-item]
+[accordion-item title="Đo cổ tay để chọn chiều dài?"]
+
+<p>Quấn thước dây quanh cổ tay ở chỗ thường đeo đồng hồ, cộng thêm 1–1,5 cm cho vừa thoải mái.</p>
+
+[/accordion-item]
+[accordion-item title="Chăm sóc dây da ra sao?"]
+
+<p>Tránh ngâm nước và nước hoa, lau bằng khăn mềm khô, dưỡng da 2–3 tháng một lần.</p>
+
+[/accordion-item]
+[accordion-item title="Bao lâu thì nhận được hàng?"]
+
+<p>Dây làm tay trong X ngày làm việc, sau đó giao trong X ngày.</p>
+
+[/accordion-item]
+[accordion-item title="Đổi trả như thế nào?"]
+
+<p>Đổi trong X ngày nếu dây chưa qua sử dụng. Liên hệ chúng tôi để được hướng dẫn.</p>
+
+[/accordion-item]
+[accordion-item title="Có thay được khoá không?"]
+
+<p>Có. Khoá chốt và khoá bướm đều thay được; chọn màu khoá theo màu vỏ đồng hồ.</p>
+
+[/accordion-item]
+
+[/accordion]
+
+[/col]
+
+[/row]

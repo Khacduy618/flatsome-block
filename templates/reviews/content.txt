@@ -1,0 +1,13 @@
+[section padding="40px"]
+
+[row]
+
+[col span__sm="12"]
+
+[fbm_reviews widget="jgm-featured-carousel" title="Khách hàng nói gì"]
+
+[/col]
+
+[/row]
+
+[/section]
