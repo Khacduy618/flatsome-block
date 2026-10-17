@@ -31,6 +31,7 @@ final class Plugin {
 
 		Installer::maybe_upgrade();
 
+		self::$services['registry'] = new Elements\Registry();
 		$catalog                    = new Catalog();
 		self::$services['catalog'] = $catalog;
 		self::$services['states']  = new States( $catalog );
