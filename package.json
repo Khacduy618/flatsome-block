@@ -1,11 +1,11 @@
 {
   "name": "flatsome-block-manager",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Admin UI + Gutenberg editor script cho Flatsome Block Manager",
+  "description": "Admin UI (3 tab danh sách) cho Flatsome Block Manager",
   "scripts": {
-    "build": "wp-scripts build admin=./assets/src/admin/index.js gutenberg=./assets/src/gutenberg/index.js --output-path=build",
-    "start": "wp-scripts start admin=./assets/src/admin/index.js gutenberg=./assets/src/gutenberg/index.js --output-path=build",
+    "build": "wp-scripts build admin=./assets/admin-src/index.js --output-path=build",
+    "start": "wp-scripts start admin=./assets/admin-src/index.js --output-path=build",
     "zip": "npm run build && sh ./bin/zip.sh"
   },
   "devDependencies": {

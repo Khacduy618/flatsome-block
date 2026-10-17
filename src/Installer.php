@@ -5,7 +5,7 @@
  * @package FBM
  */
 
-namespace FBM\Core;
+namespace FBM;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,18 +28,12 @@ final class Installer {
 		return $wpdb->prefix . 'fbm_block_usage';
 	}
 
-	public static function versions_table() {
-		global $wpdb;
-		return $wpdb->prefix . 'fbm_element_versions';
-	}
-
 	private static function install_tables() {
 		global $wpdb;
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		$charset = $wpdb->get_charset_collate();
 		$usage   = self::usage_table();
-		$vers    = self::versions_table();
 
 		dbDelta(
 			"CREATE TABLE {$usage} (
@@ -52,21 +46,6 @@ final class Installer {
   PRIMARY KEY  (id),
   KEY block_id (block_id),
   KEY source (source_type,source_id)
-) {$charset};"
-		);
-
-		dbDelta(
-			"CREATE TABLE {$vers} (
-  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  element_id bigint(20) unsigned NOT NULL,
-  version int(10) unsigned NOT NULL,
-  payload longtext NOT NULL,
-  hash char(40) NOT NULL,
-  test_report longtext NULL,
-  created_by bigint(20) unsigned NOT NULL DEFAULT 0,
-  created_at datetime NOT NULL,
-  PRIMARY KEY  (id),
-  KEY element_version (element_id,version)
 ) {$charset};"
 		);
 

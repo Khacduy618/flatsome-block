@@ -11,7 +11,7 @@
  * @package FBM
  */
 
-namespace FBM\Modules\Handdn;
+namespace FBM\Handdn;
 
 defined( 'ABSPATH' ) || exit;
 

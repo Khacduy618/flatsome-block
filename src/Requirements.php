@@ -5,7 +5,7 @@
  * @package FBM
  */
 
-namespace FBM\Core;
+namespace FBM;
 
 defined( 'ABSPATH' ) || exit;
 
