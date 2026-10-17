@@ -19,6 +19,20 @@ final class Product3DButton {
 
 	const SCRIPT = 'fbm-handdn-3d-button';
 
+	/** Khoá trạng thái trong States (chỉ Bật / Tắt, không phải element nên không có Ẩn). */
+	const STATE_KEY = 'handdn_3d_button';
+
+	/** @var \FBM\States|null */
+	private $states;
+
+	public function __construct( $states = null ) {
+		$this->states = $states;
+	}
+
+	private function enabled() {
+		return ! $this->states || 'off' !== $this->states->get( self::STATE_KEY );
+	}
+
 	/** @var array<int, string> Cache link theo product id trong 1 request. */
 	private $urls = array();
 
@@ -68,43 +82,55 @@ final class Product3DButton {
 		return $found;
 	}
 
-	private function current_url() {
-		return function_exists( 'is_product' ) && is_product() ? $this->url( get_queried_object_id() ) : '';
+	private function current_id() {
+		return function_exists( 'is_product' ) && is_product() ? (int) get_queried_object_id() : 0;
 	}
 
 	public function form_button() {
-		$url = $this->current_url();
-		if ( ! $url ) {
-			return;
-		}
-		echo '<a class="plain" href="' . esc_url( $url ) . '" rel="nofollow" data-handdn-3d="form">';
-		echo '<div class="icon-box featured-box featured-box_button featured-box_center icon-box-right text-right">';
-		echo '<div class="icon-box-img" style="width: 20px"><div class="icon"><div class="icon-inner">';
-		echo $this->svg( 'form' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG tĩnh trong plugin.
-		echo '</div></div></div>';
-		echo '<div class="icon-box-text last-reset"><p><strong>' . esc_html__( 'Customize this strap in 3D', 'flatsome-block-manager' ) . '</strong></p></div>';
-		echo '</div></a>';
+		echo $this->form_html( $this->current_id() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escape trong form_html.
 	}
 
 	public function gallery_button() {
-		$url = $this->current_url();
+		echo $this->gallery_html( $this->current_id() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escape trong gallery_html.
+	}
+
+	/** Nút trong form, đặt trước form thêm vào giỏ (JS chuyển xuống sau field APF). */
+	public function form_html( $product_id ) {
+		$url = $this->enabled() ? $this->url( $product_id ) : '';
 		if ( ! $url ) {
-			return;
+			return '';
 		}
-		echo '<a class="plain" href="' . esc_url( $url ) . '" rel="nofollow" data-handdn-3d="gallery">';
-		echo '<div class="icon-box featured-box bagde-whitebg items-center icon-box-left text-left is-small shrink">';
-		echo '<div class="icon-box-img" style="width: 20px"><div class="icon"><div class="icon-inner">';
-		echo $this->svg( 'gallery' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG tĩnh trong plugin.
-		echo '</div></div></div>';
-		echo '<div class="icon-box-text last-reset"><div class="text"><strong>' . esc_html__( 'CUSTOMIZE THIS STRAP IN 3D', 'flatsome-block-manager' ) . '</strong></div></div>';
-		echo '</div></a>';
+		return '<a class="plain" href="' . esc_url( $url ) . '" rel="nofollow" data-handdn-3d="form">'
+			. '<div class="icon-box featured-box featured-box_button featured-box_center icon-box-right text-right">'
+			. '<div class="icon-box-img" style="width: 20px"><div class="icon"><div class="icon-inner">'
+			. $this->svg( 'form' ) // SVG tĩnh trong plugin.
+			. '</div></div></div>'
+			. '<div class="icon-box-text last-reset"><p><strong>' . esc_html__( 'Customize this strap in 3D', 'flatsome-block-manager' ) . '</strong></p></div>'
+			. '</div></a>';
+	}
+
+	/** Nút ở góc trên phải ảnh sản phẩm (hook image tools của Flatsome). */
+	public function gallery_html( $product_id ) {
+		$url = $this->enabled() ? $this->url( $product_id ) : '';
+		if ( ! $url ) {
+			return '';
+		}
+		return '<a class="plain" href="' . esc_url( $url ) . '" rel="nofollow" data-handdn-3d="gallery">'
+			. '<div class="icon-box featured-box bagde-whitebg items-center icon-box-left text-left is-small shrink">'
+			. '<div class="icon-box-img" style="width: 20px"><div class="icon"><div class="icon-inner">'
+			. $this->svg( 'gallery' ) // SVG tĩnh trong plugin.
+			. '</div></div></div>'
+			. '<div class="icon-box-text last-reset"><div class="text"><strong>' . esc_html__( 'CUSTOMIZE THIS STRAP IN 3D', 'flatsome-block-manager' ) . '</strong></div></div>'
+			. '</div></a>';
 	}
 
 	/** JS chỉ để đưa nút form xuống sau phần field APF; chỉ nạp khi sản phẩm có link 3D. */
 	public function enqueue() {
-		if ( ! $this->current_url() ) {
+		$id = $this->current_id();
+		if ( ! $this->enabled() || ! $id || ! $this->url( $id ) ) {
 			return;
 		}
+		wp_enqueue_style( self::SCRIPT, FBM_URL . 'assets/handdn/3d-button.css', array(), FBM_VERSION );
 		wp_enqueue_script(
 			self::SCRIPT,
 			FBM_URL . 'assets/handdn/3d-button.js',

@@ -75,6 +75,15 @@ function fbm_fixtures_up() {
 		}
 	}
 
+	// WooCommerce cache danh sách attribute trong process; attribute vừa tạo cần cache mới để có nhãn.
+	delete_transient( 'wc_attribute_taxonomies' );
+	WC_Cache_Helper::invalidate_cache_group( 'woocommerce-attributes' );
+	// Request thật: WooCommerce nạp $wc_product_attributes lúc init. Attribute tạo giữa process phải tự thêm.
+	global $wc_product_attributes;
+	foreach ( wc_get_attribute_taxonomies() as $tax ) {
+		$wc_product_attributes[ wc_attribute_taxonomy_name( $tax->attribute_name ) ] = $tax;
+	}
+
 	$f = array();
 	$f['simple']     = fbm_qa_simple( 'simple' );
 	$f['sale']       = fbm_qa_simple( 'sale', array( 'price' => '100', 'sale_price' => '80' ) );

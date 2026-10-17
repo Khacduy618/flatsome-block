@@ -61,6 +61,9 @@ final class States {
 		if ( in_array( $tag, self::LOCKED, true ) ) {
 			return new \WP_Error( 'fbm_locked', __( 'Element khung trang luôn bật.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
 		}
+		if ( 'hidden' === $state && in_array( $tag, Catalog::VIRTUAL, true ) ) {
+			return new \WP_Error( 'fbm_bad_state', __( 'Mục này không phải element nên chỉ có Bật / Tắt.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
+		}
 		if ( ! $this->catalog->has( $tag ) ) {
 			return new \WP_Error( 'fbm_unknown_tag', __( 'Không có element này.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
 		}

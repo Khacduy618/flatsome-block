@@ -45,7 +45,7 @@ final class Plugin {
 			}
 		}
 
-		( new Handdn\Product3DButton() )->boot();
+		( new Handdn\Product3DButton( self::$services['states'] ) )->boot();
 
 		do_action( 'fbm/booted' );
 	}
