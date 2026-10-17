@@ -319,7 +319,7 @@ Mỗi bước kết thúc bằng phần chạy được và kiểm tra được 
 |---|---|---|
 | Q1 ✅ | Đã trả lời: chưa có code, plugin tự sinh (module `handdn`). Trên site thật, code nào đang sinh `handdn-product-attributes`? Nếu nó tự chèn vào trang sản phẩm, đặt thêm element sẽ hiện 2 lần. | Người dùng cho biết nguồn (snippet / plugin / child theme). |
 | Q2 ✅ | Đã trả lời: Judge.me, block 8 đổi hướng. Site thật dùng CusRev hay Judge.me? CusRev lưu đánh giá trong WooCommerce nên element đọc được; Judge.me lưu ngoài nên không. | Người dùng xác nhận. Nếu là Judge.me, block 8 cần đổi hướng (dùng widget của Judge.me). |
-| A1 | Cơ chế Ẩn (`ux_builder_shortcode_data_{tag}` → `hidden`) chưa kiểm chứng. | Kiểm chứng ở B1; nếu không được, dùng `ux_builder_remove_element` chỉ trong màn hình Add Elements. |
+| A1 ✅ | Đã kiểm chứng 2026-10-17 trên DDEV (Task 2): cờ `hidden` qua filter `ux_builder_shortcode_data` làm element biến khỏi Add elements (tìm "map" không ra), trang đã dùng vẫn render trên canvas. Cơ chế Ẩn (`ux_builder_shortcode_data_{tag}` → `hidden`). | Kiểm chứng ở B1; nếu không được, dùng `ux_builder_remove_element` chỉ trong màn hình Add Elements. |
 | A2 | Màu chính `#161735` suy ra từ CSS; element không phụ thuộc giá trị này. | Không. |
 | A3 | Font `title-handdn` không có trong site local; giao diện local có thể khác site thật. | Kiểm tra lại trên staging. |
 | A4 | Nội dung chữ trong mẫu thư viện (lợi ích, FAQ, chính sách) là gợi ý. | Người bán sửa trước khi đăng. |

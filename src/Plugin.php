@@ -31,6 +31,10 @@ final class Plugin {
 
 		Installer::maybe_upgrade();
 
+		$catalog                    = new Catalog();
+		self::$services['catalog'] = $catalog;
+		self::$services['states']  = new States( $catalog );
+
 		foreach ( self::$services as $service ) {
 			if ( method_exists( $service, 'boot' ) ) {
 				$service->boot();
