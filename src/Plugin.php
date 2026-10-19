@@ -50,6 +50,9 @@ final class Plugin {
 
 		( new Handdn\Product3DButton( self::$services['states'] ) )->boot();
 
+		Upgrade::boot();
+		Upgrade::maybe_run();
+
 		do_action( 'fbm/booted' );
 	}
 
