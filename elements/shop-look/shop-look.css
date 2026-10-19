@@ -1,0 +1,221 @@
+/* Shop The Look: bố cục, định vị pin và hiệu ứng. Màu chỉ lấy từ token theme / site. */
+.fbm-stl {
+	margin-bottom: 1.5em;
+}
+.fbm-stl__desc {
+	margin-bottom: 1.2em;
+}
+.fbm-stl__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: 30px;
+	align-items: center;
+}
+.fbm-stl--split-60 .fbm-stl__grid {
+	grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+}
+.fbm-stl--split-66 .fbm-stl__grid {
+	grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+/* Ảnh bên phải: đổi thứ tự và đảo tỉ lệ cột để cột ảnh vẫn là cột lớn. */
+.fbm-stl--right .fbm-stl__media {
+	order: 2;
+}
+.fbm-stl--right.fbm-stl--split-60 .fbm-stl__grid {
+	grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+}
+.fbm-stl--right.fbm-stl--split-66 .fbm-stl__grid {
+	grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+/* Ảnh */
+.fbm-stl__media {
+	position: relative;
+	overflow: hidden; /* Giữ vòng lan toả của pin sát mép trong khung ảnh. */
+	line-height: 0;
+	border-radius: var(--global-radius, 4px);
+}
+.fbm-stl .fbm-stl__img {
+	display: block;
+	width: 100%;
+	height: auto;
+	user-select: none;
+	-webkit-user-select: none;
+}
+.fbm-stl--ratio .fbm-stl__img {
+	position: absolute;
+	inset: 0;
+	height: 100%;
+	object-fit: cover;
+}
+.fbm-stl--r-1-1 .fbm-stl__media { aspect-ratio: 1 / 1; }
+.fbm-stl--r-4-5 .fbm-stl__media { aspect-ratio: 4 / 5; }
+.fbm-stl--r-3-4 .fbm-stl__media { aspect-ratio: 3 / 4; }
+.fbm-stl--r-2-3 .fbm-stl__media { aspect-ratio: 2 / 3; }
+.fbm-stl--r-3-2 .fbm-stl__media { aspect-ratio: 3 / 2; }
+.fbm-stl--r-16-9 .fbm-stl__media { aspect-ratio: 16 / 9; }
+
+/* Pin: vùng bấm 44px, vòng tròn 32px; kẹp vào trong ảnh để pin sát mép vẫn bấm được. */
+.fbm-stl .fbm-stl__pin {
+	position: absolute;
+	z-index: 1;
+	left: clamp(22px, var(--fbm-x, 50%), calc(100% - 22px));
+	top: clamp(22px, var(--fbm-y, 50%), calc(100% - 22px));
+	width: 44px;
+	height: 44px;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	box-shadow: none;
+	line-height: 1;
+	letter-spacing: 0;
+	text-transform: none;
+	transform: translate(-50%, -50%);
+	scale: 1;
+	transition: scale 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+	cursor: pointer;
+}
+.fbm-stl .fbm-stl__pin::before,
+.fbm-stl .fbm-stl__pin::after {
+	content: "";
+	position: absolute;
+	inset: 6px;
+	border-radius: 50%;
+}
+.fbm-stl .fbm-stl__pin::before {
+	background: var(--secondary-color, #f8f8f8);
+	border: 2px solid var(--primary-color);
+	transition: box-shadow 0.25s ease;
+}
+.fbm-stl .fbm-stl__pin::after {
+	border: 2px solid var(--secondary-color, #f8f8f8);
+	opacity: 0;
+	pointer-events: none;
+}
+.fbm-stl--pulse .fbm-stl__pin::after {
+	animation: fbm-stl-pulse 2s ease-out infinite;
+}
+@keyframes fbm-stl-pulse {
+	0% {
+		transform: scale(1);
+		opacity: 0.6;
+	}
+	100% {
+		transform: scale(2.2);
+		opacity: 0;
+	}
+}
+.fbm-stl .fbm-stl__pin.is-active {
+	z-index: 2;
+	scale: 1.15;
+}
+.fbm-stl .fbm-stl__pin.is-highlight::before,
+.fbm-stl .fbm-stl__pin:hover::before {
+	box-shadow: 0 0 0 4px var(--secondary-color, #f8f8f8);
+}
+.fbm-stl .fbm-stl__pin:focus-visible {
+	outline: 2px solid var(--primary-color);
+	outline-offset: 2px;
+}
+
+/* Nội dung trong vòng tròn: chấm (mặc định) hoặc số thứ tự. */
+.fbm-stl .fbm-stl__pin-num {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: var(--primary-color);
+	font-size: 13px;
+	font-weight: 700;
+}
+.fbm-stl--dots .fbm-stl__pin-num {
+	width: 10px;
+	height: 10px;
+	overflow: hidden;
+	border-radius: 50%;
+	background: var(--primary-color);
+	color: transparent;
+	font-size: 0;
+}
+
+/* Tông tối: đảo màu cho ảnh nền sáng. */
+.fbm-stl--tone-dark .fbm-stl__pin::before {
+	background: var(--primary-color);
+	border-color: var(--secondary-color, #f8f8f8);
+}
+.fbm-stl--tone-dark .fbm-stl__pin::after {
+	border-color: var(--primary-color);
+}
+.fbm-stl--tone-dark .fbm-stl__pin-num {
+	color: var(--secondary-color, #f8f8f8);
+}
+.fbm-stl--tone-dark.fbm-stl--dots .fbm-stl__pin-num {
+	background: var(--secondary-color, #f8f8f8);
+	color: transparent;
+}
+.fbm-stl--tone-dark .fbm-stl__pin.is-highlight::before,
+.fbm-stl--tone-dark .fbm-stl__pin:hover::before {
+	box-shadow: 0 0 0 4px var(--primary-color);
+}
+
+/* Thẻ sản phẩm: chỉ một thẻ hiện. */
+.fbm-stl .fbm-stl__card {
+	display: grid;
+	gap: 12px;
+	padding: 20px;
+	border: 1px solid var(--color-grey, #ececec);
+	border-radius: var(--global-radius, 4px);
+	background: var(--secondary-color, #f8f8f8);
+	animation: fbm-stl-card-in 0.25s ease;
+}
+.fbm-stl .fbm-stl__card[hidden] {
+	display: none;
+}
+@keyframes fbm-stl-card-in {
+	0% {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	100% {
+		opacity: 1;
+		transform: none;
+	}
+}
+.fbm-stl .fbm-stl__card-img img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: var(--global-radius, 4px);
+}
+.fbm-stl .fbm-stl__card-name {
+	color: var(--primary-color);
+	font-weight: 600;
+	line-height: 1.4;
+}
+.fbm-stl .fbm-stl__card-btn {
+	justify-self: start;
+	margin: 0;
+}
+
+@media (max-width: 549px) {
+	.fbm-stl .fbm-stl__grid {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 20px;
+	}
+	.fbm-stl--right .fbm-stl__media {
+		order: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fbm-stl .fbm-stl__pin,
+	.fbm-stl .fbm-stl__pin::before {
+		transition: none;
+	}
+	.fbm-stl--pulse .fbm-stl__pin::after,
+	.fbm-stl .fbm-stl__card {
+		animation: none;
+	}
+}

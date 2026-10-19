@@ -191,3 +191,43 @@ fbm_test( 'test_stl_builder_options', function () {
 	}
 	fbm_assert_same( array_merge( array( '' ), array_keys( $shared['ratios'] ) ), array_map( 'strval', array_keys( $ratio['options'] ) ) );
 } );
+
+fbm_test( 'test_stl_css_rules', function () {
+	$css = file_get_contents( FBM_DIR . 'elements/shop-look/shop-look.css' );
+	$css = preg_replace( '/var\([^)]*\)/', 'var()', $css );
+	fbm_assert_same( 0, preg_match( '/#[0-9a-f]{3,8}\b|rgba?\(|!important|font-family/i', $css ), 'no raw colors/important/font' );
+	foreach ( preg_split( '/\}/', $css ) as $block ) {
+		$sel = trim( preg_replace( '#/\*.*?\*/#s', '', strstr( $block, '{', true ) ?: '' ) );
+		// Bỏ qua @media/@keyframes và bước keyframe (0%, 100%, from, to).
+		if ( '' === $sel || 0 === strpos( $sel, '@' ) || preg_match( '/^(\d+%|from|to)(\s*,\s*(\d+%|from|to))*$/', $sel ) ) {
+			continue;
+		}
+		fbm_assert_contains( '.fbm-stl', $sel, 'namespaced: ' . $sel );
+	}
+} );
+
+fbm_test( 'test_stl_css_has_ratio_rules', function () {
+	$shared = require FBM_DIR . 'elements/shop-look/options.php';
+	$css    = file_get_contents( FBM_DIR . 'elements/shop-look/shop-look.css' );
+	foreach ( array_keys( $shared['ratios'] ) as $key ) {
+		list( $w, $h ) = explode( '-', $key );
+		fbm_assert_contains( ".fbm-stl--r-{$key} .fbm-stl__media { aspect-ratio: {$w} / {$h}; }", $css, $key );
+	}
+} );
+
+fbm_test( 'test_stl_css_reduced_motion', function () {
+	fbm_assert_contains( '@media (prefers-reduced-motion: reduce)', file_get_contents( FBM_DIR . 'elements/shop-look/shop-look.css' ) );
+} );
+
+fbm_test( 'test_stl_assets_enqueued_only_when_used', function () {
+	$f = fbm_fixtures_up();
+	wp_dequeue_style( 'fbm-shop-look' );
+	wp_dequeue_script( 'fbm-shop-look' );
+	do_shortcode( '[fbm_products source="recent" products="1"]' );
+	$before = wp_style_is( 'fbm-shop-look', 'enqueued' );
+	fbm_stl( 'image="' . fbm_qa_image( 'look' ) . '" pin1_product="' . $f['simple'] . '"' );
+	$after = array( wp_style_is( 'fbm-shop-look', 'enqueued' ), wp_script_is( 'fbm-shop-look', 'enqueued' ) );
+	fbm_fixtures_down();
+	fbm_assert_same( false, $before );
+	fbm_assert_same( array( true, true ), $after );
+} );
