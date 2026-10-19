@@ -57,7 +57,7 @@ return array(
 			'type'    => 'group',
 			'heading' => __( 'Nhãn', 'flatsome-block-manager' ),
 			'options' => array(
-				'show_labels'  => array( 'type' => 'checkbox', 'heading' => __( 'Hiện nhãn', 'flatsome-block-manager' ), 'default' => 'true' ),
+				'show_labels'  => array( 'type' => 'checkbox', 'heading' => __( 'Hiện nhãn', 'flatsome-block-manager' ), 'default' => 'false' ),
 				'label_before' => array( 'type' => 'textfield', 'heading' => __( 'Nhãn trước', 'flatsome-block-manager' ), 'default' => 'Trước' ),
 				'label_after'  => array( 'type' => 'textfield', 'heading' => __( 'Nhãn sau', 'flatsome-block-manager' ), 'default' => 'Sau' ),
 				'caption'      => array( 'type' => 'textfield', 'heading' => __( 'Chú thích dưới ảnh', 'flatsome-block-manager' ), 'default' => '' ),

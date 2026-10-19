@@ -23,6 +23,22 @@ final class Registry {
 	public function boot() {
 		add_action( 'init', array( $this, 'register_shortcodes' ) );
 		add_action( 'ux_builder_setup', array( $this, 'register_builder' ), 20 );
+		add_action( 'ux_builder_enqueue_scripts', array( $this, 'enqueue_for_canvas' ) );
+	}
+
+	/**
+	 * Canvas UX Builder chèn element qua AJAX nên không in được file nạp lúc render:
+	 * nạp sẵn CSS/JS của mọi element vào iframe (context "content").
+	 *
+	 * @param string $context editor | content
+	 */
+	public function enqueue_for_canvas( $context ) {
+		if ( 'content' !== $context ) {
+			return;
+		}
+		foreach ( $this->all() as $el ) {
+			$this->enqueue( $el );
+		}
 	}
 
 	/**

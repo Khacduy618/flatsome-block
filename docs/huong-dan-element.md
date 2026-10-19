@@ -47,8 +47,8 @@ So sánh 2 ảnh bằng một đường kéo. Phù hợp để khoe dây da mớ
 
 | Cài đặt | Ý nghĩa |
 |---|---|
-| Hiện nhãn | Bật/tắt 2 nhãn nhỏ ở góc ảnh. |
-| Nhãn trước / Nhãn sau | Chữ trên nhãn, mặc định "Trước" / "Sau". Ví dụ: "Da mới" / "Sau 6 tháng". |
+| Hiện nhãn | Mặc định **tắt**. Bật để hiện 2 nhãn nhỏ ở góc ảnh. |
+| Nhãn trước / Nhãn sau | Chữ trên nhãn khi bật "Hiện nhãn", mặc định "Trước" / "Sau". Ví dụ: "Da mới" / "Sau 6 tháng". Khi tắt nhãn, chữ này vẫn được đọc cho người dùng trình đọc màn hình. |
 | Chú thích dưới ảnh | Một dòng chữ dưới element, ví dụ "Patina sau 6 tháng đeo hằng ngày". |
 
 ### Khách dùng thế nào

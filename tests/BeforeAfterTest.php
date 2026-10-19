@@ -30,7 +30,23 @@ fbm_test( 'test_ba_handle_is_button_with_label', function () {
 	fbm_assert_true( 1 === preg_match( '/<button type="button" class="fbm-ba__handle[^"]*"[^>]*role="slider"[^>]*aria-label="[^"]+"/', $html ), 'button role=slider with label' );
 	fbm_assert_contains( 'aria-valuenow="50"', $html );
 	fbm_assert_contains( 'flickity-button-icon', $html );
-	fbm_assert_contains( 'badge-inner', $html, 'labels reuse theme badge' );
+} );
+
+fbm_test( 'test_ba_labels_hidden_by_default', function () {
+	$b    = fbm_qa_image( 'before' );
+	$a    = fbm_qa_image( 'after' );
+	$html = fbm_ba( 'before="' . $b . '" after="' . $a . '"' );
+	fbm_fixtures_down();
+	fbm_assert_not_contains( 'fbm-ba__label', $html );
+} );
+
+fbm_test( 'test_ba_labels_shown_when_enabled', function () {
+	$b    = fbm_qa_image( 'before' );
+	$a    = fbm_qa_image( 'after' );
+	$html = fbm_ba( 'before="' . $b . '" after="' . $a . '" show_labels="true" label_before="Da mới"' );
+	fbm_fixtures_down();
+	fbm_assert_contains( 'fbm-ba__label--before badge-inner', $html, 'labels reuse theme badge' );
+	fbm_assert_contains( '>Da mới</span>', $html );
 } );
 
 fbm_test( 'test_ba_no_inline_color', function () {
@@ -104,4 +120,22 @@ fbm_test( 'test_carousel_wraps_children_in_flatsome_slider', function () {
 fbm_test( 'test_carousel_empty_guest_blank', function () {
 	wp_set_current_user( 0 );
 	fbm_assert_same( '', do_shortcode( '[fbm_ba_carousel][/fbm_ba_carousel]' ) );
+} );
+
+fbm_test( 'test_builder_canvas_enqueues_element_assets', function () {
+	// Canvas UX Builder render shortcode qua AJAX: CSS/JS phải có sẵn trong iframe từ đầu.
+	foreach ( array( 'fbm-before-after', 'fbm-product-compare' ) as $h ) {
+		wp_dequeue_style( $h );
+		wp_dequeue_script( $h );
+	}
+	do_action( 'ux_builder_enqueue_scripts', 'content' );
+	fbm_assert_true( wp_style_is( 'fbm-before-after', 'enqueued' ), 'before-after.css' );
+	fbm_assert_true( wp_script_is( 'fbm-before-after', 'enqueued' ), 'view.js' );
+	fbm_assert_true( wp_style_is( 'fbm-product-compare', 'enqueued' ), 'compare.css' );
+} );
+
+fbm_test( 'test_builder_editor_context_does_not_enqueue', function () {
+	wp_dequeue_style( 'fbm-before-after' );
+	do_action( 'ux_builder_enqueue_scripts', 'editor' );
+	fbm_assert_true( ! wp_style_is( 'fbm-before-after', 'enqueued' ) );
 } );
