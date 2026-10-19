@@ -39,6 +39,8 @@ final class Plugin {
 		self::$services['usage']        = $usage;
 		self::$services['block_states'] = new BlockStates( $usage );
 		self::$services['templates']    = new Templates();
+		self::$services['rest']         = new Admin\Rest( self::$services['states'], $catalog, self::$services['block_states'], $usage, self::$services['registry'] );
+		self::$services['admin']        = new Admin\Page();
 
 		foreach ( self::$services as $service ) {
 			if ( method_exists( $service, 'boot' ) ) {
