@@ -625,3 +625,20 @@ fbm_test( 'test_css_look_full_width_slide', function () {
 	// Flickity đặt slide position:absolute; không có width thì Look co về 0.
 	fbm_assert_contains( '.fbm-shop-look .flickity-slider > .fbm-stl', file_get_contents( FBM_DIR . 'elements/look/shop-look.css' ) );
 } );
+
+fbm_test( 'test_look_drag_script_only_in_canvas', function () {
+	$all = FBM\Plugin::get( 'registry' )->all();
+	fbm_assert_same( 'editor.js', $all['fbm_look']['editor'] );
+	wp_dequeue_script( 'fbm-look-editor' );
+	$f = fbm_fixtures_up();
+	fbm_stl( 'image="' . fbm_qa_image( 'look' ) . '" pin1_product="' . $f['simple'] . '"' );
+	fbm_fixtures_down();
+	$front = wp_script_is( 'fbm-look-editor', 'enqueued' );
+	do_action( 'ux_builder_enqueue_scripts', 'content' );
+	fbm_assert_same( false, $front, 'not on the frontend' );
+	fbm_assert_true( wp_script_is( 'fbm-look-editor', 'enqueued' ), 'enqueued in canvas' );
+	$js = file_get_contents( FBM_DIR . 'elements/look/editor.js' );
+	fbm_assert_contains( "tag === 'fbm_look'", $js );
+	fbm_assert_contains( "'_x'", $js );
+	fbm_assert_contains( 'uxb-selected', $js, 'click-to-place only on the selected look' );
+} );

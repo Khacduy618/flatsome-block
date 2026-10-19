@@ -144,7 +144,7 @@ Chỉ nạp trong canvas (`ux_builder_enqueue_scripts`, context `content`).
 | R1 | Kéo-thả dựa vào cấu trúc nội bộ của UX Builder (Angular scope, `shortcode.options`). Flatsome có thể đổi. | Lớp bảo vệ §6.5; thanh X/Y luôn chạy; test Playwright kéo-thả chạy lại mỗi khi cập nhật Flatsome. |
 | R2 | `conditions` trên option kiểu `group` có thể không được UX Builder hỗ trợ. | Kiểm ngay task đầu của plan. Nếu không được: đặt `conditions` lên từng option trong nhóm. |
 | R3 | 8 nhóm × 3 option làm bảng cài đặt dài. | Nhóm thu gọn mặc định; chỉ hiện nhóm kế tiếp khi nhóm trước có sản phẩm. |
-| R4 | Undo/Redo của UX Builder với giá trị ghi từ canvas. | Kiểm trong Playwright; nếu Undo không lùi được cú kéo thì ghi vào spec như giới hạn đã biết. |
+| R4 | Undo/Redo của UX Builder với giá trị ghi từ canvas. | **Đã kiểm 2026-10-19: Undo không lùi cú kéo pin** (giá trị ghi thẳng vào `shortcode.options`, không qua lịch sử của UX Builder). Giới hạn đã biết; chỉnh lại bằng kéo tiếp hoặc thanh X/Y. |
 
 ## 9. Cập nhật 2026-10-19 (thắng mọi dòng mâu thuẫn ở trên)
 
