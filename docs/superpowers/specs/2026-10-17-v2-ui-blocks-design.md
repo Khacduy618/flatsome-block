@@ -267,6 +267,8 @@ Ký hiệu: **[F]** option lấy từ Flatsome (`commons/*.php`), **[P]** option
 
 ### 7.1 Checklist
 
+> Kết quả QA ngày 2026-10-19 (v2.0.0): `docs/qa/2026-10-19-v2-qa.md`. Còn mở: Reviews chưa thử với Judge.me thật; font `title-handdn` (A3) cần xem trên staging.
+
 | Nhóm | Kiểm tra |
 |---|---|
 | PHP | `php -l` mọi file; WP_DEBUG không có notice/warning khi render từng element ở mọi option |
