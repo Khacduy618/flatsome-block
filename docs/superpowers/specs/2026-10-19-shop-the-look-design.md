@@ -155,3 +155,17 @@ Người dùng yêu cầu danh sách sản phẩm **không giới hạn**. UX Bu
 - **Trong canvas:** cha vẽ bằng template Angular (`template.html`: ảnh qua `wp-attachment`, class từ option, `<content>` trong `.fbm-stl__media`, cột thẻ trống). Mỗi `[fbm_look_pin]` render PHP thành `div.fbm-stl__item` (1 phần tử gốc) gồm nút pin và thẻ ẩn; `view.js` sao chép thẻ của pin đang chọn sang cột thẻ.
 - **Số thứ tự trên pin:** CSS counter (đúng cả trong canvas, nơi pin con không biết vị trí của mình).
 - **Kéo-thả (§6):** tìm đối tượng shortcode `tag === 'fbm_look_pin'` có `$element` là `div.fbm-stl__item` chứa pin, rồi ghi `options.x` / `options.y`.
+
+## 10. Cập nhật lần 2, 2026-10-19 (thắng §9 và mọi dòng mâu thuẫn ở trên)
+
+Người dùng không muốn pin là element con. Cấu trúc chốt: **slider → Look**.
+
+- **`fbm_look`** (element con, `wrap => false`, 1 phần tử gốc `section.fbm-stl`): đúng bản 8 ô ở §2.1 (`pinN_product`, `pinN_x`, `pinN_y`; nhóm N chỉ hiện khi nhóm N-1 có sản phẩm) cùng toàn bộ cài đặt Chung / Ảnh / Bố cục / Kiểu pin / Thẻ. Render PHP đầy đủ, cả trong canvas. Pin có `data-slot`.
+- **`fbm_shop_look`** (container, chỉ nhận `fbm_look`, số Look không giới hạn):
+  - Cài đặt: nhóm Slider của Flatsome (`@commons/repeater-slider`) và Advanced. Preset gồm 1 Look.
+  - 0 Look hợp lệ: khách nhận `''`, editor thấy dòng nhắc.
+  - 1 Look: in Look đó, không có slider.
+  - Từ 2 Look: slider Flickity của Flatsome (`get_flatsome_repeater_start`, 1 cột), mỗi Look một slide.
+- **Kéo-thả (§6):** tìm shortcode `tag === 'fbm_look'` có `$element` là `section.fbm-stl`, rồi ghi `options.pinN_x/pinN_y` theo `data-slot`.
+- Số thứ tự trên pin: CSS counter `fbm-stl-pin`.
+- Bỏ §9 (pin con, template canvas, thẻ mẫu).

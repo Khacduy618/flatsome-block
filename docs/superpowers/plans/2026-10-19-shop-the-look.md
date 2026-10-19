@@ -254,3 +254,37 @@ Chèn **Task 1b** trước Task 3. Task 3–5 dùng markup sau Task 1b.
 - [ ] **Step 3: Implement** theo Interfaces và spec §9.
 - [ ] **Step 4:** `sh bin/test.sh`. Mong đợi: PASS. Kiểm trong UX Builder: thêm pin bằng +, đổi sản phẩm/X/Y của pin 2 thì canvas đổi; ảnh và class của cha cập nhật khi đổi option.
 - [ ] **Step 5:** Commit `refactor: shop the look pins as child elements`.
+
+
+---
+
+## Amendment 2 2026-10-19: slider → Look (spec §10). Thay Task 1b.
+
+**Task 1b bị huỷ** (code chưa commit, đã bỏ). Thay bằng:
+
+### Task 1c: `fbm_look` (8 ô) + `fbm_shop_look` (slider)
+
+**Files:**
+- Move: `elements/shop-look/` → `elements/look/` (tag `fbm_look`, tên "Look"). `shop-look.css`, `view.js`, `editor.js`, `options.php` thuộc Look.
+- Create: `elements/shop-look/{meta.php,builder.php,render.php}` (container slider), `src/Elements/ShopLook.php` (helper: `product()`, `coord()`, `pin_html( $product, $x, $y, $index, $card_id, $slot )`, `card_html( $product, array $opts )`).
+- Modify: `tests/ShopLookTest.php` (đổi tag thành `fbm_look`, đổi đường dẫn sang `elements/look/`).
+
+**Interfaces:**
+- `fbm_look`: markup như Task 1 (Produces). `builder.php` có thêm `'require'`/`'allow_in' => array( 'fbm_shop_look' )`.
+- `fbm_shop_look`:
+  - Builder: `type => 'container'`, `allow => array( 'fbm_look' )`, `template` là `'<div class="fbm-shop-look {{ shortcode.options.class }}"><content></content></div>'`, option `slider_options` (`repeater-slider.php`) và `advanced_options`.
+  - Render: bọc ngoài là `div.fbm-shop-look`. Có từ 2 Look thì là slider Flatsome, mỗi slide `div.col.fbm-shop-look__slide`.
+- Task 3/4 không đổi: thao tác trên từng `section.fbm-stl`. `editor.js` tìm tag `fbm_look`.
+
+- [ ] **Step 1: Test thất bại** (thêm vào test hiện có, sau khi đổi tag):
+  - `test_shop_look_single_look_no_slider`: 1 Look → chứa `fbm-stl`, không chứa `class="slider`.
+  - `test_shop_look_multiple_looks_slider`: 2 Look → chứa `slider`, 2 `fbm-shop-look__slide`.
+  - `test_shop_look_skips_empty_looks`: 1 Look rỗng + 1 Look hợp lệ → không có slider, 1 `fbm-stl`.
+  - `test_shop_look_empty_guest_blank` / `_editor_note`.
+  - `test_shop_look_builder`: `type`, `allow`, có `slider_options`.
+  - `test_look_builder_allow_in`: `allow_in === array( 'fbm_shop_look' )`.
+  - `test_stl_css_counter`: CSS chứa `counter-increment: fbm-stl-pin`.
+- [ ] **Step 2:** `sh bin/test.sh ShopLook`. Mong đợi: FAIL.
+- [ ] **Step 3:** Implement theo Interfaces.
+- [ ] **Step 4:** `sh bin/test.sh`. Mong đợi: PASS. Kiểm trong UX Builder: Shop The Look → thêm 2 Look; chọn sản phẩm cho Pin 1–2 của Look 2; đổi X/Y thì canvas theo. Ngoài site có slider 2 Look; bấm pin đổi thẻ trong đúng Look.
+- [ ] **Step 5:** Commit `refactor: shop the look as slider of looks`.
