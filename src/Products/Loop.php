@@ -27,6 +27,9 @@ final class Loop {
 		$prev_post    = $post;
 		$prev_product = $product;
 
+		// Query chỉ trả ID: nạp sẵn post, term và meta của cả danh sách bằng vài query thay vì từng thẻ.
+		_prime_post_caches( array_map( 'intval', $ids ), true, true );
+
 		ob_start();
 		get_flatsome_repeater_start( $repeater );
 		foreach ( $ids as $id ) {

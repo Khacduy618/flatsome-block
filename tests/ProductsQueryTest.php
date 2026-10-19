@@ -104,3 +104,19 @@ fbm_test( 'test_loop_restores_global_post', function () {
 	fbm_fixtures_down();
 	fbm_assert_same( $before, $after );
 } );
+
+fbm_test( 'test_loop_queries_not_above_flatsome_products', function () {
+	global $wpdb;
+	$count = function ( $sc ) use ( $wpdb ) {
+		wp_cache_flush();
+		$before = $wpdb->num_queries;
+		do_shortcode( $sc );
+		return $wpdb->num_queries - $before;
+	};
+	// Lần đầu nạp option / template; chỉ so lần thứ hai.
+	$count( '[ux_products products="8" type="row"]' );
+	$count( '[fbm_products products="8" type="row"]' );
+	$flatsome = $count( '[ux_products products="8" type="row"]' );
+	$ours     = $count( '[fbm_products products="8" type="row"]' );
+	fbm_assert_true( $ours <= $flatsome + 5, "fbm_products {$ours} queries vs ux_products {$flatsome}" );
+} );
