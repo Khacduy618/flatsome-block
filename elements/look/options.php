@@ -14,9 +14,10 @@ return array(
 		'3-2'  => '3:2',
 		'16-9' => '16:9',
 	),
+	// Khoá không phải số: UX Builder so sánh $ctrl.model === value, giá trị số 60 sẽ không khớp khoá chuỗi "60".
 	'splits' => array(
-		'50' => '50/50',
-		'60' => '60/40',
-		'66' => '66/33',
+		'1-1' => '50/50',
+		'3-2' => '60/40',
+		'2-1' => '66/33',
 	),
 );

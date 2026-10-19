@@ -169,3 +169,21 @@ Người dùng không muốn pin là element con. Cấu trúc chốt: **slider �
 - **Kéo-thả (§6):** tìm shortcode `tag === 'fbm_look'` có `$element` là `section.fbm-stl`, rồi ghi `options.pinN_x/pinN_y` theo `data-slot`.
 - Số thứ tự trên pin: CSS counter `fbm-stl-pin`.
 - Bỏ §9 (pin con, template canvas, thẻ mẫu).
+
+## 11. Cập nhật lần 3, 2026-10-19 (yêu cầu người dùng trong lúc làm; thắng các mục trên)
+
+- **Look** (`fbm_look`) chỉ có: ảnh lookbook, Pin 1–8 (sản phẩm + X/Y), Advanced.
+- **Shop The Look** (`fbm_shop_look`) giữ mọi cài đặt chung:
+  - **General:** Title, Short description, Text align (bộ nút căn lề của Flatsome), Spacing.
+  - **Look layout:** Image position, Columns `1-1` / `3-2` / `2-1` (khoá không phải số vì UX Builder so `model === value`), Frame width % và Frame height (theo từng màn hình; có chiều cao thì ảnh phủ kín khung).
+  - **Image style:** Image size, Frame ratio.
+  - **Pin style:** Dot/Number, Pulse, Light/Dark.
+  - **Product card:** Button text (mặc định "View product").
+  - **Slider:** các nhóm Layout / Navigation / Auto Slide lấy nguyên từ element Slider (`ux_slider`) của Flatsome.
+- **Kiểu dáng là class trên Shop The Look** (`.fbm-shop-look--*`), nên canvas cập nhật ngay. Image size và Button text được truyền xuống từng Look khi render.
+- **Bố cục mặc định theo mẫu:** ảnh trái phủ kín, khối nền phải chứa thẻ canh giữa (ảnh sản phẩm luôn hiện, tên, giá, nút) và dãy chấm ứng với các pin.
+- **Pin:** chấm đặc + quầng mờ đều, mép mềm; pin đang chọn phóng to 1.15×; pulse "thở" nhẹ.
+- **Slider:**
+  - Ngoài site: từ 2 Look thì in bằng `[ux_slider]`, mỗi Look là một slide.
+  - Canvas: dùng template, directive, tools và controller của `ux_slider`. Controller gắn qua `UxBuilder.controller('fbm_shop_look', …)` trong `canvas.js`, file chỉ nạp ở canvas.
+- **Nhãn option** toàn bộ bằng tiếng Anh.

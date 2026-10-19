@@ -6,4 +6,5 @@ return array(
 	'name'      => __( 'Shop The Look', 'flatsome-block-manager' ),
 	'category'  => __( 'Shop', 'flatsome-block-manager' ),
 	'container' => true,
+	'editor'    => 'canvas.js',
 );

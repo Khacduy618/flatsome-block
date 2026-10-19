@@ -1,8 +1,6 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-$fbm_shared = require __DIR__ . '/options.php';
-
 $fbm_pin_group = static function ( $n ) {
 	$axis  = static function ( $key, $heading, $var ) use ( $n ) {
 		return array(
@@ -26,17 +24,17 @@ $fbm_pin_group = static function ( $n ) {
 		'options' => array(
 			"pin{$n}_product" => array(
 				'type'       => 'select',
-				'heading'    => __( 'Sản phẩm', 'flatsome-block-manager' ),
+				'heading'    => __( 'Product', 'flatsome-block-manager' ),
 				'full_width' => true,
 				'default'    => '',
 				'config'     => array(
 					'multiple'    => false,
-					'placeholder' => __( 'Chọn sản phẩm…', 'flatsome-block-manager' ),
+					'placeholder' => __( 'Select product…', 'flatsome-block-manager' ),
 					'postSelect'  => array( 'post_type' => array( 'product' ) ),
 				),
 			),
-			"pin{$n}_x"       => $axis( "pin{$n}_x", __( 'Ngang (X)', 'flatsome-block-manager' ), '--fbm-x' ),
-			"pin{$n}_y"       => $axis( "pin{$n}_y", __( 'Dọc (Y)', 'flatsome-block-manager' ), '--fbm-y' ),
+			"pin{$n}_x"       => $axis( "pin{$n}_x", __( 'Horizontal (X)', 'flatsome-block-manager' ), '--fbm-x' ),
+			"pin{$n}_y"       => $axis( "pin{$n}_y", __( 'Vertical (Y)', 'flatsome-block-manager' ), '--fbm-y' ),
 		),
 	);
 	if ( $n > 1 ) {
@@ -47,90 +45,11 @@ $fbm_pin_group = static function ( $n ) {
 };
 
 $fbm_options = array(
-	'general_options' => array(
-		'type'    => 'group',
-		'heading' => __( 'Chung', 'flatsome-block-manager' ),
-		'options' => array(
-			'title'       => array( 'type' => 'textfield', 'heading' => __( 'Tiêu đề', 'flatsome-block-manager' ), 'default' => '' ),
-			'description' => array( 'type' => 'textarea', 'heading' => __( 'Mô tả ngắn', 'flatsome-block-manager' ), 'default' => '' ),
-		),
-	),
 	'image_options'   => array(
 		'type'    => 'group',
-		'heading' => __( 'Ảnh', 'flatsome-block-manager' ),
+		'heading' => __( 'Image', 'flatsome-block-manager' ),
 		'options' => array(
-			'image'      => array( 'type' => 'image', 'heading' => __( 'Ảnh lookbook', 'flatsome-block-manager' ), 'default' => '' ),
-			'image_size' => array(
-				'type'    => 'select',
-				'heading' => __( 'Kích thước ảnh', 'flatsome-block-manager' ),
-				'default' => 'large',
-				'options' => array( 'medium' => 'Medium', 'medium_large' => 'Medium Large', 'large' => 'Large', 'full' => 'Full' ),
-			),
-			'ratio'      => array(
-				'type'    => 'select',
-				'heading' => __( 'Tỉ lệ khung', 'flatsome-block-manager' ),
-				'default' => '',
-				'options' => array( '' => __( 'Theo ảnh', 'flatsome-block-manager' ) ) + $fbm_shared['ratios'],
-			),
-		),
-	),
-	'layout_options'  => array(
-		'type'    => 'group',
-		'heading' => __( 'Bố cục', 'flatsome-block-manager' ),
-		'options' => array(
-			'image_side' => array(
-				'type'    => 'radio-buttons',
-				'heading' => __( 'Vị trí ảnh', 'flatsome-block-manager' ),
-				'default' => 'left',
-				'options' => array(
-					'left'  => array( 'title' => __( 'Trái', 'flatsome-block-manager' ) ),
-					'right' => array( 'title' => __( 'Phải', 'flatsome-block-manager' ) ),
-				),
-			),
-			'split'      => array(
-				'type'    => 'radio-buttons',
-				'heading' => __( 'Chia cột', 'flatsome-block-manager' ),
-				'default' => '50',
-				'options' => array_map(
-					static function ( $label ) {
-						return array( 'title' => $label );
-					},
-					$fbm_shared['splits']
-				),
-			),
-		),
-	),
-	'pin_style_options' => array(
-		'type'    => 'group',
-		'heading' => __( 'Kiểu pin', 'flatsome-block-manager' ),
-		'options' => array(
-			'pin_style' => array(
-				'type'    => 'radio-buttons',
-				'heading' => __( 'Kiểu', 'flatsome-block-manager' ),
-				'default' => 'dot',
-				'options' => array(
-					'dot'     => array( 'title' => __( 'Chấm', 'flatsome-block-manager' ) ),
-					'numbers' => array( 'title' => __( 'Số thứ tự', 'flatsome-block-manager' ) ),
-				),
-			),
-			'pulse'     => array( 'type' => 'checkbox', 'heading' => __( 'Vòng lan toả', 'flatsome-block-manager' ), 'default' => 'true' ),
-			'pin_tone'  => array(
-				'type'    => 'radio-buttons',
-				'heading' => __( 'Tông', 'flatsome-block-manager' ),
-				'default' => 'light',
-				'options' => array(
-					'light' => array( 'title' => __( 'Sáng', 'flatsome-block-manager' ) ),
-					'dark'  => array( 'title' => __( 'Tối', 'flatsome-block-manager' ) ),
-				),
-			),
-		),
-	),
-	'card_options'    => array(
-		'type'    => 'group',
-		'heading' => __( 'Thẻ sản phẩm', 'flatsome-block-manager' ),
-		'options' => array(
-			'card_image'  => array( 'type' => 'checkbox', 'heading' => __( 'Hiện ảnh sản phẩm', 'flatsome-block-manager' ), 'default' => 'true' ),
-			'button_text' => array( 'type' => 'textfield', 'heading' => __( 'Chữ trên nút', 'flatsome-block-manager' ), 'default' => __( 'Xem sản phẩm', 'flatsome-block-manager' ) ),
+			'image' => array( 'type' => 'image', 'heading' => __( 'Lookbook image', 'flatsome-block-manager' ), 'default' => '' ),
 		),
 	),
 );

@@ -38,11 +38,21 @@ final class Registry {
 		}
 		foreach ( $this->all() as $el ) {
 			$this->enqueue( $el );
+			if ( $el['editor'] ) {
+				// Script chỉ dành cho canvas; chạy sau script canvas của Flatsome (nơi đăng ký controller của element gốc).
+				wp_enqueue_script(
+					'fbm-' . $el['slug'] . '-editor',
+					FBM_URL . 'elements/' . $el['slug'] . '/' . $el['editor'],
+					wp_script_is( 'ux-builder-flatsome', 'registered' ) ? array( 'ux-builder-flatsome' ) : array(),
+					FBM_VERSION,
+					true
+				);
+			}
 		}
 	}
 
 	/**
-	 * @return array<string, array{tag:string, name:string, category:string, dir:string, slug:string, container:bool, css:string|null, js:string|null}>
+	 * @return array<string, array{tag:string, name:string, category:string, dir:string, slug:string, container:bool, css:string|null, js:string|null, editor:string|null}>
 	 */
 	public function all() {
 		if ( null !== $this->all ) {
@@ -64,6 +74,7 @@ final class Registry {
 				'container' => ! empty( $meta['container'] ),
 				'css'       => isset( $meta['css'] ) ? (string) $meta['css'] : null,
 				'js'        => isset( $meta['js'] ) ? (string) $meta['js'] : null,
+				'editor'    => isset( $meta['editor'] ) ? (string) $meta['editor'] : null,
 			);
 		}
 		return $this->all;

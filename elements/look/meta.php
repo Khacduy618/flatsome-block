@@ -7,5 +7,4 @@ return array(
 	'category' => __( 'Shop', 'flatsome-block-manager' ),
 	'css'      => 'shop-look.css',
 	'js'       => 'view.js',
-	'editor'   => 'editor.js',
 );

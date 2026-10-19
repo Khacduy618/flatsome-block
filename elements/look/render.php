@@ -8,18 +8,9 @@ defined( 'ABSPATH' ) || exit;
 
 $fbm_defaults = array(
 	'_id'         => 'look-' . wp_rand(),
-	'title'       => '',
-	'description' => '',
 	'image'       => '',
 	'image_size'  => 'large',
-	'ratio'       => '',
-	'image_side'  => 'left',
-	'split'       => '50',
-	'pin_style'   => 'dot',
-	'pulse'       => 'true',
-	'pin_tone'    => 'light',
-	'card_image'  => 'true',
-	'button_text' => __( 'Xem sản phẩm', 'flatsome-block-manager' ),
+	'button_text' => __( 'View product', 'flatsome-block-manager' ),
 	'class'       => '',
 	'visibility'  => '',
 );
@@ -30,7 +21,6 @@ for ( $fbm_n = 1; $fbm_n <= 8; $fbm_n++ ) {
 }
 $a = shortcode_atts( $fbm_defaults, $atts, $tag );
 
-$fbm_shared = require __DIR__ . '/options.php';
 $fbm_size   = in_array( $a['image_size'], array( 'medium', 'medium_large', 'large', 'full' ), true ) ? $a['image_size'] : 'large';
 $fbm_image  = wp_get_attachment_image( absint( $a['image'] ), $fbm_size, false, array( 'class' => 'fbm-stl__img', 'draggable' => 'false' ) );
 
@@ -55,37 +45,13 @@ if ( ! $fbm_image || ! $fbm_pins ) {
 }
 
 $fbm_id      = sanitize_html_class( $a['_id'] );
-$fbm_classes = array( 'fbm-stl', 'numbers' === $a['pin_style'] ? 'fbm-stl--numbers' : 'fbm-stl--dots' );
-if ( 'right' === $a['image_side'] ) {
-	$fbm_classes[] = 'fbm-stl--right';
-}
-if ( isset( $fbm_shared['splits'][ $a['split'] ] ) && '50' !== $a['split'] ) {
-	$fbm_classes[] = 'fbm-stl--split-' . $a['split'];
-}
-if ( 'true' === $a['pulse'] ) {
-	$fbm_classes[] = 'fbm-stl--pulse';
-}
-if ( 'dark' === $a['pin_tone'] ) {
-	$fbm_classes[] = 'fbm-stl--tone-dark';
-}
-if ( isset( $fbm_shared['ratios'][ $a['ratio'] ] ) ) {
-	$fbm_classes[] = 'fbm-stl--ratio';
-	$fbm_classes[] = 'fbm-stl--r-' . $a['ratio'];
-}
+$fbm_classes = array( 'fbm-stl' );
 foreach ( preg_split( '/\s+/', $a['class'] . ' ' . $a['visibility'], -1, PREG_SPLIT_NO_EMPTY ) as $fbm_c ) {
 	$fbm_classes[] = sanitize_html_class( $fbm_c );
 }
 
-// Tiêu đề in bằng [title] của Flatsome; bỏ ký tự có thể phá shortcode.
-$fbm_title = trim( str_replace( array( '"', '[', ']' ), '', (string) $a['title'] ) );
 ?>
 <section id="<?php echo esc_attr( $fbm_id ); ?>" class="<?php echo esc_attr( implode( ' ', $fbm_classes ) ); ?>">
-	<?php if ( '' !== $fbm_title ) : ?>
-		<?php echo do_shortcode( '[title text="' . $fbm_title . '"]' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup của Flatsome. ?>
-	<?php endif; ?>
-	<?php if ( '' !== trim( $a['description'] ) ) : ?>
-		<p class="fbm-stl__desc"><?php echo esc_html( $a['description'] ); ?></p>
-	<?php endif; ?>
 	<div class="fbm-stl__grid">
 		<div class="fbm-stl__media">
 			<?php echo $fbm_image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image. ?>
@@ -101,9 +67,7 @@ $fbm_title = trim( str_replace( array( '"', '[', ']' ), '', (string) $a['title']
 				$fbm_price = $fbm_p->get_price_html();
 				?>
 				<article class="fbm-stl__card" id="<?php echo esc_attr( $fbm_id . '-card-' . $fbm_i ); ?>" data-index="<?php echo esc_attr( $fbm_i ); ?>"<?php echo 0 === $fbm_i ? '' : ' hidden'; ?>>
-					<?php if ( 'true' === $a['card_image'] ) : ?>
-						<a class="fbm-stl__card-img" href="<?php echo esc_url( $fbm_link ); ?>" tabindex="-1" aria-hidden="true"><?php echo $fbm_p->get_image( 'woocommerce_thumbnail' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WooCommerce. ?></a>
-					<?php endif; ?>
+					<a class="fbm-stl__card-img" href="<?php echo esc_url( $fbm_link ); ?>" tabindex="-1" aria-hidden="true"><?php echo $fbm_p->get_image( 'woocommerce_thumbnail' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WooCommerce. ?></a>
 					<a class="fbm-stl__card-name" href="<?php echo esc_url( $fbm_link ); ?>"><?php echo esc_html( wp_strip_all_tags( $fbm_p->get_name() ) ); ?></a>
 					<?php if ( '' !== trim( (string) $fbm_price ) ) : ?>
 						<div class="fbm-stl__card-price price-wrapper"><span class="price"><?php echo wp_kses_post( $fbm_price ); ?></span></div>
@@ -111,6 +75,13 @@ $fbm_title = trim( str_replace( array( '"', '[', ']' ), '', (string) $a['title']
 					<a class="button primary is-small fbm-stl__card-btn" href="<?php echo esc_url( $fbm_link ); ?>"><?php echo esc_html( $a['button_text'] ); ?></a>
 				</article>
 			<?php endforeach; ?>
+			<?php if ( count( $fbm_pins ) > 1 ) : ?>
+				<div class="fbm-stl__dots">
+					<?php foreach ( $fbm_pins as $fbm_i => $fbm_pin ) : ?>
+						<button type="button" class="fbm-stl__dot<?php echo 0 === $fbm_i ? ' is-active' : ''; ?>" data-index="<?php echo esc_attr( $fbm_i ); ?>" aria-controls="<?php echo esc_attr( $fbm_id . '-card-' . $fbm_i ); ?>" aria-pressed="<?php echo 0 === $fbm_i ? 'true' : 'false'; ?>" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: product name */ __( 'Xem %s', 'flatsome-block-manager' ), wp_strip_all_tags( $fbm_pin['product']->get_name() ) ) ); ?>"></button>
+					<?php endforeach; ?>
+				</div>
+			<?php endif; ?>
 		</div>
 	</div>
 </section>
