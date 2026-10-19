@@ -145,3 +145,13 @@ Chỉ nạp trong canvas (`ux_builder_enqueue_scripts`, context `content`).
 | R2 | `conditions` trên option kiểu `group` có thể không được UX Builder hỗ trợ. | Kiểm ngay task đầu của plan. Nếu không được: đặt `conditions` lên từng option trong nhóm. |
 | R3 | 8 nhóm × 3 option làm bảng cài đặt dài. | Nhóm thu gọn mặc định; chỉ hiện nhóm kế tiếp khi nhóm trước có sản phẩm. |
 | R4 | Undo/Redo của UX Builder với giá trị ghi từ canvas. | Kiểm trong Playwright; nếu Undo không lùi được cú kéo thì ghi vào spec như giới hạn đã biết. |
+
+## 9. Cập nhật 2026-10-19 (thắng mọi dòng mâu thuẫn ở trên)
+
+Người dùng yêu cầu danh sách sản phẩm **không giới hạn**. UX Builder không có option repeater (Flatsome 3.20.11 chỉ có textfield, select, slider, group, image, gallery…), nên người dùng chọn **pin là element con**.
+
+- **D2/D8 thay bằng:** `fbm_shop_look` là container, chỉ nhận `fbm_look_pin`. Mỗi pin con có `product` (select product), `x`, `y` (slider 0–100, bước 1, mặc định 50). Không giới hạn số pin. Thêm bằng nút +, xoá, kéo sắp thứ tự trong cột trái UX Builder. Bỏ các ô `pin1…pin8`.
+- **Ngoài site:** `fbm_shop_look` đọc các `[fbm_look_pin]` trong nội dung (`get_shortcode_regex`) và tự in pin vào ảnh, thẻ vào cột phải. Markup như §3, bỏ `data-slot`.
+- **Trong canvas:** cha vẽ bằng template Angular (`template.html`: ảnh qua `wp-attachment`, class từ option, `<content>` trong `.fbm-stl__media`, cột thẻ trống). Mỗi `[fbm_look_pin]` render PHP thành `div.fbm-stl__item` (1 phần tử gốc) gồm nút pin và thẻ ẩn; `view.js` sao chép thẻ của pin đang chọn sang cột thẻ.
+- **Số thứ tự trên pin:** CSS counter (đúng cả trong canvas, nơi pin con không biết vị trí của mình).
+- **Kéo-thả (§6):** tìm đối tượng shortcode `tag === 'fbm_look_pin'` có `$element` là `div.fbm-stl__item` chứa pin, rồi ghi `options.x` / `options.y`.

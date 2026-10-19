@@ -219,3 +219,38 @@ docs/huong-dan-element.md   (sửa) thêm mục Shop The Look
 - [ ] **Step 3:** `sh bin/test.sh` toàn bộ và `php -l elements/shop-look/*.php src/Elements/Registry.php`. Mong đợi: 0 fail, 0 lỗi cú pháp.
 - [ ] **Step 4:** `npm run build && sh bin/zip.sh`, rồi chép thành `~/Documents/project-wp/zips/flatsome-block-manager-2.0.0.zip`. `unzip -l` có `elements/shop-look/editor.js`, không có `tests/`.
 - [ ] **Step 5:** Trong `~/Documents/project-wp/handdn`: `ddev wp eval-file wp-content/plugins/flatsome-block-manager/tests/qa-seed.php down`, xoá trang và user tạm đã tạo cho Playwright. Commit `docs: shop the look guide + QA`.
+
+---
+
+## Amendment 2026-10-19: pin là element con (spec §9)
+
+Chèn **Task 1b** trước Task 3. Task 3–5 dùng markup sau Task 1b.
+
+### Task 1b: Container + `fbm_look_pin`
+
+**Files:**
+- Create: `elements/look-pin/{meta.php,builder.php,render.php}`, `elements/shop-look/template.html`
+- Modify: `elements/shop-look/{builder.php,render.php,shop-look.css}`, `tests/ShopLookTest.php`
+
+**Interfaces:**
+- Produces:
+  - Shortcode `[fbm_look_pin product x y]`.
+  - `fbm_shop_look` builder có `type => 'container'`, `allow => array( 'fbm_look_pin' )`, `template` (nội dung `template.html`), preset 3 pin.
+  - Render ngoài site: như Task 1, bỏ `data-slot`. `data-index` = thứ tự pin hợp lệ; `.fbm-stl__pin-num` để trống, số do CSS counter `fbm-stl-pin`.
+  - Render `fbm_look_pin` đứng riêng (canvas): `<div class="fbm-stl__item">` + `button.fbm-stl__pin` + `article.fbm-stl__card.fbm-stl__card--tpl[hidden]`. Sản phẩm không hợp lệ thì `''`.
+- Consumes (Task 3): `view.js` lấy thẻ theo `data-index` trong `.fbm-stl__cards`; nếu cột trống (canvas) thì sao chép `.fbm-stl__card--tpl` của pin đang chọn vào cột. Thứ tự pin tính theo DOM.
+- Consumes (Task 4): `editor.js` ghi `options.x/y` của shortcode `fbm_look_pin` có `$element` chứa pin.
+
+- [ ] **Step 1: Sửa test** trong `tests/ShopLookTest.php`:
+  - Shortcode viết dạng `[fbm_shop_look …][fbm_look_pin product="…" x="30" y="40"]…[/fbm_shop_look]` (helper `fbm_stl( $atts, array $pins )`).
+  - Bỏ kiểm tra `data-slot`.
+  - `test_stl_skips_invalid_and_renumbers`: kiểm `data-index="0"` cho pin hợp lệ duy nhất.
+  - `test_stl_builder_options`: `type === 'container'`, `allow === array('fbm_look_pin')`, có `template`, không còn khoá `pin1_options`.
+  - Thêm `test_look_pin_builder`: `wrap === false`, `allow_in === array( 'fbm_shop_look' )`, slider `x` có `step` 1.
+  - Thêm `test_look_pin_standalone_item`: render `[fbm_look_pin product=simple x=10 y=20]` thì bắt đầu bằng `<div class="fbm-stl__item"`, chứa `--fbm-x:10%;--fbm-y:20%` và `fbm-stl__card--tpl`; sản phẩm nháp thì trả `''`.
+  - Thêm `test_stl_unlimited_pins`: 12 pin hợp lệ thì có 12 nút.
+  - Thêm `test_stl_css_counter`: CSS chứa `counter-increment: fbm-stl-pin`.
+- [ ] **Step 2:** `sh bin/test.sh ShopLook`. Mong đợi: FAIL.
+- [ ] **Step 3: Implement** theo Interfaces và spec §9.
+- [ ] **Step 4:** `sh bin/test.sh`. Mong đợi: PASS. Kiểm trong UX Builder: thêm pin bằng +, đổi sản phẩm/X/Y của pin 2 thì canvas đổi; ảnh và class của cha cập nhật khi đổi option.
+- [ ] **Step 5:** Commit `refactor: shop the look pins as child elements`.
