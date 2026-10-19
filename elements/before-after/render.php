@@ -73,19 +73,20 @@ $fbm_label = sprintf( /* translators: 1: before label, 2: after label */ __( 'So
 	<?php if ( '' !== trim( $a['caption'] ) ) : ?>
 		<figcaption class="fbm-ba__caption op-7"><?php echo esc_html( $a['caption'] ); ?></figcaption>
 	<?php endif; ?>
-</figure>
-<?php
-// Chiều rộng theo breakpoint: cùng cách element Image của Flatsome (thẻ <style> theo id, chỉ khi người dùng đã đặt).
-if ( function_exists( 'ux_builder_element_style_tag' ) && is_array( $atts ) ) {
-	echo ux_builder_element_style_tag( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS do Flatsome sinh, giá trị đã floatval.
-		sanitize_html_class( $a['_id'] ),
-		array(
-			'width' => array(
-				'selector' => '',
-				'property' => 'width',
-				'unit'     => '%',
+	<?php
+	// Chiều rộng theo breakpoint: cùng cách element Image của Flatsome (thẻ <style> theo id, chỉ khi người dùng đã đặt).
+	if ( function_exists( 'ux_builder_element_style_tag' ) && is_array( $atts ) ) {
+		echo ux_builder_element_style_tag( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS do Flatsome sinh, giá trị đã floatval.
+			sanitize_html_class( $a['_id'] ),
+			array(
+				'width' => array(
+					'selector' => '',
+					'property' => 'width',
+					'unit'     => '%',
+				),
 			),
-		),
-		$atts
-	);
-}
+			$atts
+		);
+	}
+	?>
+</figure>

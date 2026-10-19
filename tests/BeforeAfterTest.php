@@ -203,3 +203,15 @@ fbm_test( 'test_ba_builder_options_width_and_ratio', function () {
 	$ratios = require FBM_DIR . 'elements/before-after/ratios.php';
 	fbm_assert_same( array_merge( array( '' ), array_keys( $ratios ) ), array_map( 'strval', array_keys( $images['ratio']['options'] ) ) );
 } );
+
+fbm_test( 'test_ba_single_root_element_for_builder', function () {
+	// wrap => false: UX Builder gắn element với đúng 1 nút gốc; <style> phải nằm trong <figure> như ux_image.
+	$b    = fbm_qa_image( 'before' );
+	$a    = fbm_qa_image( 'after' );
+	$html = trim( fbm_ba( '_id="fbm-qa-ba" before="' . $b . '" after="' . $a . '" width="60" caption="x"' ) );
+	fbm_fixtures_down();
+	fbm_assert_same( 0, strpos( $html, '<figure' ), 'starts with figure' );
+	fbm_assert_same( strlen( $html ) - strlen( '</figure>' ), strrpos( $html, '</figure>' ), 'ends with figure' );
+	fbm_assert_same( 1, substr_count( $html, '<figure' ) );
+	fbm_assert_contains( 'width: 60%;', $html );
+} );
