@@ -100,8 +100,44 @@ function Confirm( { item, onCancel, onHide, onOff } ) {
 	);
 }
 
+const PER_PAGE = 10;
+
+function Pager( { page, pages, total, onPage } ) {
+	if ( pages < 2 ) {
+		return null;
+	}
+	const from = ( page - 1 ) * PER_PAGE + 1;
+	const to = Math.min( total, page * PER_PAGE );
+	return (
+		<nav className="fbm-pager" aria-label="Phân trang">
+			<span className="fbm-pager__info">
+				{ from }–{ to } / { total }
+			</span>
+			<button type="button" className="components-button is-secondary is-small" disabled={ page === 1 } onClick={ () => onPage( page - 1 ) } aria-label="Trang trước">
+				‹
+			</button>
+			{ Array.from( { length: pages }, ( _, i ) => i + 1 ).map( ( n ) => (
+				<button
+					key={ n }
+					type="button"
+					className={ `components-button is-small ${ n === page ? 'is-primary' : 'is-secondary' }` }
+					aria-current={ n === page ? 'page' : undefined }
+					aria-label={ `Trang ${ n }` }
+					onClick={ () => onPage( n ) }
+				>
+					{ n }
+				</button>
+			) ) }
+			<button type="button" className="components-button is-secondary is-small" disabled={ page === pages } onClick={ () => onPage( page + 1 ) } aria-label="Trang sau">
+				›
+			</button>
+		</nav>
+	);
+}
+
 export default function ItemList( { type, data, searchLabel, note, onChange } ) {
 	const [ q, setQ ] = useState( '' );
+	const [ page, setPage ] = useState( 1 );
 	const [ confirming, setConfirming ] = useState( null );
 	const [ busy, setBusy ] = useState( null );
 	const [ error, setError ] = useState( '' );
@@ -130,6 +166,11 @@ export default function ItemList( { type, data, searchLabel, note, onChange } ) 
 		  )
 		: data.items;
 
+	// Phân trang 10 dòng; trang hiện tại không vượt số trang (khi tìm kiếm làm danh sách ngắn lại).
+	const pages = Math.max( 1, Math.ceil( items.length / PER_PAGE ) );
+	const current = Math.min( page, pages );
+	const shown = items.slice( ( current - 1 ) * PER_PAGE, current * PER_PAGE );
+
 	const totals = { on: 0, hidden: 0, off: 0 };
 	data.items.forEach( ( it ) => ( totals[ it.state ] += 1 ) );
 
@@ -153,7 +194,10 @@ export default function ItemList( { type, data, searchLabel, note, onChange } ) 
 					placeholder={ searchLabel }
 					aria-label={ searchLabel }
 					value={ q }
-					onChange={ ( e ) => setQ( e.target.value ) }
+					onChange={ ( e ) => {
+						setQ( e.target.value );
+						setPage( 1 );
+					} }
 				/>
 				<div className="fbm-summary">
 					<span><b>{ totals.on }</b> bật</span>
@@ -172,7 +216,7 @@ export default function ItemList( { type, data, searchLabel, note, onChange } ) 
 				</p>
 			) : (
 				<ul className="fbm-list">
-					{ items.map( ( it ) => (
+					{ shown.map( ( it ) => (
 						<li key={ it.id } className={ `fbm-row is-${ it.state }` }>
 							<div className="fbm-row__main">
 								<div className="fbm-row__name">
@@ -207,6 +251,7 @@ export default function ItemList( { type, data, searchLabel, note, onChange } ) 
 					) ) }
 				</ul>
 			) }
+			<Pager page={ current } pages={ pages } total={ items.length } onPage={ setPage } />
 			<p className="fbm-note">{ note }</p>
 		</div>
 	);
