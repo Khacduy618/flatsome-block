@@ -1,7 +1,7 @@
 /* Before / After: chỉ CSS cơ chế; màu lấy từ token của theme/site, tay nắm và nhãn dùng class của theme. */
 .fbm-ba {
 	position: relative;
-	margin: 0 0 1.5em;
+	margin: 0 auto 1.5em; /* Căn giữa khi Chiều rộng < 100%. */
 }
 .fbm-ba__stage {
 	position: relative;
@@ -35,6 +35,22 @@
 	height: 100%;
 	object-fit: cover;
 }
+/* Tỉ lệ khung cố định: cả hai ảnh phủ kín khung, cắt từ giữa. */
+.fbm-ba--ratio .fbm-ba__before {
+	height: 100%;
+}
+.fbm-ba--ratio .fbm-ba__img {
+	height: 100%;
+	object-fit: cover;
+}
+.fbm-ba--r-1-1 .fbm-ba__stage { aspect-ratio: 1 / 1; }
+.fbm-ba--r-4-3 .fbm-ba__stage { aspect-ratio: 4 / 3; }
+.fbm-ba--r-3-4 .fbm-ba__stage { aspect-ratio: 3 / 4; }
+.fbm-ba--r-3-2 .fbm-ba__stage { aspect-ratio: 3 / 2; }
+.fbm-ba--r-2-3 .fbm-ba__stage { aspect-ratio: 2 / 3; }
+.fbm-ba--r-16-9 .fbm-ba__stage { aspect-ratio: 16 / 9; }
+.fbm-ba--r-9-16 .fbm-ba__stage { aspect-ratio: 9 / 16; }
+.fbm-ba--r-21-9 .fbm-ba__stage { aspect-ratio: 21 / 9; }
 .fbm-ba__divider {
 	position: absolute;
 	top: 0;

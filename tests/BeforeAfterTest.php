@@ -139,3 +139,67 @@ fbm_test( 'test_builder_editor_context_does_not_enqueue', function () {
 	do_action( 'ux_builder_enqueue_scripts', 'editor' );
 	fbm_assert_true( ! wp_style_is( 'fbm-before-after', 'enqueued' ) );
 } );
+
+fbm_test( 'test_ba_ratio_adds_class', function () {
+	$b    = fbm_qa_image( 'before' );
+	$a    = fbm_qa_image( 'after' );
+	$html = fbm_ba( 'before="' . $b . '" after="' . $a . '" ratio="9-16"' );
+	fbm_fixtures_down();
+	fbm_assert_contains( 'fbm-ba--ratio fbm-ba--r-9-16', $html );
+} );
+
+fbm_test( 'test_ba_ratio_default_and_unknown_follow_image', function () {
+	$b       = fbm_qa_image( 'before' );
+	$a       = fbm_qa_image( 'after' );
+	$default = fbm_ba( 'before="' . $b . '" after="' . $a . '"' );
+	$evil    = fbm_ba( 'before="' . $b . '" after="' . $a . '" ratio="1-1 evil"' );
+	fbm_fixtures_down();
+	fbm_assert_not_contains( 'fbm-ba--r', $default );
+	fbm_assert_not_contains( 'fbm-ba--r', $evil );
+	fbm_assert_not_contains( 'evil', $evil );
+} );
+
+fbm_test( 'test_ba_css_has_rule_for_every_ratio', function () {
+	$ratios = require FBM_DIR . 'elements/before-after/ratios.php';
+	$css    = file_get_contents( FBM_DIR . 'elements/before-after/before-after.css' );
+	fbm_assert_true( count( $ratios ) >= 8, 'at least 8 ratios' );
+	foreach ( array_keys( $ratios ) as $key ) {
+		list( $w, $h ) = explode( '-', $key );
+		fbm_assert_contains( ".fbm-ba--r-{$key} .fbm-ba__stage { aspect-ratio: {$w} / {$h}; }", $css, $key );
+	}
+} );
+
+fbm_test( 'test_ba_width_uses_flatsome_responsive_style', function () {
+	$b    = fbm_qa_image( 'before' );
+	$a    = fbm_qa_image( 'after' );
+	$html = fbm_ba( '_id="fbm-qa-ba" before="' . $b . '" after="' . $a . '" width="60" width__md="80" width__sm="100"' );
+	fbm_fixtures_down();
+	fbm_assert_contains( '<style', $html );
+	fbm_assert_contains( "#fbm-qa-ba {\n  width: 100%;", $html );
+	fbm_assert_contains( 'width: 80%;', $html );
+	fbm_assert_contains( 'width: 60%;', $html );
+	fbm_assert_contains( '@media (min-width:', $html );
+} );
+
+fbm_test( 'test_ba_no_width_no_style_tag', function () {
+	$b    = fbm_qa_image( 'before' );
+	$a    = fbm_qa_image( 'after' );
+	$html = fbm_ba( 'before="' . $b . '" after="' . $a . '"' );
+	fbm_fixtures_down();
+	fbm_assert_not_contains( '<style', $html );
+} );
+
+fbm_test( 'test_ba_builder_options_width_and_ratio', function () {
+	$commons = get_template_directory() . '/inc/builder/shortcodes/commons/';
+	$args    = ( function () use ( $commons ) {
+		return include FBM_DIR . 'elements/before-after/builder.php';
+	} )();
+	$images = $args['options']['images']['options'];
+	// Như ux_image: không bọc .uxb-wrapper, để on_change width áp lên chính element (không nhân đôi %).
+	fbm_assert_same( false, $args['wrap'] );
+	fbm_assert_same( true, $images['width']['responsive'] );
+	fbm_assert_same( '100', $images['width']['default'] );
+	fbm_assert_same( '', $images['ratio']['default'] );
+	$ratios = require FBM_DIR . 'elements/before-after/ratios.php';
+	fbm_assert_same( array_merge( array( '' ), array_keys( $ratios ) ), array_map( 'strval', array_keys( $images['ratio']['options'] ) ) );
+} );

@@ -12,6 +12,8 @@ $a = shortcode_atts(
 		'before'       => '',
 		'after'        => '',
 		'image_size'   => 'large',
+		'ratio'        => '',
+		'width'        => '100',
 		'orientation'  => 'horizontal',
 		'trigger'      => 'drag',
 		'offset'       => '50',
@@ -45,6 +47,11 @@ $classes = array( 'fbm-ba', $fbm_vertical ? 'fbm-ba--v' : 'fbm-ba--h' );
 if ( 'none' === $a['handle'] ) {
 	$classes[] = 'fbm-ba--no-handle';
 }
+$fbm_ratios = require __DIR__ . '/ratios.php';
+if ( isset( $fbm_ratios[ $a['ratio'] ] ) ) {
+	$classes[] = 'fbm-ba--ratio';
+	$classes[] = 'fbm-ba--r-' . $a['ratio'];
+}
 foreach ( preg_split( '/\s+/', $a['class'] . ' ' . $a['visibility'], -1, PREG_SPLIT_NO_EMPTY ) as $c ) {
 	$classes[] = sanitize_html_class( $c );
 }
@@ -68,3 +75,17 @@ $fbm_label = sprintf( /* translators: 1: before label, 2: after label */ __( 'So
 	<?php endif; ?>
 </figure>
 <?php
+// Chiều rộng theo breakpoint: cùng cách element Image của Flatsome (thẻ <style> theo id, chỉ khi người dùng đã đặt).
+if ( function_exists( 'ux_builder_element_style_tag' ) && is_array( $atts ) ) {
+	echo ux_builder_element_style_tag( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS do Flatsome sinh, giá trị đã floatval.
+		sanitize_html_class( $a['_id'] ),
+		array(
+			'width' => array(
+				'selector' => '',
+				'property' => 'width',
+				'unit'     => '%',
+			),
+		),
+		$atts
+	);
+}

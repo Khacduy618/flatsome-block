@@ -29,9 +29,11 @@ So sánh 2 ảnh bằng một đường kéo. Phù hợp để khoe dây da mớ
 
 | Cài đặt | Ý nghĩa | Gợi ý |
 |---|---|---|
-| Trước | Ảnh hiện ở bên trái (hoặc trên). | Hai ảnh nên **cùng tỷ lệ và cùng góc chụp**, nếu không đường so sánh sẽ lệch. |
+| Trước | Ảnh hiện ở bên trái (hoặc trên). | Hai ảnh nên **cùng góc chụp**. Nếu khác tỉ lệ, chọn một **Tỉ lệ khung** cố định bên dưới. |
 | Sau | Ảnh hiện ở bên phải (hoặc dưới). | |
 | Kích thước ảnh | Medium · Medium Large · **Large** (mặc định) · Full | Large là đủ cho cột rộng. Chỉ chọn Full khi element rộng hết màn hình. |
+| Tỉ lệ khung | **Theo ảnh** (mặc định) · 1:1 · 4:3 · 3:4 · 3:2 · 2:3 · 16:9 · 9:16 · 21:9 | Chọn khung cố định khi 2 ảnh khác tỉ lệ, hoặc muốn các khung trong Carousel bằng nhau. Ảnh tự cắt từ giữa cho vừa khung, không méo. Ảnh dây đeo dọc hợp với 3:4 hoặc 9:16. |
+| Chiều rộng | Kéo 10–100 %, mặc định 100 %. Bấm biểu tượng màn hình cạnh tên để chỉnh riêng desktop / tablet / mobile. | Element hẹp hơn cột sẽ tự căn giữa. Ví dụ ảnh 9:16: desktop 40 %, mobile 100 %. |
 
 ### Cách so sánh
 

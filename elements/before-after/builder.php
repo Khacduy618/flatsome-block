@@ -3,6 +3,7 @@ defined( 'ABSPATH' ) || exit;
 
 return array(
 	'info'    => '{{ label_before }} / {{ label_after }}',
+	'wrap'    => false, // Như ux_image: Chiều rộng áp lên chính element trong canvas.
 	'options' => array(
 		'images'           => array(
 			'type'    => 'group',
@@ -15,6 +16,24 @@ return array(
 					'heading' => __( 'Kích thước ảnh', 'flatsome-block-manager' ),
 					'default' => 'large',
 					'options' => array( 'medium' => 'Medium', 'medium_large' => 'Medium Large', 'large' => 'Large', 'full' => 'Full' ),
+				),
+				'ratio'      => array(
+					'type'    => 'select',
+					'heading' => __( 'Tỉ lệ khung', 'flatsome-block-manager' ),
+					'default' => '',
+					'options' => array( '' => __( 'Theo ảnh', 'flatsome-block-manager' ) ) + ( require __DIR__ . '/ratios.php' ),
+				),
+				'width'      => array(
+					'type'       => 'slider',
+					'heading'    => __( 'Chiều rộng', 'flatsome-block-manager' ),
+					'responsive' => true,
+					'default'    => '100',
+					'unit'       => '%',
+					'min'        => 10,
+					'max'        => 100,
+					'on_change'  => array(
+						'style' => 'width: {{ value }}%',
+					),
 				),
 			),
 		),
