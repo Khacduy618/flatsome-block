@@ -10,12 +10,22 @@ if ( ! function_exists( 'fbm_qa_image' ) ) {
 }
 
 function fbm_stl( $atts ) {
-	return do_shortcode( '[fbm_shop_look ' . $atts . ']' );
+	return do_shortcode( '[fbm_look ' . $atts . ']' );
 }
 
 fbm_test( 'test_stl_registered', function () {
-	fbm_assert_true( isset( FBM\Plugin::get( 'registry' )->all()['fbm_shop_look'] ) );
+	$all = FBM\Plugin::get( 'registry' )->all();
+	fbm_assert_true( isset( $all['fbm_look'], $all['fbm_shop_look'] ) );
 } );
+
+/** [fbm_shop_look] chứa các Look; mỗi phần tử $looks là chuỗi thuộc tính của một [fbm_look]. */
+function fbm_shop( array $looks, $atts = '' ) {
+	$inner = '';
+	foreach ( $looks as $look ) {
+		$inner .= '[fbm_look ' . $look . ']';
+	}
+	return do_shortcode( '[fbm_shop_look ' . $atts . ']' . $inner . '[/fbm_shop_look]' );
+}
 
 fbm_test( 'test_stl_renders_pins_and_cards', function () {
 	$f    = fbm_fixtures_up();
@@ -169,10 +179,11 @@ fbm_test( 'test_stl_button_text', function () {
 fbm_test( 'test_stl_builder_options', function () {
 	$commons = get_template_directory() . '/inc/builder/shortcodes/commons/';
 	$args    = ( function () use ( $commons ) {
-		return include FBM_DIR . 'elements/shop-look/builder.php';
+		return include FBM_DIR . 'elements/look/builder.php';
 	} )();
 	$o = $args['options'];
 	fbm_assert_same( false, $args['wrap'] );
+	fbm_assert_same( array( 'fbm_shop_look' ), $args['allow_in'] );
 	for ( $n = 1; $n <= 8; $n++ ) {
 		fbm_assert_true( isset( $o[ "pin{$n}_options" ] ), "pin{$n}_options" );
 	}
@@ -182,7 +193,7 @@ fbm_test( 'test_stl_builder_options', function () {
 	}
 	$x = $o['pin3_options']['options']['pin3_x'];
 	fbm_assert_same( array( 1, 0, 100 ), array( $x['step'], $x['min'], $x['max'] ) );
-	$shared = require FBM_DIR . 'elements/shop-look/options.php';
+	$shared = require FBM_DIR . 'elements/look/options.php';
 	$ratio  = null;
 	foreach ( $o as $group ) {
 		if ( isset( $group['options']['ratio'] ) ) {
@@ -193,7 +204,7 @@ fbm_test( 'test_stl_builder_options', function () {
 } );
 
 fbm_test( 'test_stl_css_rules', function () {
-	$css = file_get_contents( FBM_DIR . 'elements/shop-look/shop-look.css' );
+	$css = file_get_contents( FBM_DIR . 'elements/look/shop-look.css' );
 	$css = preg_replace( '/var\([^)]*\)/', 'var()', $css );
 	fbm_assert_same( 0, preg_match( '/#[0-9a-f]{3,8}\b|rgba?\(|!important|font-family/i', $css ), 'no raw colors/important/font' );
 	foreach ( preg_split( '/\}/', $css ) as $block ) {
@@ -207,8 +218,8 @@ fbm_test( 'test_stl_css_rules', function () {
 } );
 
 fbm_test( 'test_stl_css_has_ratio_rules', function () {
-	$shared = require FBM_DIR . 'elements/shop-look/options.php';
-	$css    = file_get_contents( FBM_DIR . 'elements/shop-look/shop-look.css' );
+	$shared = require FBM_DIR . 'elements/look/options.php';
+	$css    = file_get_contents( FBM_DIR . 'elements/look/shop-look.css' );
 	foreach ( array_keys( $shared['ratios'] ) as $key ) {
 		list( $w, $h ) = explode( '-', $key );
 		fbm_assert_contains( ".fbm-stl--r-{$key} .fbm-stl__media { aspect-ratio: {$w} / {$h}; }", $css, $key );
@@ -216,18 +227,72 @@ fbm_test( 'test_stl_css_has_ratio_rules', function () {
 } );
 
 fbm_test( 'test_stl_css_reduced_motion', function () {
-	fbm_assert_contains( '@media (prefers-reduced-motion: reduce)', file_get_contents( FBM_DIR . 'elements/shop-look/shop-look.css' ) );
+	fbm_assert_contains( '@media (prefers-reduced-motion: reduce)', file_get_contents( FBM_DIR . 'elements/look/shop-look.css' ) );
 } );
 
 fbm_test( 'test_stl_assets_enqueued_only_when_used', function () {
 	$f = fbm_fixtures_up();
-	wp_dequeue_style( 'fbm-shop-look' );
-	wp_dequeue_script( 'fbm-shop-look' );
+	wp_dequeue_style( 'fbm-look' );
+	wp_dequeue_script( 'fbm-look' );
 	do_shortcode( '[fbm_products source="recent" products="1"]' );
-	$before = wp_style_is( 'fbm-shop-look', 'enqueued' );
+	$before = wp_style_is( 'fbm-look', 'enqueued' );
 	fbm_stl( 'image="' . fbm_qa_image( 'look' ) . '" pin1_product="' . $f['simple'] . '"' );
-	$after = array( wp_style_is( 'fbm-shop-look', 'enqueued' ), wp_script_is( 'fbm-shop-look', 'enqueued' ) );
+	$after = array( wp_style_is( 'fbm-look', 'enqueued' ), wp_script_is( 'fbm-look', 'enqueued' ) );
 	fbm_fixtures_down();
 	fbm_assert_same( false, $before );
 	fbm_assert_same( array( true, true ), $after );
+} );
+
+fbm_test( 'test_shop_look_single_look_no_slider', function () {
+	$f    = fbm_fixtures_up();
+	$html = fbm_shop( array( 'image="' . fbm_qa_image( 'look' ) . '" pin1_product="' . $f['simple'] . '"' ) );
+	fbm_fixtures_down();
+	fbm_assert_contains( 'class="fbm-stl', $html );
+	fbm_assert_contains( 'fbm-shop-look', $html );
+	fbm_assert_not_contains( 'class="slider', $html );
+} );
+
+fbm_test( 'test_shop_look_multiple_looks_slider', function () {
+	$f    = fbm_fixtures_up();
+	$img  = fbm_qa_image( 'look' );
+	$html = fbm_shop( array( 'image="' . $img . '" pin1_product="' . $f['simple'] . '"', 'image="' . $img . '" pin1_product="' . $f['sale'] . '"' ) );
+	fbm_fixtures_down();
+	fbm_assert_contains( 'slider', $html );
+	fbm_assert_same( 2, substr_count( $html, 'fbm-shop-look__slide' ) );
+	fbm_assert_same( 2, substr_count( $html, '<section ' ) );
+} );
+
+fbm_test( 'test_shop_look_skips_empty_looks', function () {
+	$f    = fbm_fixtures_up();
+	$img  = fbm_qa_image( 'look' );
+	$html = fbm_as_user( 'editor', function () use ( $f, $img ) {
+		return fbm_shop( array( 'image="' . $img . '"', 'image="' . $img . '" pin1_product="' . $f['simple'] . '"' ) );
+	} );
+	fbm_fixtures_down();
+	fbm_assert_not_contains( 'fbm-shop-look__slide', $html );
+	fbm_assert_same( 1, substr_count( $html, '<section ' ) );
+} );
+
+fbm_test( 'test_shop_look_empty_guest_blank', function () {
+	wp_set_current_user( 0 );
+	fbm_assert_same( '', trim( fbm_shop( array( 'image=""' ) ) ) );
+	fbm_assert_same( '', trim( do_shortcode( '[fbm_shop_look][/fbm_shop_look]' ) ) );
+} );
+
+fbm_test( 'test_shop_look_empty_editor_note', function () {
+	$html = fbm_as_user( 'editor', function () {
+		return do_shortcode( '[fbm_shop_look][/fbm_shop_look]' );
+	} );
+	fbm_assert_contains( 'fbm-empty', $html );
+} );
+
+fbm_test( 'test_shop_look_builder', function () {
+	$commons = get_template_directory() . '/inc/builder/shortcodes/commons/';
+	$args    = ( function () use ( $commons ) {
+		return include FBM_DIR . 'elements/shop-look/builder.php';
+	} )();
+	fbm_assert_same( 'container', $args['type'] );
+	fbm_assert_same( array( 'fbm_look' ), $args['allow'] );
+	fbm_assert_true( isset( $args['options']['slider_options'] ) );
+	fbm_assert_contains( '<content></content>', $args['template'] );
 } );
