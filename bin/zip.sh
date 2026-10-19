@@ -10,7 +10,7 @@ STAGE=$(mktemp -d)
 mkdir -p "$STAGE/$NAME" dist
 rsync -a ./ "$STAGE/$NAME/" \
   --exclude node_modules --exclude dist --exclude '.git*' --exclude '.DS_Store' \
-  --exclude '.playwright-mcp' --exclude 'package-lock.json' --exclude tests --exclude docs --exclude .superpowers
+  --exclude '.playwright-mcp' --exclude 'package-lock.json' --exclude tests --exclude docs --exclude .superpowers --exclude CLAUDE.md
 rm -f "dist/$NAME.zip"
 ( cd "$STAGE" && zip -qr -X "$OLDPWD/dist/$NAME.zip" "$NAME" )
 rm -rf "$STAGE"
