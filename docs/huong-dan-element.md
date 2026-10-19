@@ -160,7 +160,49 @@ Chỉ hiện thuộc tính có tick "Visible on the product page" trong WooComme
 
 ---
 
-## 7. Nút "Customize this strap in 3D" (tự động)
+## 7. Shop The Look (nhóm Shop)
+
+Ảnh lookbook có các pin tròn; khách bấm pin nào thì khối bên phải hiện sản phẩm đó (ảnh, tên, giá, nút). Gồm hai lớp:
+
+- **Shop The Look**: khung chung, chứa một hoặc nhiều **Look**. Có từ 2 Look thì thành slider.
+- **Look**: một ảnh và tối đa 8 pin, mỗi pin gắn một sản phẩm.
+
+### Cách dựng
+
+1. Thêm **Shop The Look**, chọn preset *1 look* hoặc *2 looks (slider)*.
+2. Bấm vào **Look** trong cây bên trái. Chọn ảnh ở *Image*, rồi chọn sản phẩm ở *Pin 1*. *Pin 2* chỉ hiện sau khi Pin 1 đã có sản phẩm, và cứ thế tới Pin 8.
+3. Đặt vị trí pin theo một trong ba cách:
+   - **Kéo pin ngay trên ảnh** trong canvas.
+   - Khi Look đang được chọn, **bấm chỗ trống trên ảnh**: pin vừa bấm gần nhất nhảy tới đó.
+   - Kéo thanh *Horizontal (X)* / *Vertical (Y)* (bước 1 %) để tinh chỉnh.
+4. Thêm Look mới bằng nút **+** cạnh tab Look ở đầu canvas, hoặc *Add to Shop The Look*.
+
+### Cài đặt của Shop The Look (áp chung cho mọi Look)
+
+| Nhóm | Cài đặt | Ghi chú |
+|---|---|---|
+| General | Title, Short description, Text align, Spacing | Tiêu đề và mô tả hiện một lần, phía trên slider. *Spacing* là khoảng cách tiêu đề → mô tả → Look. |
+| Look layout | Image position (Left/Right), Columns (50/50 · 60/40 · 66/33), Frame width (%), Frame height | Width / Height chỉnh riêng desktop / tablet / mobile. Có *Frame height* thì ảnh phủ kín khung và cắt từ giữa. |
+| Image style | Image size, Frame ratio | *Original* = theo ảnh. |
+| Pin style | Style (Dot / Number), Pulse, Tone (Light / Dark) | *Dark* dành cho ảnh nền sáng. |
+| Product card | Button text | Mặc định "View product". Ảnh sản phẩm trong thẻ luôn hiện. |
+| Layout · Navigation · Auto Slide | Giống hệt element **Slider** của Flatsome | Chỉ có tác dụng khi có từ 2 Look. |
+
+### Khách dùng thế nào
+
+- Bấm pin, hoặc Tab tới pin rồi nhấn Enter: thẻ đổi sang sản phẩm đó. Dãy chấm dưới thẻ cũng đổi được sản phẩm.
+- Rê chuột lên thẻ: pin của sản phẩm đó sáng lên.
+- Trên điện thoại, thẻ nằm dưới ảnh; bấm pin thì trang cuộn nhẹ tới thẻ.
+
+### Giới hạn
+
+- Tối đa 8 pin mỗi Look; số Look không giới hạn.
+- Nút Undo của UX Builder không lùi được một cú **kéo pin**; muốn sửa thì kéo lại hoặc dùng thanh X/Y.
+- Màu pin, khối nền, nút lấy theo màu của theme; không có ô chọn màu.
+
+---
+
+## 8. Nút "Customize this strap in 3D" (tự động)
 
 Không phải element, không cần chèn. Nút tự hiện trên trang sản phẩm khi sản phẩm có custom field **`3D-link`** chứa một link `http(s)://`. Bật / Tắt nút ở **Block Manager › Element plugin**.
 
