@@ -1,0 +1,121 @@
+/* Bento Card: bố cục thẻ; màu/viền theo token theme/HANDDN (spec 4.1, 4.3). Bo góc mặc định --global-radius. */
+.fbm-bento {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 28px;
+	overflow: hidden;
+	border: 1px solid var(--color-grey, #ececec);
+	border-radius: var(--fbm-bento-radius, var(--global-radius, 4px));
+	transition: border-color 0.25s;
+}
+.fbm-bento:hover {
+	border-color: var(--primary-color);
+}
+.fbm-bento--soft {
+	background: var(--secondary-color, #f8f8f8);
+	border-color: var(--secondary-color, #f8f8f8);
+}
+.fbm-bento--dark {
+	background: var(--primary-color);
+	border-color: var(--primary-color);
+}
+.fbm-bento__body {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+.fbm-bento__tag {
+	padding: 0.15em 0.7em;
+	margin-bottom: 1em;
+	font-size: 0.75em;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	border: 1px solid var(--color-grey, #ececec);
+	border-radius: 999px;
+}
+.fbm-bento--dark .fbm-bento__tag {
+	border-color: currentColor;
+}
+.fbm-bento .fbm-bento__title {
+	margin: 0 0 0.5em;
+}
+.fbm-bento__text {
+	opacity: 0.85;
+}
+.fbm-bento__text p:last-child {
+	margin-bottom: 0;
+}
+.fbm-bento .fbm-bento__link {
+	margin: 1em 0 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+.fbm-bento .fbm-bento__link:focus-visible {
+	outline: 2px solid var(--primary-color);
+	outline-offset: 2px;
+}
+/* Dọc: ảnh tự đẩy xuống đáy thẻ. */
+.fbm-bento__media {
+	margin-top: auto;
+	padding-top: 24px;
+	line-height: 0;
+}
+.fbm-bento .fbm-bento__img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: var(--global-radius, 4px);
+}
+.fbm-bento__media--empty {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 140px;
+	margin-top: auto;
+	line-height: 1.4;
+	border: 1px dashed var(--color-grey, #ececec);
+	border-radius: var(--global-radius, 4px);
+}
+/* Ngang: chữ một bên, ảnh một bên, cao bằng thẻ. */
+.fbm-bento--horizontal {
+	flex-direction: row;
+	align-items: stretch;
+	gap: 24px;
+}
+.fbm-bento--media-left {
+	flex-direction: row-reverse;
+}
+.fbm-bento--horizontal .fbm-bento__body {
+	flex: 1 1 50%;
+	justify-content: center;
+}
+.fbm-bento--horizontal .fbm-bento__media {
+	flex: 1 1 45%;
+	margin-top: 0;
+	padding-top: 0;
+}
+.fbm-bento--horizontal .fbm-bento__img {
+	height: 100%;
+	object-fit: cover;
+}
+@media (max-width: 549px) {
+	.fbm-bento {
+		padding: 20px;
+	}
+	.fbm-bento--horizontal,
+	.fbm-bento--media-left {
+		flex-direction: column;
+	}
+	.fbm-bento--horizontal .fbm-bento__media {
+		margin-top: auto;
+	}
+	.fbm-bento--horizontal .fbm-bento__img {
+		height: auto;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.fbm-bento {
+		transition: none;
+	}
+}

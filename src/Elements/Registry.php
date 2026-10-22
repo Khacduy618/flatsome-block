@@ -24,6 +24,22 @@ final class Registry {
 		add_action( 'init', array( $this, 'register_shortcodes' ) );
 		add_action( 'ux_builder_setup', array( $this, 'register_builder' ), 20 );
 		add_action( 'ux_builder_enqueue_scripts', array( $this, 'enqueue_for_canvas' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles_if_needed' ) );
+		add_filter( 'do_shortcode_tag', array( $this, 'enqueue_styles_on_block_render' ), 10, 2 );
+	}
+
+	public function enqueue_styles_if_needed() {
+		global $post;
+		if ( is_a( $post, 'WP_Post' ) && false !== strpos( $post->post_content, 'fbm-angled-card' ) ) {
+			wp_enqueue_style( 'fbm-angled-card', FBM_URL . 'elements/angled-card/angled-card.css', array(), FBM_VERSION );
+		}
+	}
+
+	public function enqueue_styles_on_block_render( $output, $tag ) {
+		if ( 'block' === $tag && false !== strpos( (string) $output, 'fbm-angled-card' ) ) {
+			wp_enqueue_style( 'fbm-angled-card', FBM_URL . 'elements/angled-card/angled-card.css', array(), FBM_VERSION );
+		}
+		return $output;
 	}
 
 	/**
@@ -138,7 +154,7 @@ final class Registry {
 			wp_enqueue_script(
 				$handle,
 				FBM_URL . 'elements/' . $el['slug'] . '/' . $el['js'],
-				array(),
+				array( 'jquery' ),
 				FBM_VERSION,
 				array(
 					'in_footer' => true,

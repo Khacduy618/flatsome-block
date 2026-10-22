@@ -1,0 +1,113 @@
+<?php
+/**
+ * [fbm_bento_card]: thẻ bento — nhãn số, tiêu đề, mô tả, nút link, ảnh tự đẩy xuống đáy (dọc) hoặc nằm cạnh (ngang).
+ * Nền theo token (Viền / Nền phụ / Màu chính + class .dark của Flatsome); bo góc, đệm, chiều cao theo option.
+ * Biến có sẵn: $atts, $content, $tag.
+ */
+defined( 'ABSPATH' ) || exit;
+
+$a = shortcode_atts(
+	array(
+		'_id'        => 'fbm-bento-' . wp_rand(),
+		'tag'        => '01',
+		'title'      => 'Khung gỗ sồi tự nhiên',
+		'title_tag'  => 'h3',
+		'text'       => 'Vân gỗ thật, hoàn thiện thủ công, bền màu theo thời gian.',
+		'link_text'  => 'Xem thêm',
+		'link'       => '',
+		'target'     => '',
+		'image'      => '',
+		'image_size' => 'large',
+		'layout'     => 'vertical',
+		'media_side' => 'right',
+		'style'      => 'light',
+		'radius'     => '',
+		'padding'    => '',
+		'min_height' => '',
+		'class'      => '',
+		'visibility' => '',
+	),
+	$atts,
+	$tag
+);
+
+$fbm_size  = in_array( $a['image_size'], array( 'medium', 'medium_large', 'large', 'full' ), true ) ? $a['image_size'] : 'large';
+$fbm_image = $a['image'] ? wp_get_attachment_image( absint( $a['image'] ), $fbm_size, false, array( 'class' => 'fbm-bento__img', 'loading' => 'lazy' ) ) : '';
+$fbm_title = trim( $a['title'] );
+$fbm_text  = trim( $a['text'] );
+
+if ( '' === $fbm_title && '' === $fbm_text && ! $fbm_image ) {
+	echo FBM\Placeholder::empty( __( 'Bento Card: nhập tiêu đề, mô tả hoặc chọn ảnh.', 'flatsome-block-manager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	return;
+}
+
+$fbm_id     = sanitize_html_class( $a['_id'] );
+$fbm_layout = 'horizontal' === $a['layout'] ? 'horizontal' : 'vertical';
+$fbm_style  = in_array( $a['style'], array( 'light', 'soft', 'dark' ), true ) ? $a['style'] : 'light';
+$fbm_htag   = in_array( $a['title_tag'], array( 'h2', 'h3', 'h4', 'p' ), true ) ? $a['title_tag'] : 'h3';
+
+$classes = array( 'fbm-bento', 'fbm-bento--' . $fbm_layout, 'fbm-bento--' . $fbm_style );
+if ( 'dark' === $fbm_style ) {
+	$classes[] = 'dark';
+}
+if ( 'horizontal' === $fbm_layout ) {
+	$classes[] = 'fbm-bento--media-' . ( 'left' === $a['media_side'] ? 'left' : 'right' );
+}
+foreach ( preg_split( '/\s+/', $a['class'] . ' ' . $a['visibility'], -1, PREG_SPLIT_NO_EMPTY ) as $c ) {
+	$classes[] = sanitize_html_class( $c );
+}
+
+$fbm_inline = '' !== trim( $a['radius'] ) ? ' style="--fbm-bento-radius:' . absint( $a['radius'] ) . 'px"' : '';
+$fbm_url    = '' !== trim( $a['link'] ) ? esc_url( $a['link'] ) : '';
+?>
+<div id="<?php echo esc_attr( $fbm_id ); ?>" class="<?php echo esc_attr( implode( ' ', array_filter( $classes ) ) ); ?>"<?php echo $fbm_inline; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- absint. ?>>
+	<div class="fbm-bento__body">
+		<?php if ( '' !== trim( $a['tag'] ) ) : ?>
+			<span class="fbm-bento__tag"><?php echo esc_html( trim( $a['tag'] ) ); ?></span>
+		<?php endif; ?>
+		<?php if ( '' !== $fbm_title ) : ?>
+			<<?php echo $fbm_htag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- whitelist. ?> class="fbm-bento__title"><?php echo esc_html( $fbm_title ); ?></<?php echo $fbm_htag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<?php endif; ?>
+		<?php if ( '' !== $fbm_text ) : ?>
+			<div class="fbm-bento__text"><?php echo wpautop( wp_kses_post( $fbm_text ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_kses_post. ?></div>
+		<?php endif; ?>
+		<?php if ( '' !== $fbm_url && '' !== trim( $a['link_text'] ) ) : ?>
+			<a class="button is-link is-small fbm-bento__link" href="<?php echo $fbm_url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- esc_url. ?>"<?php echo '_blank' === $a['target'] ? ' target="_blank" rel="noopener"' : ''; ?>>
+				<span><?php echo esc_html( trim( $a['link_text'] ) ); ?></span>
+				<i class="icon-angle-right" aria-hidden="true"></i>
+			</a>
+		<?php endif; ?>
+	</div>
+	<?php if ( $fbm_image ) : ?>
+		<div class="fbm-bento__media"><?php echo $fbm_image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image. ?></div>
+	<?php elseif ( FBM\Placeholder::visible() ) : ?>
+		<div class="fbm-bento__media fbm-bento__media--empty"><span class="op-7"><?php esc_html_e( 'Chọn ảnh trong tab Ảnh', 'flatsome-block-manager' ); ?></span></div>
+	<?php endif; ?>
+	<?php
+	// Đệm và chiều cao theo breakpoint: cùng cách element gốc của Flatsome (thẻ <style> theo id, chỉ khi đã đặt).
+	$fbm_style_atts = array();
+	foreach ( $a + (array) $atts as $key => $value ) {
+		if ( preg_match( '/^(padding|min_height)(__md|__sm)?$/', (string) $key ) && is_numeric( $value ) ) {
+			$fbm_style_atts[ $key ] = (string) absint( $value );
+		}
+	}
+	if ( $fbm_style_atts && function_exists( 'ux_builder_element_style_tag' ) ) {
+		echo ux_builder_element_style_tag( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS do Flatsome sinh, giá trị đã absint.
+			$fbm_id,
+			array(
+				'padding'    => array(
+					'selector' => '',
+					'property' => 'padding',
+					'unit'     => 'px',
+				),
+				'min_height' => array(
+					'selector' => '',
+					'property' => 'min-height',
+					'unit'     => 'px',
+				),
+			),
+			$fbm_style_atts
+		);
+	}
+	?>
+</div>

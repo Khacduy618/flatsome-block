@@ -141,6 +141,37 @@ export default function ItemList( { type, data, searchLabel, note, onChange } ) 
 	const [ confirming, setConfirming ] = useState( null );
 	const [ busy, setBusy ] = useState( null );
 	const [ error, setError ] = useState( '' );
+	const [ copiedId, setCopiedId ] = useState( null );
+
+	const copyShortcode = ( text, id ) => {
+		if ( ! text ) {
+			return;
+		}
+		const onSuccess = () => {
+			setCopiedId( id );
+			setTimeout( () => setCopiedId( null ), 1500 );
+		};
+		if ( navigator.clipboard && navigator.clipboard.writeText ) {
+			navigator.clipboard.writeText( text ).then( onSuccess ).catch( () => {
+				fallbackCopy( text );
+				onSuccess();
+			} );
+		} else {
+			fallbackCopy( text );
+			onSuccess();
+		}
+	};
+
+	const fallbackCopy = ( text ) => {
+		const ta = document.createElement( 'textarea' );
+		ta.value = text;
+		ta.style.position = 'fixed';
+		ta.style.opacity = '0';
+		document.body.appendChild( ta );
+		ta.select();
+		document.execCommand( 'copy' );
+		document.body.removeChild( ta );
+	};
 
 	const apply = ( item, state ) => {
 		setConfirming( null );
@@ -222,7 +253,13 @@ export default function ItemList( { type, data, searchLabel, note, onChange } ) 
 								<div className="fbm-row__name">
 									<b>{ it.name }</b>
 									<small>
-										<code>{ it.sub }</code>
+										<code
+											className={ `fbm-code-copyable ${ copiedId === it.id ? 'is-copied' : '' }` }
+											title="Nhấp đúp chuột để sao chép"
+											onDoubleClick={ () => copyShortcode( it.sub, it.id ) }
+										>
+											{ copiedId === it.id ? '✓ Đã copy!' : it.sub }
+										</code>
 										{ it.category && <span>{ it.category }</span> }
 										{ it.locked && (
 											<span className="fbm-lock">

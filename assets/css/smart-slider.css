@@ -1,0 +1,194 @@
+/**
+ * Smart Product Slider Styles
+ * Optimized for Flatsome native slider & UX Builder canvas
+ *
+ * @package FlatsomeBlockManager
+ */
+
+/* ==========================================================================
+   1. Wrapper & Tab Navigation
+   ========================================================================== */
+.uxb-smart-slider-wrapper {
+	position: relative;
+	margin-bottom: 30px;
+	width: 100%;
+}
+
+.uxb-tab-nav-wrapper {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 25px;
+	position: relative;
+	border-bottom: 2px solid #f1f1f1;
+}
+
+.uxb-tab-nav {
+	display: flex;
+	align-items: center;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	gap: 12px;
+	overflow-x: auto;
+	scrollbar-width: none;
+	-webkit-overflow-scrolling: touch;
+}
+
+.uxb-tab-nav::-webkit-scrollbar {
+	display: none;
+}
+
+.uxb-tab-item {
+	margin: 0;
+	padding: 0;
+}
+
+.uxb-tab-btn {
+	background: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 10px 20px;
+	font-size: 15px;
+	font-weight: 600;
+	color: #666;
+	position: relative;
+	transition: all 0.25s ease-in-out;
+	border-bottom: 2px solid transparent;
+	margin-bottom: -2px;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	white-space: nowrap;
+}
+
+.uxb-tab-btn:hover {
+	color: #111;
+}
+
+.uxb-tab-btn.active {
+	color: var(--primary-color, #446084);
+	border-bottom-color: var(--primary-color, #446084);
+}
+
+/* ==========================================================================
+   2. Tab Panels & CLS Prevention
+   ========================================================================== */
+.uxb-tab-panels {
+	position: relative;
+	min-height: 380px;
+}
+
+.uxb-tab-panel {
+	display: none;
+}
+
+.uxb-tab-panel.active {
+	display: block;
+}
+
+.uxb-tab-panel[data-animate][data-animate-transition] {
+	transition-duration: var(--uxb-anim-speed, 0.7s) !important;
+}
+
+/* ==========================================================================
+   3. Skeleton Loading State (CLS Optimization)
+   ========================================================================== */
+.uxb-slider-skeleton {
+	width: 100%;
+	padding: 10px 0;
+}
+
+.uxb-skeleton-grid {
+	display: grid;
+	gap: 20px;
+	grid-template-columns: repeat(4, 1fr);
+}
+
+.uxb-skeleton-grid.uxb-cols-1 { grid-template-columns: repeat(1, 1fr); }
+.uxb-skeleton-grid.uxb-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.uxb-skeleton-grid.uxb-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.uxb-skeleton-grid.uxb-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 1024px) {
+	.uxb-skeleton-grid {
+		grid-template-columns: repeat(3, 1fr) !important;
+	}
+}
+
+@media (max-width: 768px) {
+	.uxb-skeleton-grid {
+		grid-template-columns: repeat(2, 1fr) !important;
+	}
+}
+
+@media (max-width: 480px) {
+	.uxb-skeleton-grid {
+		grid-template-columns: repeat(1, 1fr) !important;
+	}
+}
+
+.uxb-skeleton-card {
+	background: #fff;
+	border-radius: 4px;
+	padding: 10px;
+	border: 1px solid #f0f0f0;
+}
+
+.uxb-skeleton-thumb {
+	width: 100%;
+	padding-top: 100%;
+	background: #eee;
+	border-radius: 4px;
+	margin-bottom: 12px;
+	position: relative;
+	overflow: hidden;
+}
+
+.uxb-skeleton-line {
+	height: 12px;
+	background: #eee;
+	border-radius: 4px;
+	margin-bottom: 8px;
+	position: relative;
+	overflow: hidden;
+}
+
+.uxb-skeleton-line.category { width: 40%; }
+.uxb-skeleton-line.title { width: 85%; height: 14px; }
+.uxb-skeleton-line.price { width: 50%; height: 16px; margin-top: 6px; }
+
+.uxb-skeleton-thumb::after,
+.uxb-skeleton-line::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+	animation: uxb-shimmer 1.4s infinite;
+}
+
+@keyframes uxb-shimmer {
+	0% { transform: translateX(-100%); }
+	100% { transform: translateX(100%); }
+}
+
+/* ==========================================================================
+   4. Flatsome Slider Integration
+   ========================================================================== */
+.uxb-tab-panel .row.slider {
+	margin-bottom: 0;
+}
+
+/* Ensure empty notices are cleanly presented */
+.uxb-no-products {
+	padding: 40px 20px;
+	text-align: center;
+	color: #777;
+	font-style: italic;
+	background: #fdfdfd;
+	border: 1px dashed #e2e2e2;
+	border-radius: 6px;
+}

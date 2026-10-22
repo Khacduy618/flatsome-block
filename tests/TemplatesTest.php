@@ -1,6 +1,6 @@
 <?php
 function fbm_known_tags() {
-	$tags = array( 'row_inner', 'col_inner', 'row_inner_1', 'col_inner_1', 'tab' );
+	$tags = array( 'row_inner', 'col_inner', 'row_inner_1', 'col_inner_1', 'tab', 'uxb_smart_product_slider', 'uxb_smart_product_tab' );
 	foreach ( glob( get_template_directory() . '/inc/builder/shortcodes/*.php' ) as $f ) {
 		if ( preg_match_all( "/add_ux_builder_shortcode\(\s*'([a-z0-9_-]+)'/", file_get_contents( $f ), $m ) ) {
 			$tags = array_merge( $tags, $m[1] );
@@ -9,9 +9,9 @@ function fbm_known_tags() {
 	return array_merge( $tags, array_keys( FBM\Plugin::get( 'registry' )->all() ) );
 }
 
-fbm_test( 'test_ten_templates', function () {
+fbm_test( 'test_twelve_templates', function () {
 	$all = FBM\Plugin::get( 'templates' )->all();
-	fbm_assert_same( 10, count( $all ) );
+	fbm_assert_same( 14, count( $all ) );
 	foreach ( $all as $slug => $t ) {
 		fbm_assert_true( '' !== trim( $t['name'] ) && '' !== trim( $t['content'] ), $slug );
 		fbm_assert_contains( 'templates/' . $slug . '/thumb.svg', $t['thumb'] );

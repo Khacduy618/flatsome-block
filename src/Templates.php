@@ -1,6 +1,6 @@
 <?php
 /**
- * 10 bố cục mẫu (templates/<slug>/) cho UX Builder › Add Content › Import ("Insert a template", tab Flatsome).
+ * 12 bố cục mẫu (templates/<slug>/) cho UX Builder › Add Content › Import ("Insert a template", tab Flatsome).
  * category = HANDDN được lưu nhưng Flatsome 3.20 không tách tab theo category.
  * Không có nút hay tab trong admin.
  *

@@ -1,10 +1,12 @@
 <?php
 /** Ảnh test tối thiểu (1x1 PNG) trong Media Library, có marker để dọn. */
-function fbm_qa_image( $name ) {
-	$upload = wp_upload_bits( $name . '.png', null, base64_decode( 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==' ) );
-	$id     = wp_insert_attachment( array( 'post_mime_type' => 'image/png', 'post_title' => 'FBM QA ' . $name, 'post_status' => 'inherit' ), $upload['file'] );
-	update_post_meta( $id, '_fbm_qa', 1 );
-	return $id;
+if ( ! function_exists( 'fbm_qa_image' ) ) {
+	function fbm_qa_image( $name ) {
+		$upload = wp_upload_bits( $name . '.png', null, base64_decode( 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==' ) );
+		$id     = wp_insert_attachment( array( 'post_mime_type' => 'image/png', 'post_title' => 'FBM QA ' . $name, 'post_status' => 'inherit' ), $upload['file'] );
+		update_post_meta( $id, '_fbm_qa', 1 );
+		return $id;
+	}
 }
 
 function fbm_ba( $atts ) {

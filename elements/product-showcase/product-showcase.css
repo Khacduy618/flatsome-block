@@ -1,0 +1,41 @@
+/*
+ * Product Showcase Slider. Giao diện là của Flatsome: Slider (Flickity, .is-selected), row/col, image-cover, is-border,
+ * button, dark. File này chỉ thêm phần theme không có: tốc độ chuyển cảnh, scale nhẹ, và ảnh hiện lớp lang
+ * (ảnh gốc cùng slide, ảnh kết quả sau nửa nhịp). --fbm-ps-speed do render.php / template canvas đặt trên phần tử gốc.
+ */
+.fbm-ps {
+	--fbm-ps-speed: 600ms;
+}
+.fbm-ps .flickity-slider > .fbm-ps__slide {
+	transition: all var(--fbm-ps-speed) ease-in-out;
+}
+.fbm-ps .flickity-slider > .fbm-ps__slide:not(.is-selected) {
+	transform: scale(1.02);
+}
+.fbm-ps .fbm-ps__frame--input img {
+	object-fit: contain;
+}
+/* Chỉ ẩn ảnh khi slider đã chạy: trước khi Flickity khởi tạo (hoặc không có JS) ảnh vẫn hiện. */
+.fbm-ps .flickity-enabled .fbm-ps__frame img {
+	opacity: 0;
+	transform: scale(1.02);
+	transition: all var(--fbm-ps-speed) ease-in-out;
+}
+.fbm-ps .flickity-enabled .is-selected .fbm-ps__frame img {
+	opacity: 1;
+	transform: none;
+}
+.fbm-ps .flickity-enabled .is-selected .fbm-ps__frame--output img {
+	transition-delay: calc(var(--fbm-ps-speed) * 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fbm-ps .flickity-slider > .fbm-ps__slide,
+	.fbm-ps .flickity-enabled .fbm-ps__frame img {
+		transition: none;
+	}
+	.fbm-ps .flickity-slider > .fbm-ps__slide:not(.is-selected),
+	.fbm-ps .flickity-enabled .fbm-ps__frame img {
+		transform: none;
+	}
+}

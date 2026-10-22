@@ -23,6 +23,12 @@ define( 'FBM_URL', plugin_dir_url( __FILE__ ) );
 
 require_once FBM_DIR . 'src/autoload.php';
 
+// Load Custom UX Builder Element & Preset Block: Smart Product Slider.
+require_once FBM_DIR . 'inc/ajax-product-tabs.php';
+require_once FBM_DIR . 'shortcodes/smart-product-slider.php';
+require_once FBM_DIR . 'inc/Elements/smart-product-slider.php';
+require_once FBM_DIR . 'inc/Blocks/smart-product-slider-block.php';
+
 register_activation_hook( __FILE__, array( 'FBM\\Installer', 'activate' ) );
 
 // Flatsome đăng ký CPT `blocks` khi theme được nạp, nên khởi động sau after_setup_theme.

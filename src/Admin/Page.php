@@ -41,6 +41,38 @@ final class Page {
 	}
 
 	public function enqueue( $hook ) {
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		if ( $screen && 'blocks' === $screen->post_type ) {
+			wp_add_inline_script(
+				'common',
+				'jQuery(function($){
+					$(document).on("dblclick", "textarea, code", function(e){
+						var val = $(this).val() || $(this).text() || "";
+						if (val.indexOf("[block id=") !== -1) {
+							var text = val.trim();
+							var el = $(this);
+							var copy = function(){
+								var orig = el.css("background-color");
+								el.css({"background-color":"#c6e1c6","transition":"background-color 0.2s"});
+								setTimeout(function(){ el.css("background-color", orig); }, 1000);
+							};
+							if (navigator.clipboard && navigator.clipboard.writeText) {
+								navigator.clipboard.writeText(text).then(copy).catch(copy);
+							} else {
+								var ta = document.createElement("textarea");
+								ta.value = text;
+								document.body.appendChild(ta);
+								ta.select();
+								document.execCommand("copy");
+								document.body.removeChild(ta);
+								copy();
+							}
+						}
+					});
+				});'
+			);
+		}
+
 		if ( $hook !== $this->hook ) {
 			return;
 		}

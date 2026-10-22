@@ -1,0 +1,27 @@
+[section padding="60px" padding__sm="40px"]
+
+[row h_align="center"]
+
+[col span="8" span__sm="12" align="center"]
+
+[title style="bold-center" text="Curated Products Showcase" tag_name="h2"]
+
+[/col]
+
+[/row]
+
+[row]
+
+[col span="12" span__sm="12"]
+
+[uxb_smart_product_slider columns="4" autoplay_speed="2000"]
+[uxb_smart_product_tab title="Flash Sale" source="sale" posts_per_page="8"][/uxb_smart_product_tab]
+[uxb_smart_product_tab title="Best Sellers" source="best_selling" posts_per_page="8"][/uxb_smart_product_tab]
+[uxb_smart_product_tab title="New Arrivals" source="recent" posts_per_page="8"][/uxb_smart_product_tab]
+[/uxb_smart_product_slider]
+
+[/col]
+
+[/row]
+
+[/section]

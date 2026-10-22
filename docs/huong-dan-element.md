@@ -208,9 +208,62 @@ Không phải element, không cần chèn. Nút tự hiện trên trang sản ph
 
 ---
 
+## 9. Pill Badge (nhóm Content)
+
+Nhãn bo tròn có chấm màu, dùng trên tiêu đề section.
+
+| Cài đặt | Ý nghĩa |
+|---|---|
+| Chữ / Liên kết / Mở | Chữ trong nhãn; có liên kết thì cả nhãn bấm được. |
+| Màu nhấn | Màu chính, Thành công, Cảnh báo, Trung tính — lấy theo màu theme, không có ô chọn màu tự do. |
+| Chấm tròn / Chấm nhấp nháy | Bật/tắt chấm và hiệu ứng nhấp nháy (tự tắt khi máy bật "giảm chuyển động"). |
+| Cỡ / Căn | S / M / L; căn trái, giữa, phải. |
+
+---
+
+## 10. Bento Card (nhóm Content)
+
+Thẻ có nhãn số thứ tự, tiêu đề, mô tả, nút link và ảnh. Đặt mỗi thẻ trong một cột; chọn **Align Vertical: Equal** cho Row để các thẻ cao bằng nhau.
+
+| Cài đặt | Ý nghĩa |
+|---|---|
+| Nội dung | Nhãn số, Tiêu đề (+ thẻ H2/H3/H4/P), Mô tả, Chữ nút, Liên kết. Nút chỉ hiện khi có cả chữ nút và liên kết. |
+| Ảnh › Hướng xếp | **Dọc**: ảnh tự đẩy xuống đáy thẻ. **Ngang**: ảnh nằm bên trái/phải chữ (trên điện thoại chuyển về dọc). |
+| Kiểu › Nền thẻ | Viền / Nền phụ / Màu chính (chữ tự đổi trắng). |
+| Bo góc, Khoảng đệm, Chiều cao tối thiểu | Để trống dùng mặc định theme; Khoảng đệm và Chiều cao chỉnh riêng được cho tablet/điện thoại. |
+
+---
+
+## 11. Avatar Stack (nhóm Content)
+
+Ảnh đại diện xếp chồng + số sao + chữ đánh giá.
+
+| Cài đặt | Ý nghĩa |
+|---|---|
+| Ảnh đại diện | Chọn tối đa 8 ảnh. Chưa chọn: người biên tập thấy 4 vòng tròn giữ chỗ, khách không thấy. |
+| Số sao | 0–5, bước 0,1; tắt được. |
+| Cỡ ảnh / Độ chồng / Căn | Cỡ 24–96px, độ chồng 0–40px. |
+
+---
+
+## 12. Angled Showcase & Angled Card (nhóm Content)
+
+---
+
+## 13. Animated Showcase & Showcase Step (nhóm Media)
+
+Hiệu ứng showcase trình diễn quy trình chế tác hoặc tính năng sản phẩm qua hoạt ảnh trượt ảnh và gõ chữ từng ký tự:
+- **Animated Showcase (Khung cha)**: Khung chứa các bước `Showcase Step`; cung cấp cài đặt chung: Tiêu đề (`Title`), Mô tả (`Description`), Thời lượng chuyển động (`Animation duration`), Độ trễ giữa các bước (`Delay between steps`), Tỉ lệ ảnh (`Image ratio`), Kích thước ảnh (`Image size`).
+- **Showcase Step (Bước con)**: Một công đoạn hoặc lát cắt:
+  - **Ảnh trái**: Trượt từ bên trái vào sân khấu.
+  - **Nội dung chữ**: Hiệu ứng gõ chữ từng ký tự kèm hỗ trợ đầy đủ cho SEO và bộ đọc màn hình.
+  - **Ảnh phải & Ảnh thứ ba**: Trượt từ dưới lên và trượt từ phải vào thay thế chữ, tạo hiệu ứng chuyển cảnh mượt mà liên tục.
+
+---
+
 ## Block mẫu có sẵn
 
-Trong UX Builder: **+** › **Add Content** › **Import**. Có 10 bố cục HANDDN: Sản phẩm bán chạy, Danh mục theo loại da, Banner câu chuyện thương hiệu, Lợi ích sản phẩm, So sánh sản phẩm, Cam kết mua hàng, Khách hàng đánh giá, Câu hỏi thường gặp. Hai mẫu "Thông số sản phẩm" và "Dùng kèm với sản phẩm" chỉ có khi sửa UX Block (dùng cho layout trang sản phẩm). Chữ trong mẫu là gợi ý, hãy sửa trước khi đăng.
+Trong UX Builder: **+** › **Add Content** › **Import**. Có các bố cục HANDDN: Sản phẩm bán chạy, Danh mục theo loại da, Banner câu chuyện thương hiệu, Lợi ích sản phẩm, So sánh sản phẩm, Cam kết mua hàng, Khách hàng đánh giá, Câu hỏi thường gặp, **Frames Bento Grid Pro**, **Inspiration Angled Cards Pro**, **Animated Craft Showcase Pro** (Section quy trình chế tác thủ công với hiệu ứng Animated Showcase). Hai mẫu "Thông số sản phẩm" và "Dùng kèm với sản phẩm" chỉ có khi sửa UX Block (dùng cho layout trang sản phẩm). Chữ trong mẫu là gợi ý, hãy sửa trước khi đăng.
 
 ## Bật / Ẩn / Tắt element
 

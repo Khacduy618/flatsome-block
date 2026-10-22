@@ -1,0 +1,98 @@
+/* Angled Card: Vóc dáng vát góc hình học polygon; text nằm ở góc dưới trái. */
+.fbm-angled-card {
+	--fbm-card-ratio: 3/4;
+	--fbm-card-cut-x: 55%;
+	--fbm-card-cut-y: 120px;
+	--fbm-card-chamfer: 16px;
+	position: relative;
+	width: 100%;
+}
+.fbm-angled-card__inner {
+	position: relative;
+	display: block;
+	text-decoration: none;
+	color: inherit;
+	width: 100%;
+}
+.fbm-angled-card__media {
+	position: relative;
+	width: 100%;
+	aspect-ratio: var(--fbm-card-ratio, 3/4);
+	overflow: hidden;
+	clip-path: polygon(
+		0 0,
+		100% 0,
+		100% calc(100% - var(--fbm-card-chamfer, 16px)),
+		calc(100% - var(--fbm-card-chamfer, 16px)) 100%,
+		var(--fbm-card-cut-x, 55%) 100%,
+		0 calc(100% - var(--fbm-card-cut-y, 120px))
+	);
+	background: var(--secondary-color, #f8f8f8);
+}
+.fbm-angled-card .fbm-angled-card__img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.4s ease;
+}
+.fbm-angled-card--zoom:hover .fbm-angled-card__img,
+.fbm-angled-showcase--zoom .fbm-angled-card:hover .fbm-angled-card__img {
+	transform: scale(1.05);
+}
+.fbm-angled-card__placeholder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	color: var(--color-notactive, #abb8c3);
+	font-size: 0.9em;
+	gap: 8px;
+}
+.fbm-angled-card__placeholder .dashicons {
+	font-size: 32px;
+	width: 32px;
+	height: 32px;
+}
+.fbm-angled-card__content {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: var(--fbm-card-cut-x, 55%);
+	padding: 0 12px 6px 0;
+	z-index: 2;
+	pointer-events: none;
+}
+.fbm-angled-card__tag {
+	display: block;
+	font-size: 0.85em;
+	font-weight: 500;
+	opacity: 0.7;
+	margin-bottom: 0.4em;
+	line-height: 1;
+}
+.fbm-angled-card .fbm-angled-card__title {
+	margin: 0;
+	font-size: 1.25em;
+	font-weight: 700;
+	line-height: 1.25;
+	color: var(--text-color, #1a1a1a);
+}
+a.fbm-angled-card__inner:focus-visible {
+	outline: 2px solid var(--primary-color);
+	outline-offset: 4px;
+}
+@media (max-width: 549px) {
+	.fbm-angled-card__content {
+		padding-bottom: 4px;
+	}
+	.fbm-angled-card .fbm-angled-card__title {
+		font-size: 1.1em;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.fbm-angled-card .fbm-angled-card__img {
+		transition: none;
+	}
+}
