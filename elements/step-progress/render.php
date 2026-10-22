@@ -12,7 +12,7 @@ $a = shortcode_atts(
 	array(
 		'_id'          => 'ux-sp-' . wp_rand( 1000, 9999 ),
 		'style'        => 'segmented',
-		'height'       => '',
+		'height'       => '6px',
 		'bar_height'   => '',
 		'labels'       => '',
 		'target_class' => '.step-item',
