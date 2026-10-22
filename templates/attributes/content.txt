@@ -1,3 +1,0 @@
-[title text="Thông số" tag_name="h3"]
-
-[handdn_product_attributes]

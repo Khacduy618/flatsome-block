@@ -150,7 +150,13 @@ final class Upgrade {
 			add_shortcode(
 				self::SLIDER_TAG,
 				static function ( $atts ) {
-					return (string) include FBM_DIR . 'elements/products/alias-v1.php';
+					$v1       = is_array( $atts ) ? $atts : array();
+					$products = isset( $v1['limit'] ) ? (int) $v1['limit'] : 8;
+					$cols     = isset( $v1['per_view'] ) ? (int) $v1['per_view'] : 4;
+					$auto     = isset( $v1['autoplay_ms'] ) ? (int) $v1['autoplay_ms'] : 3000;
+					$cat_attr = ! empty( $v1['cat'] ) ? ' cat="' . esc_attr( $v1['cat'] ) . '"' : '';
+					$title    = ! empty( $v1['title'] ) ? '[title text="' . esc_attr( $v1['title'] ) . '"]' : '';
+					return do_shortcode( $title . '[ux_products type="slider" products="' . $products . '" columns="' . $cols . '" auto_slide="' . $auto . '"' . $cat_attr . ']' );
 				}
 			);
 		}

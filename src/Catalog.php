@@ -17,8 +17,8 @@ final class Catalog {
 
 	const OPTION = 'fbm_catalog';
 
-	/** Trạng thái ảo, không phải element: nút 3D của HANDDN. */
-	const VIRTUAL = array( 'handdn_3d_button' );
+	/** Trạng thái ảo, không phải element. */
+	const VIRTUAL = array();
 
 	/** @var array<string, array{name: string, category: string}> */
 	private $seen = array();

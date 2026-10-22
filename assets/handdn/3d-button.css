@@ -1,5 +1,0 @@
-/* Nút 3D: chỉ thêm viền focus khi dùng bàn phím; giao diện còn lại từ class Flatsome + CSS của site. */
-a[data-handdn-3d]:focus-visible {
-	outline: 2px solid var(--primary-color);
-	outline-offset: 2px;
-}

@@ -1,3 +1,0 @@
-[title text="Dùng kèm với dây này" tag_name="h3"]
-
-[fbm_products source="auto" products="4" type="row" columns="4" columns__md="2" columns__sm="2"]

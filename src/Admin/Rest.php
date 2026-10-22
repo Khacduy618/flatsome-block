@@ -204,16 +204,6 @@ final class Rest {
 		foreach ( $this->registry->all() as $tag => $el ) {
 			$items[] = $this->element_item( $tag, $el['name'], $el['category'], $counts );
 		}
-		$items[] = array(
-			'id'       => 'handdn_3d_button',
-			'name'     => __( 'Nút "Customize this strap in 3D"', 'flatsome-block-manager' ),
-			'sub'      => __( 'tự gắn', 'flatsome-block-manager' ),
-			'category' => __( 'Trang sản phẩm có meta 3D-link · không phải element nên không có Ẩn', 'flatsome-block-manager' ),
-			'state'    => $this->states->get( 'handdn_3d_button' ),
-			'states'   => array( 'on', 'off' ),
-			'locked'   => false,
-			'usage'    => null,
-		);
 		return $items;
 	}
 
