@@ -212,7 +212,6 @@ final class Query {
 		return array();
 	}
 
-	/** "1, 2, ao-thun" -> array( '1', '2', 'ao-thun' ). */
 	private static function split( $value ) {
 		return array_values( array_filter( array_map( 'trim', explode( ',', (string) $value ) ), 'strlen' ) );
 	}
