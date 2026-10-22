@@ -1,8 +1,9 @@
 <?php
 /**
- * 12 bố cục mẫu (templates/<slug>/) cho UX Builder › Add Content › Import ("Insert a template", tab Flatsome).
- * category = HANDDN được lưu nhưng Flatsome 3.20 không tách tab theo category.
- * Không có nút hay tab trong admin.
+ * Layout templates (templates/<slug>/) for UX Builder › Add Content › Import ("Insert a template", Flatsome tab),
+ * also registered as presets of the Section element (Add elements › Section).
+ * category = HANDDN is stored, but Flatsome 3.20 does not split tabs by category.
+ * No button or tab in the admin.
  *
  * @package FBM
  */
@@ -20,6 +21,31 @@ final class Templates {
 
 	public function boot() {
 		add_action( 'ux_builder_setup', array( $this, 'register' ), 20 );
+		add_filter( 'ux_builder_shortcode_data_section', array( $this, 'add_section_presets' ) );
+	}
+
+	/**
+	 * Every template is also a preset of Flatsome's Section element (Add elements › Section), so it can be
+	 * inserted anywhere, any number of times; "Insert a template" only shows on an empty page.
+	 * Only templates whose content is a single root [section] qualify: Flatsome keeps the first root node.
+	 *
+	 * @param array $data Section element data.
+	 * @return array
+	 */
+	public function add_section_presets( $data ) {
+		$data['presets'] = isset( $data['presets'] ) ? (array) $data['presets'] : array();
+		foreach ( $this->all() as $t ) {
+			$content = trim( $t['content'] );
+			if ( 0 !== strpos( $content, '[section' ) || 1 !== preg_match_all( '/\[section[\s\]]/', $content ) ) {
+				continue;
+			}
+			$data['presets'][] = array(
+				'name'      => $t['name'],
+				'thumbnail' => $t['thumb'],
+				'content'   => $content,
+			);
+		}
+		return $data;
 	}
 
 	/**
@@ -41,7 +67,7 @@ final class Templates {
 			$this->all[ $slug ] = array(
 				'name'       => isset( $meta['name'] ) ? (string) $meta['name'] : $slug,
 				'order'      => isset( $meta['order'] ) ? (int) $meta['order'] : 99,
-				'post_types' => isset( $meta['post_types'] ) ? (array) $meta['post_types'] : array( 'page', 'blocks' ),
+				'post_types' => isset( $meta['post_types'] ) ? (array) $meta['post_types'] : array( 'page', 'blocks', 'product' ),
 				'content'    => $content,
 				'thumb'      => FBM_URL . 'templates/' . $slug . '/thumb.svg',
 			);

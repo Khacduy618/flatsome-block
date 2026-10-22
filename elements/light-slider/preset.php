@@ -49,7 +49,7 @@ return array(
 		. $fbm_ls_banners
 		. '[/fbm_light_slider]',
 	'single'  => $fbm_ls_single( 0 ),
-	'columns' => '[row style="small" width="full-width" v_align="equal"]' . "\n\n"
+	'columns' => '[row v_align="equal"]' . "\n\n"
 		. $fbm_ls_columns
 		. '[/row]',
 );

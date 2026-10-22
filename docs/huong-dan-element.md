@@ -282,7 +282,7 @@ Slider banner / ảnh tự trượt từ phải sang trái, lặp vòng không n
 
 ## Block mẫu có sẵn
 
-Trong UX Builder: **+** › **Add Content** › **Import**. Có các bố cục HANDDN: Sản phẩm bán chạy, Danh mục theo loại da, Banner câu chuyện thương hiệu, Lợi ích sản phẩm, So sánh sản phẩm, Cam kết mua hàng, Khách hàng đánh giá, Câu hỏi thường gặp, **Frames Bento Grid Pro**, **Animated Craft Showcase Pro** (Section quy trình chế tác thủ công với hiệu ứng Animated Showcase). Hai mẫu "Thông số sản phẩm" và "Dùng kèm với sản phẩm" chỉ có khi sửa UX Block (dùng cho layout trang sản phẩm). Chữ trong mẫu là gợi ý, hãy sửa trước khi đăng.
+Trong UX Builder: **+** › **Add Content** › **Import**. Mỗi UX Block do plugin tạo có một mẫu tương ứng: **Animated Craft Showcase Pro**, **Smart Product Slider Tabs**, **Light Slider - 4 Columns**, **Light Carousel**, **Light Slider Hero**. Khung "Insert a template" chỉ hiện khi trang còn trống; trang đã có nội dung thì dùng **+** › **Add elements** › **Section** › chọn mẫu cùng tên (chèn được ở mọi vị trí, bao nhiêu lần cũng được). Chèn mẫu = bản sao riêng cho trang đó (sửa không ảnh hưởng nơi khác); chèn `[block id="…"]` = nội dung dùng chung. Chữ trong mẫu là gợi ý, ảnh để trống: hãy sửa trước khi đăng.
 
 ## Bật / Ẩn / Tắt element
 

@@ -1,0 +1,72 @@
+[section padding="60px" padding__sm="40px"]
+
+[row h_align="center"]
+
+[col span="8" span__sm="12" align="center"]
+
+[title style="bold-center" text="Crafted to Last" tag_name="h2"]
+
+[/col]
+
+[/row]
+[row]
+
+[col span__sm="12"]
+
+[fbm_light_slider columns="4" columns__md="2" columns__sm="1" gap="16" nav_color="dark" bullets="true"]
+
+[ux_banner height="360px" class="bg-primary-color"]
+[text_box width="85" position_x="50" position_y="100" text_align="left"]
+<h3>Vegetable-tanned Leather</h3>
+<p>Full-grain hides tanned with plant extracts, aging into a rich patina.</p>
+[button text="Learn more" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="360px" class="bg-secondary-color"]
+[text_box width="85" position_x="50" position_y="100" text_align="left"]
+<h3>Saddle Stitching</h3>
+<p>Waxed thread stitched by hand, stronger than any machine seam.</p>
+[button text="Learn more" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="360px" class="bg-success-color"]
+[text_box width="85" position_x="50" position_y="100" text_align="left"]
+<h3>Burnished Edges</h3>
+<p>Every edge sanded, dyed and polished for a smooth, sealed finish.</p>
+[button text="Learn more" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="360px" class="bg-primary-color"]
+[text_box width="85" position_x="50" position_y="100" text_align="left"]
+<h3>Custom Watch Straps</h3>
+<p>Sized to your lugs and wrist, with your choice of thread color.</p>
+[button text="Learn more" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="360px" class="bg-secondary-color"]
+[text_box width="85" position_x="50" position_y="100" text_align="left"]
+<h3>Leather Care</h3>
+<p>Natural beeswax balm to keep every piece supple for years.</p>
+[button text="Learn more" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="360px" class="bg-success-color"]
+[text_box width="85" position_x="50" position_y="100" text_align="left"]
+<h3>Gift Ready</h3>
+<p>Each order arrives in a branded box with a handwritten card.</p>
+[button text="Learn more" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[/fbm_light_slider]
+
+[/col]
+
+[/row]
+
+[/section]

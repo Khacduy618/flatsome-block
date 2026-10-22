@@ -4,13 +4,13 @@
 
 [col span="10" span__sm="12" align="center"]
 
-[fbm_animated_showcase title="Quy trình chế tác thủ công" description="Từng đường kim mũi chỉ được hoàn thiện tỉ mỉ qua từng công đoạn." duration="700" step_delay="1200"]
+[fbm_animated_showcase title="Our Handcrafting Process" description="Every stitch is finished with care at each step." duration="700" step_delay="1200"]
 
-[fbm_showcase_step text_content="Thuộc da thảo mộc thủ công" left_image="24" right_image="26" third_image="30"][/fbm_showcase_step]
+[fbm_showcase_step text_content="Hand vegetable tanning" left_image="24" right_image="26" third_image="30"][/fbm_showcase_step]
 
-[fbm_showcase_step text_content="Đục lỗ và khâu chỉ sáp Saddle Stitch" left_image="26" right_image="30" third_image="22"][/fbm_showcase_step]
+[fbm_showcase_step text_content="Punching and waxed-thread saddle stitching" left_image="26" right_image="30" third_image="22"][/fbm_showcase_step]
 
-[fbm_showcase_step text_content="Gọt viền và đánh bóng cạnh tự nhiên" left_image="30" right_image="22" third_image="28"][/fbm_showcase_step]
+[fbm_showcase_step text_content="Edge trimming and natural burnishing" left_image="30" right_image="22" third_image="28"][/fbm_showcase_step]
 
 [/fbm_animated_showcase]
 
