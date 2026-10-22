@@ -246,11 +246,7 @@ Thẻ có nhãn số thứ tự, tiêu đề, mô tả, nút link và ảnh. Đ�
 
 ---
 
-## 12. Angled Showcase & Angled Card (nhóm Content)
-
----
-
-## 13. Animated Showcase & Showcase Step (nhóm Media)
+## 12. Animated Showcase & Showcase Step (nhóm Media)
 
 Hiệu ứng showcase trình diễn quy trình chế tác hoặc tính năng sản phẩm qua hoạt ảnh trượt ảnh và gõ chữ từng ký tự:
 - **Animated Showcase (Khung cha)**: Khung chứa các bước `Showcase Step`; cung cấp cài đặt chung: Tiêu đề (`Title`), Mô tả (`Description`), Thời lượng chuyển động (`Animation duration`), Độ trễ giữa các bước (`Delay between steps`), Tỉ lệ ảnh (`Image ratio`), Kích thước ảnh (`Image size`).
@@ -259,11 +255,34 @@ Hiệu ứng showcase trình diễn quy trình chế tác hoặc tính năng s�
   - **Nội dung chữ**: Hiệu ứng gõ chữ từng ký tự kèm hỗ trợ đầy đủ cho SEO và bộ đọc màn hình.
   - **Ảnh phải & Ảnh thứ ba**: Trượt từ dưới lên và trượt từ phải vào thay thế chữ, tạo hiệu ứng chuyển cảnh mượt mà liên tục.
 
+## 13. Light Slider (nhóm Layout)
+
+Slider banner / ảnh tự trượt từ phải sang trái, lặp vòng không ngừng: sau slide cuối, slide đầu trồi ra từ bên phải, không trượt ngược về đầu. Không dùng thư viện slider (Flickity). Tên cũ "Light Carousel" (`[fbm_light_carousel]`) vẫn hiển thị đúng ở nội dung đã lưu.
+
+1. Thêm **Light Slider**, chọn preset **Banners (4 / 3 / 2)** hoặc **Single Banner Column**.
+2. Hoặc chèn UX Block có sẵn `[block id="light-slider-4-columns"]` (4 cột, mỗi cột một slider 3 banner).
+3. Bấm vào từng **Banner** / **Image** con để sửa. Thêm slide bằng **+** bên trong slider (nhận Banner và Image).
+4. Trong canvas, slider đứng yên; cuộn ngang trong khung để tới các slide phía sau.
+
+| Nhóm | Cài đặt | Ý nghĩa |
+|---|---|---|
+| Layout | Columns | Số slide hiện cùng lúc, chỉnh riêng desktop / tablet / mobile. Số lẻ (vd 1.2, 2.2) hé một phần slide kế tiếp. Để trống ở tablet / mobile thì lấy theo màn hình lớn hơn. |
+| | Gap / Slides per Move / Equal Height | Khoảng cách (px, theo từng màn hình) · số slide trượt mỗi lần · ép các slide cao bằng nhau. |
+| Navigation | Arrows / Always Visible | Bật nút; mặc định chỉ hiện khi rê chuột, bật Always Visible để luôn hiện. |
+| | Arrow Style / Arrow & Dot Color / Bullets / Bullet Style | Giống Slider của Flatsome. |
+| Auto Slide | Auto Slide / Timer / Pause on Hover / Touch | Tự trượt sau mỗi khoảng Timer (mặc định 3000 ms); dừng khi rê chuột, chạm hoặc focus. |
+| | Transition Speed | Thời gian trượt (mặc định 500 ms). |
+
+- Cần **nhiều slide hơn số slide hiện cùng lúc**, nếu không slider đứng yên và ẩn nút.
+- Tự dừng khi slider ra khỏi màn hình, khi tab bị ẩn, hoặc khi máy khách bật "giảm chuyển động".
+- Slide có **video nền** sẽ phát lại từ đầu khi bấm nút lùi.
+- Trên mobile, chấm (bullets) chỉ để chỉ vị trí (Flatsome tắt bấm chấm ở màn hình nhỏ); khách vuốt để chuyển.
+
 ---
 
 ## Block mẫu có sẵn
 
-Trong UX Builder: **+** › **Add Content** › **Import**. Có các bố cục HANDDN: Sản phẩm bán chạy, Danh mục theo loại da, Banner câu chuyện thương hiệu, Lợi ích sản phẩm, So sánh sản phẩm, Cam kết mua hàng, Khách hàng đánh giá, Câu hỏi thường gặp, **Frames Bento Grid Pro**, **Inspiration Angled Cards Pro**, **Animated Craft Showcase Pro** (Section quy trình chế tác thủ công với hiệu ứng Animated Showcase). Hai mẫu "Thông số sản phẩm" và "Dùng kèm với sản phẩm" chỉ có khi sửa UX Block (dùng cho layout trang sản phẩm). Chữ trong mẫu là gợi ý, hãy sửa trước khi đăng.
+Trong UX Builder: **+** › **Add Content** › **Import**. Có các bố cục HANDDN: Sản phẩm bán chạy, Danh mục theo loại da, Banner câu chuyện thương hiệu, Lợi ích sản phẩm, So sánh sản phẩm, Cam kết mua hàng, Khách hàng đánh giá, Câu hỏi thường gặp, **Frames Bento Grid Pro**, **Animated Craft Showcase Pro** (Section quy trình chế tác thủ công với hiệu ứng Animated Showcase). Hai mẫu "Thông số sản phẩm" và "Dùng kèm với sản phẩm" chỉ có khi sửa UX Block (dùng cho layout trang sản phẩm). Chữ trong mẫu là gợi ý, hãy sửa trước khi đăng.
 
 ## Bật / Ẩn / Tắt element
 

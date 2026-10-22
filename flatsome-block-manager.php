@@ -28,6 +28,7 @@ require_once FBM_DIR . 'inc/ajax-product-tabs.php';
 require_once FBM_DIR . 'shortcodes/smart-product-slider.php';
 require_once FBM_DIR . 'inc/Elements/smart-product-slider.php';
 require_once FBM_DIR . 'inc/Blocks/smart-product-slider-block.php';
+require_once FBM_DIR . 'inc/Blocks/light-slider-block.php';
 
 register_activation_hook( __FILE__, array( 'FBM\\Installer', 'activate' ) );
 

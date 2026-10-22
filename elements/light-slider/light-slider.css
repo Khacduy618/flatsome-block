@@ -1,0 +1,90 @@
+/**
+ * Light Slider: layout only.
+ *
+ * Arrows and dots reuse Flatsome's .flickity-prev-next-button / .flickity-page-dots and slider-nav-* styles.
+ * --fbm-ls-cur (items per view) and --fbm-ls-gap are set per breakpoint by the element's style tag.
+ *
+ * @package FlatsomeBlockManager
+ */
+
+.fbm-ls {
+	--fbm-ls-cur: 4;
+	--fbm-ls-gap: 16px;
+	--fbm-ls-speed: 500ms;
+	position: relative;
+}
+
+/*
+ * isolation: banner layers carry z-index 9-10 (.text-box); without a stacking context here they paint over the
+ * arrows/dots and swallow the first click until the track gets its first transform.
+ */
+.fbm-ls__viewport {
+	overflow: hidden;
+	isolation: isolate;
+}
+
+.fbm-ls__track {
+	display: flex;
+	gap: var(--fbm-ls-gap);
+	transition: transform var(--fbm-ls-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+	touch-action: pan-y;
+}
+
+.fbm-ls__track > * {
+	flex: 0 0 calc((100% - (var(--fbm-ls-cur) - 1) * var(--fbm-ls-gap)) / var(--fbm-ls-cur));
+	min-width: 0;
+}
+
+.fbm-ls--top .fbm-ls__track {
+	align-items: flex-start;
+}
+
+/*
+ * Nav state is owned here, scoped to .fbm-ls: Flatsome only reveals arrows inside .slider (which would also
+ * turn on its scroll fallback), and site-wide custom CSS may restyle .flickity-* globally.
+ */
+.fbm-ls:not(.slider-show-nav) .flickity-prev-next-button {
+	opacity: 0;
+}
+
+.fbm-ls:not(.slider-show-nav):hover .flickity-prev-next-button,
+.fbm-ls:not(.slider-show-nav):focus-within .flickity-prev-next-button {
+	opacity: 0.7;
+	transform: translateX(0);
+}
+
+.fbm-ls .flickity-prev-next-button:hover {
+	opacity: 1;
+}
+
+.fbm-ls .flickity-prev-next-button:focus-visible,
+.fbm-ls .flickity-page-dots .dot:focus-visible {
+	opacity: 1;
+	outline: 2px solid var(--fs-color-primary);
+	outline-offset: 2px;
+}
+
+/* Dots sit on the slides (Flatsome default), so the Light / Dark color option stays meaningful. */
+.fbm-ls .flickity-page-dots {
+	bottom: 15px;
+}
+
+.fbm-ls.is-static .flickity-prev-next-button,
+.fbm-ls.is-static .flickity-page-dots {
+	display: none;
+}
+
+/* UX Builder canvas: no motion, scroll sideways to reach every slide. */
+.fbm-ls.is-canvas .fbm-ls__viewport {
+	overflow-x: auto;
+}
+
+.fbm-ls.is-canvas .fbm-ls__track {
+	transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fbm-ls__track {
+		transition: none;
+	}
+}

@@ -24,22 +24,6 @@ final class Registry {
 		add_action( 'init', array( $this, 'register_shortcodes' ) );
 		add_action( 'ux_builder_setup', array( $this, 'register_builder' ), 20 );
 		add_action( 'ux_builder_enqueue_scripts', array( $this, 'enqueue_for_canvas' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles_if_needed' ) );
-		add_filter( 'do_shortcode_tag', array( $this, 'enqueue_styles_on_block_render' ), 10, 2 );
-	}
-
-	public function enqueue_styles_if_needed() {
-		global $post;
-		if ( is_a( $post, 'WP_Post' ) && false !== strpos( $post->post_content, 'fbm-angled-card' ) ) {
-			wp_enqueue_style( 'fbm-angled-card', FBM_URL . 'elements/angled-card/angled-card.css', array(), FBM_VERSION );
-		}
-	}
-
-	public function enqueue_styles_on_block_render( $output, $tag ) {
-		if ( 'block' === $tag && false !== strpos( (string) $output, 'fbm-angled-card' ) ) {
-			wp_enqueue_style( 'fbm-angled-card', FBM_URL . 'elements/angled-card/angled-card.css', array(), FBM_VERSION );
-		}
-		return $output;
 	}
 
 	/**
@@ -68,7 +52,7 @@ final class Registry {
 	}
 
 	/**
-	 * @return array<string, array{tag:string, name:string, category:string, dir:string, slug:string, container:bool, css:string|null, js:string|null, editor:string|null}>
+	 * @return array<string, array{tag:string, name:string, category:string, dir:string, slug:string, container:bool, css:string|null, js:string|null, editor:string|null, aliases:string[]}>
 	 */
 	public function all() {
 		if ( null !== $this->all ) {
@@ -91,6 +75,7 @@ final class Registry {
 				'css'       => isset( $meta['css'] ) ? (string) $meta['css'] : null,
 				'js'        => isset( $meta['js'] ) ? (string) $meta['js'] : null,
 				'editor'    => isset( $meta['editor'] ) ? (string) $meta['editor'] : null,
+				'aliases'   => isset( $meta['aliases'] ) ? array_map( 'strval', (array) $meta['aliases'] ) : array(),
 			);
 		}
 		return $this->all;
@@ -98,12 +83,15 @@ final class Registry {
 
 	public function register_shortcodes() {
 		foreach ( $this->all() as $tag => $el ) {
-			add_shortcode(
-				$tag,
-				function ( $atts, $content = '', $shortcode_tag = '' ) use ( $tag ) {
-					return $this->render( $tag, $atts, (string) $content );
-				}
-			);
+			// Old tags of a renamed element keep rendering saved content; only the new tag is in UX Builder.
+			foreach ( array_merge( array( $tag ), $el['aliases'] ) as $shortcode ) {
+				add_shortcode(
+					$shortcode,
+					function ( $atts, $content = '', $shortcode_tag = '' ) use ( $tag ) {
+						return $this->render( $tag, $atts, (string) $content );
+					}
+				);
+			}
 		}
 	}
 
