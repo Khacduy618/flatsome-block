@@ -1,8 +1,8 @@
 <?php
 /**
- * [fbm_animated_showcase]: các [fbm_showcase_step] chồng lên nhau, view.js chạy lần lượt từng bước (mỗi bước 2 lượt, lặp mãi).
- * Một phần tử gốc section.fbm-as; tiêu đề dùng [title] của Flatsome.
- * Biến có sẵn: $atts, $content, $tag.
+ * [fbm_animated_showcase]: stacked [fbm_showcase_step] items; view.js plays each step in turn (2 runs per step, looping forever).
+ * One root node section.fbm-as; the heading uses Flatsome's [title].
+ * Variables provided: $atts, $content, $tag.
  */
 defined( 'ABSPATH' ) || exit;
 
@@ -25,7 +25,7 @@ $fbm_size  = in_array( $a['image_size'], array( 'medium', 'medium_large', 'large
 $fbm_ratio = array_key_exists( $a['image_ratio'], require __DIR__ . '/ratios.php' ) ? $a['image_ratio'] : '1-1';
 $fbm_pass  = ' image_size="' . $fbm_size . '" image_ratio="' . $fbm_ratio . '"';
 
-// Lượt 1: bỏ bước thiếu ảnh (kể cả dòng nhắc của nó). Lượt 2: in bước hợp lệ, bước đầu đang hiện.
+// Pass 1: drop steps missing images (including their hint line). Pass 2: print valid steps, the first one visible.
 $fbm_codes = array();
 if ( preg_match_all( '/' . get_shortcode_regex( array( 'fbm_showcase_step' ) ) . '/s', (string) $content, $fbm_m ) ) {
 	foreach ( $fbm_m[0] as $fbm_child ) {
@@ -37,7 +37,7 @@ if ( preg_match_all( '/' . get_shortcode_regex( array( 'fbm_showcase_step' ) ) .
 	}
 }
 if ( ! $fbm_codes ) {
-	echo FBM\Placeholder::empty( __( 'Animated Showcase: thêm ít nhất một bước có đủ ảnh trái, ảnh phải và ảnh thứ ba.', 'flatsome-block-manager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo FBM\Placeholder::empty( __( 'Animated Showcase: add at least one step with left, right and third images.', 'flatsome-block-manager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	return;
 }
 $fbm_steps = '';
@@ -53,7 +53,7 @@ foreach ( preg_split( '/\s+/', $a['class'] . ' ' . $a['visibility'], -1, PREG_SP
 	$fbm_classes[] = sanitize_html_class( $fbm_c );
 }
 
-// Tiêu đề: markup [title] của Flatsome (h2), bỏ ký tự có thể phá shortcode.
+// Heading: Flatsome [title] markup (h2), stripping characters that could break the shortcode.
 $fbm_title  = trim( str_replace( array( '"', '[', ']' ), '', (string) $a['title'] ) );
 $fbm_header = '' !== $fbm_title ? do_shortcode( '[title text="' . $fbm_title . '" style="center" tag_name="h2"]' ) : '';
 if ( '' !== trim( $a['description'] ) ) {
@@ -63,7 +63,7 @@ $fbm_label = '' !== $fbm_title ? wp_strip_all_tags( $fbm_title ) : __( 'Animated
 ?>
 <section class="<?php echo esc_attr( implode( ' ', $fbm_classes ) ); ?>" style="--fbm-as-dur: <?php echo (int) $fbm_duration; ?>ms" data-duration="<?php echo (int) $fbm_duration; ?>" data-delay="<?php echo (int) $fbm_delay; ?>" aria-label="<?php echo esc_attr( $fbm_label ); ?>">
 	<?php if ( '' !== $fbm_header ) : ?>
-		<div class="text-center"><?php echo $fbm_header; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup [title] của Flatsome + mô tả đã escape. ?></div>
+		<div class="text-center"><?php echo $fbm_header; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Flatsome [title] markup + escaped description. ?></div>
 	<?php endif; ?>
-	<div class="fbm-as__track"><?php echo $fbm_steps; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- output của Showcase Step đã escape. ?></div>
+	<div class="fbm-as__track"><?php echo $fbm_steps; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Showcase Step output is already escaped. ?></div>
 </section>

@@ -1,5 +1,5 @@
 /**
- * Block Manager v2: 3 tab danh sách. Người không có manage_options chỉ thấy tab UX Blocks.
+ * Block Manager v2: 3 list tabs. Users without manage_options only see the UX Blocks tab.
  */
 import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
 import { Notice, Spinner, TabPanel } from '@wordpress/components';
@@ -10,20 +10,20 @@ const TABS = [
 	{
 		name: 'ux_block',
 		label: 'UX Blocks',
-		search: 'Tìm UX Block…',
-		note: 'Tạo, sửa nội dung, đổi tên, xoá UX Block: vẫn dùng menu UX Blocks của Flatsome và UX Builder.',
+		search: 'Search UX Blocks…',
+		note: 'To create, edit, rename or delete UX Blocks, use Flatsome\'s UX Blocks menu and UX Builder.',
 	},
 	{
 		name: 'plugin',
-		label: 'Element plugin',
-		search: 'Tìm element plugin…',
-		note: 'Element viết sẵn trong plugin. Muốn đổi code: sửa file rồi cài zip mới, admin không sửa được.',
+		label: 'Plugin Elements',
+		search: 'Search plugin elements…',
+		note: 'Elements shipped with the plugin. To change their code, edit the files and install a new zip; they cannot be edited in the admin.',
 	},
 	{
 		name: 'flatsome',
-		label: 'Element Flatsome',
-		search: 'Tìm element Flatsome…',
-		note: 'Element của theme. Element khung trang bị khoá ở Bật.',
+		label: 'Flatsome Elements',
+		search: 'Search Flatsome elements…',
+		note: 'Theme elements. Layout elements are locked On.',
 	},
 ];
 
@@ -48,7 +48,7 @@ export default function App() {
 			.catch( ( e ) => setError( errorMessage( e ) ) );
 	}, [] );
 
-	// Chỉ mục nơi dùng UX Block chưa dựng (cài mới): dựng theo lô rồi tải lại danh sách.
+	// UX Block usage index not built yet (fresh install): build it in batches, then reload the list.
 	const rebuild = useCallback( () => {
 		if ( rebuilding.current ) {
 			return;
@@ -111,7 +111,7 @@ export default function App() {
 			) }
 			{ progress && (
 				<p className="fbm-progress" role="status">
-					Đang đếm nơi dùng UX Block… { progress.done }/{ progress.total }
+					Counting UX Block usage… { progress.done }/{ progress.total }
 				</p>
 			) }
 			<TabPanel className="fbm-tabs" tabs={ tabs }>

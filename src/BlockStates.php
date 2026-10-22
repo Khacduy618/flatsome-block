@@ -1,9 +1,9 @@
 <?php
 /**
- * Bật / Ẩn / Tắt cho UX Block (post type `blocks` của Flatsome).
+ * On / Hidden / Off for UX Blocks (Flatsome post type `blocks`).
  *
- * - Ẩn: không có trong ô tìm của element Block trong UX Builder; chỗ đã dùng vẫn hiển thị.
- * - Tắt: như Ẩn, và [block] không hiển thị ngoài site (người biên tập thấy khung nét đứt).
+ * - Hidden: not offered by the Block element search in UX Builder; existing uses still render.
+ * - Off: like Hidden, and [block] renders nothing on the site (editors see a dashed placeholder).
  *
  * @package FBM
  */
@@ -49,10 +49,10 @@ final class BlockStates {
 		$id    = (int) $id;
 		$state = (string) $state;
 		if ( ! in_array( $state, States::VALID, true ) ) {
-			return new \WP_Error( 'fbm_bad_state', __( 'Trạng thái không hợp lệ.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'fbm_bad_state', __( 'Invalid state.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
 		}
 		if ( ! $id || 'blocks' !== get_post_type( $id ) ) {
-			return new \WP_Error( 'fbm_not_block', __( 'Không phải UX Block.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'fbm_not_block', __( 'Not a UX Block.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
 		}
 		if ( 'on' === $state ) {
 			delete_post_meta( $id, self::META );
@@ -64,7 +64,7 @@ final class BlockStates {
 	}
 
 	/**
-	 * @return int[] ID các UX Block đang Ẩn hoặc Tắt.
+	 * @return int[] IDs of UX Blocks that are Hidden or Off.
 	 */
 	public function not_on_ids() {
 		return array_map(

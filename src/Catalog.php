@@ -1,10 +1,10 @@
 <?php
 /**
- * Danh sách element của UX Builder.
+ * UX Builder element catalog.
  *
- * Flatsome chỉ nạp UX Builder khi đang mở trình dựng, nên plugin ghi lại danh sách
- * mỗi lần UX Builder chạy (filter ux_builder_shortcode_data) và lưu vào option.
- * Element của plugin không nằm trong snapshot: chúng lấy từ Elements\Registry.
+ * Flatsome only loads UX Builder while the builder is open, so the plugin records the list
+ * every time UX Builder runs (filter ux_builder_shortcode_data) and stores it in an option.
+ * Plugin elements are not in the snapshot: they come from Elements\Registry.
  *
  * @package FBM
  */
@@ -17,7 +17,7 @@ final class Catalog {
 
 	const OPTION = 'fbm_catalog';
 
-	/** Trạng thái ảo, không phải element. */
+	/** Virtual states, not elements. */
 	const VIRTUAL = array();
 
 	/** @var array<string, array{name: string, category: string}> */
@@ -36,11 +36,11 @@ final class Catalog {
 	}
 
 	/**
-	 * Ghi nhận element có trong danh sách Add elements (bỏ element con / ẩn sẵn của theme).
+	 * Records elements listed in Add elements (skips child elements and ones the theme hides).
 	 *
 	 * @param array  $data
 	 * @param string $tag
-	 * @return array Không đổi.
+	 * @return array Unchanged.
 	 */
 	public function record( $data, $tag ) {
 		if ( is_array( $data ) && empty( $data['hidden'] ) && ! $this->is_plugin_tag( $tag ) ) {
@@ -85,7 +85,7 @@ final class Catalog {
 		return array_key_exists( $tag, $this->flatsome() );
 	}
 
-	/** Tên hiển thị, dùng cho placeholder. */
+	/** Display name, used by the placeholder. */
 	public function name( $tag ) {
 		$list = $this->flatsome();
 		if ( isset( $list[ $tag ]['name'] ) ) {

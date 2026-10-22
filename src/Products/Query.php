@@ -1,9 +1,9 @@
 <?php
 /**
- * Truy vấn ID sản phẩm cho element (dùng chung: Products, Cross-sell, Compare).
+ * Product ID queries for elements (shared by Products, Cross-sell, Compare).
  *
- * WP_Query + taxonomy product_visibility giống shortcode [products] của WooCommerce,
- * nên tôn trọng "Ẩn khỏi danh mục" và cài đặt "Ẩn hàng hết" của shop.
+ * WP_Query + the product_visibility taxonomy, like WooCommerce's [products] shortcode,
+ * so it respects "Hidden from catalog" and the shop's "Hide out of stock items" setting.
  *
  * @package FBM
  */
@@ -22,7 +22,7 @@ final class Query {
 
 	/**
 	 * @param array $atts source, ids, cat, tags, exclude, products, offset, orderby, order,
-	 *                    price_min, price_max, in_stock, product (ID gốc cho nguồn quan hệ).
+	 *                    price_min, price_max, in_stock, product (base ID for relation sources).
 	 * @return int[]
 	 */
 	public static function ids( array $atts ) {
@@ -52,7 +52,7 @@ final class Query {
 
 		$args = self::base_args( $a, $limit );
 		if ( null === $args ) {
-			return array(); // Danh mục / tag đã chọn nhưng không tồn tại.
+			return array(); // A category / tag was picked but no longer exists.
 		}
 
 		if ( 'auto' === $source || in_array( $source, self::RELATION_SOURCES, true ) ) {
@@ -90,7 +90,7 @@ final class Query {
 	}
 
 	/**
-	 * @return array|null null khi danh mục / tag đã chọn không tìm thấy.
+	 * @return array|null null when a picked category / tag cannot be found.
 	 */
 	private static function base_args( array $a, $limit ) {
 		$vis       = wc_get_product_visibility_term_ids();
@@ -168,8 +168,8 @@ final class Query {
 	}
 
 	/**
-	 * Sản phẩm liên quan: của sản phẩm gốc, hoặc của giỏ hàng khi không có sản phẩm gốc.
-	 * Lấy nguồn đầu tiên có dữ liệu theo thứ tự $sources.
+	 * Related products: of the base product, or of the cart when there is no base product.
+	 * Uses the first source in $sources that returns data.
 	 *
 	 * @return int[]
 	 */
@@ -216,7 +216,7 @@ final class Query {
 		return array_values( array_filter( array_map( 'trim', explode( ',', (string) $value ) ), 'strlen' ) );
 	}
 
-	/** ID hoặc slug -> slug của term (bỏ term không tồn tại). */
+	/** ID or slug -> term slug (drops terms that do not exist). */
 	private static function term_slugs( array $items, $taxonomy ) {
 		$slugs = array();
 		foreach ( $items as $item ) {

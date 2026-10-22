@@ -1,7 +1,7 @@
 <?php
 /**
- * Dòng nhắc chỉ người biên tập thấy: khung nét đứt cho thứ đang Tắt, dòng mờ cho element rỗng.
- * Khách, feed và REST luôn nhận chuỗi rỗng.
+ * Editor-only hints: a dashed box for things that are Off, a muted line for empty elements.
+ * Guests, feeds and REST always get an empty string.
  *
  * @package FBM
  */
@@ -23,7 +23,7 @@ final class Placeholder {
 	}
 
 	/**
-	 * @param string $label Tên element / UX Block đang tắt.
+	 * @param string $label Name of the element / UX Block that is Off.
 	 */
 	public static function off( $label ) {
 		if ( ! self::visible() ) {
@@ -31,14 +31,14 @@ final class Placeholder {
 		}
 		return sprintf(
 			'<div class="fbm-off" style="border:1px dashed #c3c4c7;padding:10px 14px;margin:6px 0;font:13px/1.4 -apple-system,Segoe UI,Roboto,sans-serif;color:#50575e">%1$s: <strong>%2$s</strong> <small style="opacity:.7">(%3$s)</small></div>',
-			esc_html__( 'Đang tắt', 'flatsome-block-manager' ),
+			esc_html__( 'Off', 'flatsome-block-manager' ),
 			esc_html( $label ),
-			esc_html__( 'chỉ người biên tập thấy khung này', 'flatsome-block-manager' )
+			esc_html__( 'only editors see this box', 'flatsome-block-manager' )
 		);
 	}
 
 	/**
-	 * @param string $text Lý do element không có gì để hiện.
+	 * @param string $text Why the element has nothing to show.
 	 */
 	public static function empty( $text ) {
 		if ( ! self::visible() ) {

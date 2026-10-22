@@ -1,12 +1,12 @@
 <?php
 /**
- * Element viết sẵn trong plugin: mỗi element là một thư mục elements/<slug>/.
+ * Built-in plugin elements: each element is a folder elements/<slug>/.
  *
- * - meta.php    → array( tag, name, category, container?, css?, js? ) — đọc ở mọi request.
- * - builder.php → args cho add_ux_builder_shortcode() — chỉ nạp khi UX Builder chạy; có sẵn $commons.
- * - render.php  → in HTML; nhận $atts, $content, $tag; tự shortcode_atts với $defaults của nó.
+ * - meta.php    → array( tag, name, category, container?, css?, js? ) — read on every request.
+ * - builder.php → args for add_ux_builder_shortcode() — loaded only while UX Builder runs; $commons is available.
+ * - render.php  → prints HTML; receives $atts, $content, $tag; runs shortcode_atts with its own defaults.
  *
- * Không có đường nào nạp code từ database hay từ admin.
+ * There is no path that loads code from the database or the admin.
  *
  * @package FBM
  */
@@ -27,8 +27,8 @@ final class Registry {
 	}
 
 	/**
-	 * Canvas UX Builder chèn element qua AJAX nên không in được file nạp lúc render:
-	 * nạp sẵn CSS/JS của mọi element vào iframe (context "content").
+	 * The UX Builder canvas inserts elements over AJAX, so assets enqueued at render time never print:
+	 * preload the CSS/JS of every element into the iframe (context "content").
 	 *
 	 * @param string $context editor | content
 	 */
@@ -39,7 +39,7 @@ final class Registry {
 		foreach ( $this->all() as $el ) {
 			$this->enqueue( $el );
 			if ( $el['editor'] ) {
-				// Script chỉ dành cho canvas; chạy sau script canvas của Flatsome (nơi đăng ký controller của element gốc).
+				// Canvas-only script; runs after Flatsome's canvas script (where core element controllers are registered).
 				wp_enqueue_script(
 					'fbm-' . $el['slug'] . '-editor',
 					FBM_URL . 'elements/' . $el['slug'] . '/' . $el['editor'],
@@ -152,12 +152,12 @@ final class Registry {
 		}
 	}
 
-	/** Phạm vi biến riêng cho builder.php: chỉ thấy $commons. */
+	/** Isolated scope for builder.php: only $commons is visible. */
 	private static function load_builder( $file, $commons ) {
 		return is_readable( $file ) ? include $file : null;
 	}
 
-	/** Phạm vi biến riêng cho render.php: chỉ thấy $atts, $content, $tag. */
+	/** Isolated scope for render.php: only $atts, $content, $tag are visible. */
 	private static function load_render( $file, $atts, $content, $tag ) {
 		include $file;
 	}

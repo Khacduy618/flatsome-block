@@ -1,15 +1,15 @@
 /*
- * Animated Showcase UX Block. Sân khấu mỗi bước có 2 phần (trái, phải) đặt tuyệt đối; ảnh dịch giữa hai phần bằng
- * translateX theo bề rộng một phần + khe --fbm-as-gap, sân khấu cắt phần thừa.
+ * Animated Showcase UX Block. Each step's stage has 2 absolutely positioned parts (left, right); images move between them with
+ * translateX by one part's width + the --fbm-as-gap gutter; the stage clips the overflow.
  *
- * Mặc định (không JS, giảm chuyển động, canvas dự phòng) là trạng thái tĩnh: ảnh trái + chữ.
- * Khi view.js gắn .is-playing lên phần tử gốc, các class bước trên .fbm-as__item điều khiển kịch bản:
- *   .is-s1  slide-in-left: ảnh trái trượt mượt từ trái vào phần trái (1,5 × thời lượng, chậm dần + hiện dần)
- *   .is-s2  typing: chữ bên phải hiện lần lượt từng ký tự (--i × --fbm-as-char), gõ xong khi ảnh trái dừng
- *   .is-s3  ngay khi ảnh trái vào xong: ảnh phải trượt từ dưới lên, thay chữ ở phần phải
- *   .is-s4  đẩy lần 1: ảnh thứ ba trượt từ phải vào phần phải, ảnh phải dịch sang phần trái, ảnh trái trượt ra
- *   .is-s5  đẩy lần 2: ảnh trái ban đầu (bản sao --again) trượt từ phải vào, ảnh thứ ba sang trái, ảnh phải trượt ra
- * Màu / bo góc chỉ lấy từ biến của theme.
+ * Default (no JS, reduced motion, canvas fallback) is the static state: left image + text.
+ * When view.js puts .is-playing on the root, step classes on .fbm-as__item drive the sequence:
+ *   .is-s1  slide-in-left: the left image glides in from the left into the left part (1.5 × duration, ease-out + fade-in)
+ *   .is-s2  typing: the right text appears character by character (--i × --fbm-as-char), done when the left image stops
+ *   .is-s3  as soon as the left image is in: the right image slides up from below, replacing the text in the right part
+ *   .is-s4  push 1: the third image slides in from the right, the right image moves to the left part, the left image slides out
+ *   .is-s5  push 2: the original left image (--again copy) slides in from the right, the third image moves left, the right image slides out
+ * Colors / radius come only from theme variables.
  */
 .fbm-as {
 	--fbm-as-dur: 700ms;
@@ -85,7 +85,7 @@
 	transition: opacity var(--fbm-as-dur) ease-in-out;
 }
 
-/* Kịch bản (chỉ khi view.js đang chạy) */
+/* Sequence (only while view.js is running) */
 .fbm-as.is-playing .fbm-as__img--left {
 	opacity: 0;
 	transform: translateX(calc(-100% - var(--fbm-as-gap)));
@@ -95,7 +95,7 @@
 	transform: none;
 	transition: transform calc(var(--fbm-as-dur) * 1.5) cubic-bezier(0.22, 1, 0.36, 1), opacity var(--fbm-as-dur) ease-out;
 }
-/* Đặt sau .is-s1 (cùng độ ưu tiên): ở bước 4 ảnh trái trượt ra nhường chỗ cho ảnh phải. */
+/* Placed after .is-s1 (same specificity): in step 4 the left image slides out to make room for the right image. */
 .fbm-as.is-playing .is-s4 .fbm-as__img--left {
 	transform: translateX(calc(-100% - var(--fbm-as-gap)));
 	transition: transform var(--fbm-as-dur) ease-in-out;
@@ -110,7 +110,7 @@
 .fbm-as.is-playing .is-s3 .fbm-as__text {
 	opacity: 0;
 }
-/* Ảnh phải chờ ngay dưới phần phải (sân khấu cắt đi), bước 3 trượt từ dưới lên che chữ. */
+/* The right image waits just below the right part (clipped by the stage); step 3 slides it up over the text. */
 .fbm-as.is-playing .fbm-as__img--right {
 	opacity: 1;
 	transform: translateY(100%);
@@ -141,7 +141,7 @@
 .fbm-as.is-playing .is-s5 .fbm-as__img--right {
 	transform: translateX(calc(-200% - 2 * var(--fbm-as-gap)));
 }
-/* Đưa về đầu kịch bản không chạy hiệu ứng ngược. */
+/* Reset to the start of the sequence without playing the effects backwards. */
 .fbm-as.is-playing .is-resetting,
 .fbm-as.is-playing .is-resetting * {
 	transition: none;

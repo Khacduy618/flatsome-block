@@ -1,10 +1,10 @@
 <?php
 /**
- * Quét các nơi Flatsome có thể nhúng block:
- * - post_content của mọi post type (kể cả block lồng block): [block id="..."]
- * - post meta: _product_block, _menu_item_block (ID trực tiếp), _top_content, _bottom_content (text)
- * - theme mods: header-block-1..4, footer_block, 404_block... và text có [block]
- * - widgets: "Flatsome UX Blocks" widget + text/html/block widget có [block]
+ * Scans every place Flatsome can embed a block:
+ * - post_content of every post type (including blocks inside blocks): [block id="..."]
+ * - post meta: _product_block, _menu_item_block (direct ID), _top_content, _bottom_content (text)
+ * - theme mods: header-block-1..4, footer_block, 404_block... and text containing [block]
+ * - widgets: the "Flatsome UX Blocks" widget + text/html/block widgets containing [block]
  *
  * @package FBM
  */
@@ -15,10 +15,10 @@ defined( 'ABSPATH' ) || exit;
 
 final class UsageScanner {
 
-	/** Meta chứa ID block trực tiếp. */
+	/** Meta keys holding a block ID directly. */
 	const META_ID_KEYS = array( '_product_block', '_menu_item_block' );
 
-	/** Meta chứa text có thể có shortcode. */
+	/** Meta keys holding text that may contain shortcodes. */
 	const META_TEXT_KEYS = array( '_top_content', '_bottom_content' );
 
 	const META_KEYS = array( '_product_block', '_menu_item_block', '_top_content', '_bottom_content' );
@@ -77,7 +77,7 @@ final class UsageScanner {
 	}
 
 	public function scan_globals() {
-		// Theme mods của theme đang chạy (child theme lưu riêng theme_mods_{stylesheet}).
+		// Theme mods of the active theme (a child theme stores its own theme_mods_{stylesheet}).
 		$this->repo->delete_source( 'theme_mod' );
 		foreach ( (array) get_theme_mods() as $key => $value ) {
 			if ( ! is_string( $value ) || '' === $value ) {
@@ -141,7 +141,7 @@ final class UsageScanner {
 	}
 
 	/**
-	 * Quét lại toàn bộ theo lô (UI gọi lặp đến khi done=true).
+	 * Full rescan in batches (the UI keeps calling until done=true).
 	 *
 	 * @return array{processed:int, next_offset:int, total:int, done:bool}
 	 */
@@ -180,7 +180,7 @@ final class UsageScanner {
 	}
 
 	/**
-	 * @return int[] ID các block được nhắc tới trong text.
+	 * @return int[] IDs of blocks referenced in the text.
 	 */
 	public function refs_in_text( $text ) {
 		if ( ! is_string( $text ) || false === strpos( $text, '[block' ) ) {
@@ -202,7 +202,7 @@ final class UsageScanner {
 	}
 
 	/**
-	 * Slug hoặc ID -> ID block (dùng chính hàm của Flatsome, có hỗ trợ WPML/Polylang).
+	 * Slug or ID -> block ID (uses Flatsome's own function, with WPML/Polylang support).
 	 */
 	private function resolve( $ref ) {
 		if ( ! is_scalar( $ref ) ) {
@@ -212,13 +212,13 @@ final class UsageScanner {
 		if ( '' === $ref || preg_match( '/\s/', $ref ) ) {
 			return null;
 		}
-		// Kiểm lại ID đã cache: block có thể bị xoá rồi tạo lại cùng slug trong một request.
+		// Re-check cached IDs: a block may be deleted and recreated with the same slug in one request.
 		if ( isset( $this->resolved[ $ref ] ) && 'blocks' === get_post_type( $this->resolved[ $ref ] ) ) {
 			return $this->resolved[ $ref ];
 		}
 		$id = function_exists( 'flatsome_get_block_id' ) ? flatsome_get_block_id( $ref ) : null;
 		$id = $id && get_post_type( (int) $id ) === 'blocks' ? (int) $id : null;
-		// Chỉ cache khi tìm thấy: block có thể được tạo sau trong cùng request (ví dụ khi nhập).
+		// Cache only hits: the block may be created later in the same request (e.g. during import).
 		if ( $id ) {
 			$this->resolved[ $ref ] = $id;
 		}

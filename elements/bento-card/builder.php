@@ -6,13 +6,13 @@ return array(
 	'options' => array(
 		'content'          => array(
 			'type'    => 'group',
-			'heading' => __( 'Nội dung', 'flatsome-block-manager' ),
+			'heading' => __( 'Content', 'flatsome-block-manager' ),
 			'options' => array(
-				'tag'       => array( 'type' => 'textfield', 'heading' => __( 'Nhãn số thứ tự', 'flatsome-block-manager' ), 'default' => '01' ),
-				'title'     => array( 'type' => 'textfield', 'heading' => __( 'Tiêu đề', 'flatsome-block-manager' ), 'default' => 'Khung gỗ sồi tự nhiên' ),
+				'tag'       => array( 'type' => 'textfield', 'heading' => __( 'Number Tag', 'flatsome-block-manager' ), 'default' => '01' ),
+				'title'     => array( 'type' => 'textfield', 'heading' => __( 'Title', 'flatsome-block-manager' ), 'default' => 'Natural oak frame' ),
 				'title_tag' => array(
 					'type'    => 'radio-buttons',
-					'heading' => __( 'Thẻ tiêu đề', 'flatsome-block-manager' ),
+					'heading' => __( 'Title Tag', 'flatsome-block-manager' ),
 					'default' => 'h3',
 					'options' => array(
 						'h2' => array( 'title' => 'H2' ),
@@ -21,69 +21,69 @@ return array(
 						'p'  => array( 'title' => 'P' ),
 					),
 				),
-				'text'      => array( 'type' => 'textarea', 'heading' => __( 'Mô tả', 'flatsome-block-manager' ), 'default' => 'Vân gỗ thật, hoàn thiện thủ công, bền màu theo thời gian.' ),
-				'link_text' => array( 'type' => 'textfield', 'heading' => __( 'Chữ nút', 'flatsome-block-manager' ), 'default' => 'Xem thêm' ),
-				'link'      => array( 'type' => 'textfield', 'heading' => __( 'Liên kết', 'flatsome-block-manager' ), 'default' => '', 'placeholder' => '/shop/' ),
+				'text'      => array( 'type' => 'textarea', 'heading' => __( 'Description', 'flatsome-block-manager' ), 'default' => 'Real wood grain, finished by hand, colorfast over time.' ),
+				'link_text' => array( 'type' => 'textfield', 'heading' => __( 'Button Text', 'flatsome-block-manager' ), 'default' => 'Learn more' ),
+				'link'      => array( 'type' => 'textfield', 'heading' => __( 'Link', 'flatsome-block-manager' ), 'default' => '', 'placeholder' => '/shop/' ),
 				'target'    => array(
 					'type'    => 'radio-buttons',
-					'heading' => __( 'Mở', 'flatsome-block-manager' ),
+					'heading' => __( 'Open In', 'flatsome-block-manager' ),
 					'default' => '',
 					'options' => array(
-						''       => array( 'title' => __( 'Cùng tab', 'flatsome-block-manager' ) ),
-						'_blank' => array( 'title' => __( 'Tab mới', 'flatsome-block-manager' ) ),
+						''       => array( 'title' => __( 'Same tab', 'flatsome-block-manager' ) ),
+						'_blank' => array( 'title' => __( 'New tab', 'flatsome-block-manager' ) ),
 					),
 				),
 			),
 		),
 		'media'            => array(
 			'type'    => 'group',
-			'heading' => __( 'Ảnh', 'flatsome-block-manager' ),
+			'heading' => __( 'Image', 'flatsome-block-manager' ),
 			'options' => array(
-				'image'      => array( 'type' => 'image', 'heading' => __( 'Ảnh', 'flatsome-block-manager' ), 'default' => '' ),
+				'image'      => array( 'type' => 'image', 'heading' => __( 'Image', 'flatsome-block-manager' ), 'default' => '' ),
 				'image_size' => array(
 					'type'    => 'select',
-					'heading' => __( 'Kích thước ảnh', 'flatsome-block-manager' ),
+					'heading' => __( 'Image Size', 'flatsome-block-manager' ),
 					'default' => 'large',
 					'options' => array( 'medium' => 'Medium', 'medium_large' => 'Medium Large', 'large' => 'Large', 'full' => 'Full' ),
 				),
 				'layout'     => array(
 					'type'    => 'radio-buttons',
-					'heading' => __( 'Hướng xếp', 'flatsome-block-manager' ),
+					'heading' => __( 'Direction', 'flatsome-block-manager' ),
 					'default' => 'vertical',
 					'options' => array(
-						'vertical'   => array( 'title' => __( 'Dọc (ảnh ở đáy)', 'flatsome-block-manager' ) ),
+						'vertical'   => array( 'title' => __( 'Vertical (image at bottom)', 'flatsome-block-manager' ) ),
 						'horizontal' => array( 'title' => __( 'Ngang', 'flatsome-block-manager' ) ),
 					),
 				),
 				'media_side' => array(
 					'type'       => 'radio-buttons',
-					'heading'    => __( 'Ảnh nằm bên', 'flatsome-block-manager' ),
+					'heading'    => __( 'Image Side', 'flatsome-block-manager' ),
 					'default'    => 'right',
 					'conditions' => 'layout === "horizontal"',
 					'options'    => array(
-						'left'  => array( 'title' => __( 'Trái', 'flatsome-block-manager' ) ),
-						'right' => array( 'title' => __( 'Phải', 'flatsome-block-manager' ) ),
+						'left'  => array( 'title' => __( 'Left', 'flatsome-block-manager' ) ),
+						'right' => array( 'title' => __( 'Right', 'flatsome-block-manager' ) ),
 					),
 				),
 			),
 		),
 		'style'            => array(
 			'type'    => 'group',
-			'heading' => __( 'Kiểu', 'flatsome-block-manager' ),
+			'heading' => __( 'Style', 'flatsome-block-manager' ),
 			'options' => array(
 				'style'      => array(
 					'type'    => 'radio-buttons',
-					'heading' => __( 'Nền thẻ', 'flatsome-block-manager' ),
+					'heading' => __( 'Card Background', 'flatsome-block-manager' ),
 					'default' => 'light',
 					'options' => array(
-						'light' => array( 'title' => __( 'Viền', 'flatsome-block-manager' ) ),
-						'soft'  => array( 'title' => __( 'Nền phụ', 'flatsome-block-manager' ) ),
-						'dark'  => array( 'title' => __( 'Màu chính', 'flatsome-block-manager' ) ),
+						'light' => array( 'title' => __( 'Border', 'flatsome-block-manager' ) ),
+						'soft'  => array( 'title' => __( 'Soft', 'flatsome-block-manager' ) ),
+						'dark'  => array( 'title' => __( 'Primary', 'flatsome-block-manager' ) ),
 					),
 				),
 				'radius'     => array(
 					'type'    => 'slider',
-					'heading' => __( 'Bo góc', 'flatsome-block-manager' ),
+					'heading' => __( 'Radius', 'flatsome-block-manager' ),
 					'default' => '',
 					'unit'    => 'px',
 					'min'     => 0,
@@ -91,7 +91,7 @@ return array(
 				),
 				'padding'    => array(
 					'type'       => 'slider',
-					'heading'    => __( 'Khoảng đệm', 'flatsome-block-manager' ),
+					'heading'    => __( 'Padding', 'flatsome-block-manager' ),
 					'responsive' => true,
 					'default'    => '',
 					'unit'       => 'px',
@@ -100,7 +100,7 @@ return array(
 				),
 				'min_height' => array(
 					'type'       => 'scrubfield',
-					'heading'    => __( 'Chiều cao tối thiểu', 'flatsome-block-manager' ),
+					'heading'    => __( 'Min Height', 'flatsome-block-manager' ),
 					'responsive' => true,
 					'default'    => '',
 					'unit'       => 'px',

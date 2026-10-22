@@ -1,9 +1,9 @@
 <?php
 /**
- * [fbm_showcase_step]: một bước của Animated Showcase. Sân khấu chia hai phần: trái (ảnh trái) và phải (chữ, ảnh phải,
- * ảnh thứ ba, bản sao ảnh trái cho lần đẩy thứ hai). Chữ in sẵn từng ký tự (--i = thứ tự) cho hiệu ứng gõ chữ, kèm bản đầy đủ cho trình đọc màn hình.
- * image_size, image_ratio, is_first do [fbm_animated_showcase] truyền xuống.
- * Biến có sẵn: $atts, $content, $tag.
+ * [fbm_showcase_step]: one step of Animated Showcase. The stage has two parts: left (left image) and right (text, right image,
+ * third image, a copy of the left image for the second push). Text is printed per character (--i = index) for the typing effect, plus a full copy for screen readers.
+ * image_size, image_ratio, is_first are passed down by [fbm_animated_showcase].
+ * Variables provided: $atts, $content, $tag.
  */
 defined( 'ABSPATH' ) || exit;
 
@@ -41,7 +41,7 @@ $fbm_img = static function ( $id, $slot ) use ( $fbm_size, $fbm_first ) {
 $fbm_left  = $fbm_img( $a['left_image'], 'left' );
 $fbm_right = $fbm_img( $a['right_image'], 'right' );
 $fbm_third = $fbm_img( $a['third_image'], 'third' );
-// Lần đẩy thứ hai: ảnh trái ban đầu quay lại từ bên phải. Bản sao trang trí, ẩn với trình đọc màn hình.
+// Second push: the original left image comes back from the right. Decorative copy, hidden from screen readers.
 $fbm_again = $fbm_left ? wp_get_attachment_image(
 	absint( $a['left_image'] ),
 	$fbm_size,
@@ -55,7 +55,7 @@ $fbm_again = $fbm_left ? wp_get_attachment_image(
 	)
 ) : '';
 if ( ! $fbm_left || ! $fbm_right || ! $fbm_third ) {
-	echo FBM\Placeholder::empty( __( 'Showcase Step: chọn đủ ảnh trái, ảnh phải và ảnh thứ ba.', 'flatsome-block-manager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo FBM\Placeholder::empty( __( 'Showcase Step: pick the left, right and third images.', 'flatsome-block-manager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	return;
 }
 
@@ -78,7 +78,7 @@ foreach ( '' !== $fbm_text ? mb_str_split( $fbm_text ) : array() as $fbm_i => $f
 		<div class="fbm-as__part fbm-as__part--left"><?php echo $fbm_left; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image. ?></div>
 		<div class="fbm-as__part fbm-as__part--right">
 			<?php if ( '' !== $fbm_text ) : ?>
-				<p class="fbm-as__text"><span class="screen-reader-text"><?php echo esc_html( $fbm_text ); ?></span><span class="fbm-as__chars" aria-hidden="true"><?php echo $fbm_chars; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- từng ký tự đã esc_html. ?></span></p>
+				<p class="fbm-as__text"><span class="screen-reader-text"><?php echo esc_html( $fbm_text ); ?></span><span class="fbm-as__chars" aria-hidden="true"><?php echo $fbm_chars; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- every character is already esc_html'd.?></span></p>
 			<?php endif; ?>
 			<?php echo $fbm_right . $fbm_third . $fbm_again; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image. ?>
 		</div>

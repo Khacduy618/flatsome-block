@@ -1,4 +1,4 @@
-/* Avatar Stack: ảnh tròn xếp chồng + sao của theme; cỡ/độ chồng qua biến --fbm-av-*. */
+/* Avatar Stack: overlapping round images + theme stars; size/overlap through --fbm-av-* variables. */
 .fbm-avatars {
 	margin-bottom: 1em;
 }

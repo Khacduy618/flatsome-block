@@ -1,11 +1,11 @@
 <?php
 /**
- * Nâng cấp từ v1: chuyển trạng thái UX Block, dọn dữ liệu của trình viết code, giữ nội dung cũ không vỡ.
+ * Upgrade from v1: migrates UX Block states, removes code-editor data, keeps old content from breaking.
  *
- * - Block v1 đang tắt (hoặc đang bị hẹn giờ giấu) → Tắt của v2. Hẹn giờ bị bỏ.
- * - Element v1 (CPT fbm_element, bảng phiên bản, file trong uploads) bị xoá.
- * - Tag v1 không còn: khách thấy rỗng, người biên tập thấy khung nét đứt.
- * - [fbm_product_slider] chạy tiếp bằng fbm_products (elements/products/alias-v1.php).
+ * - v1 blocks that are disabled (or hidden by a schedule) → v2 Off. Schedules are dropped.
+ * - v1 elements (CPT fbm_element, version table, files in uploads) are deleted.
+ * - Removed v1 tags: guests see nothing, editors see a dashed placeholder.
+ * - [fbm_product_slider] keeps running through fbm_products (elements/products/alias-v1.php).
  *
  * @package FBM
  */
@@ -23,7 +23,7 @@ final class Upgrade {
 	/** array{tags: string[], used: array<string,int>, dismissed: bool} */
 	const REPORT = 'fbm_v1_report';
 
-	/** Tag mẫu của v1 không đi kèm element nào sau nâng cấp. */
+	/** v1 sample tags that map to no element after the upgrade. */
 	const V1_STARTER_TAGS = array( 'fbm_hello' );
 
 	const SLIDER_TAG = 'fbm_product_slider';
@@ -50,7 +50,7 @@ final class Upgrade {
 	}
 
 	/**
-	 * Tag của element v1: registry (bản Live) và meta _fbm_tag (cả bản nháp).
+	 * Tags of v1 elements: registry (Live copies) and meta _fbm_tag (drafts too).
 	 *
 	 * @return string[]
 	 */
@@ -68,7 +68,7 @@ final class Upgrade {
 	}
 
 	/**
-	 * Tag nào còn được v2 cung cấp thì không cần khung "đang tắt".
+	 * Tags still provided by v2 need no "Off" placeholder.
 	 *
 	 * @param string[] $v1_tags
 	 */
@@ -110,7 +110,7 @@ final class Upgrade {
 			$enabled = '0' !== get_post_meta( $id, '_fbm_enabled', true );
 			$from    = (int) get_post_meta( $id, '_fbm_show_from', true );
 			$until   = (int) get_post_meta( $id, '_fbm_show_until', true );
-			// Giữ đúng thứ khách đang thấy lúc nâng cấp: block đang bị giấu (tắt hoặc ngoài khung giờ) thành Tắt.
+			// Keep what guests saw at upgrade time: hidden blocks (disabled or outside their schedule) become Off.
 			$hidden_now = ! $enabled || ( $from && $from > $now ) || ( $until && $until <= $now );
 			if ( $hidden_now ) {
 				update_post_meta( $id, BlockStates::META, 'off' );
@@ -175,8 +175,8 @@ final class Upgrade {
 	}
 
 	/**
-	 * Bảng ánh xạ att của [fbm_product_slider] v1 sang [fbm_products].
-	 * Bỏ: kiểu thẻ, màu, bo góc, tỷ lệ ảnh, show_*; title/link hiển thị bằng [title] ở alias.
+	 * Attribute map from v1 [fbm_product_slider] to [fbm_products].
+	 * Dropped: card style, colors, radius, image ratio, show_*; title/link render through [title] in the alias.
 	 *
 	 * @param array $v1
 	 * @return array<string, string>
@@ -220,27 +220,27 @@ final class Upgrade {
 		foreach ( $report['used'] as $tag => $count ) {
 			if ( self::SLIDER_TAG === $tag ) {
 				/* translators: 1: v1 tag, 2: number of places */
-				$text = __( '[%1$s] (%2$d nơi) đã chuyển sang element Products của Flatsome [ux_products].', 'flatsome-block-manager' );
+				$text = __( '[%1$s] (%2$d places) now uses Flatsome\'s Products element [ux_products].', 'flatsome-block-manager' );
 			} elseif ( in_array( $tag, (array) $report['tags'], true ) ) {
 				/* translators: 1: v1 tag, 2: number of places */
-				$text = __( '[%1$s] (%2$d nơi) không còn trong v2: khách thấy trống, người biên tập thấy khung nét đứt.', 'flatsome-block-manager' );
+				$text = __( '[%1$s] (%2$d places) is no longer in v2: guests see nothing, editors see a dashed placeholder.', 'flatsome-block-manager' );
 			} else {
 				/* translators: 1: v1 tag, 2: number of places */
-				$text = __( '[%1$s] (%2$d nơi) vẫn chạy bằng element v2 cùng tên; màu tuỳ chỉnh của v1 bị bỏ qua.', 'flatsome-block-manager' );
+				$text = __( '[%1$s] (%2$d places) still runs on the v2 element of the same name; v1 custom colors are ignored.', 'flatsome-block-manager' );
 			}
 			$items[] = '<li>' . esc_html( sprintf( $text, $tag, $count ) ) . '</li>';
 		}
 		$url = wp_nonce_url( admin_url( 'admin-post.php?action=fbm_v1_dismiss' ), 'fbm_v1_dismiss' );
-		return '<div class="notice notice-warning"><p><strong>' . esc_html__( 'Block Manager 2.0: nội dung còn dùng element của v1', 'flatsome-block-manager' ) . '</strong></p><ul style="list-style:disc;padding-left:20px">' . implode( '', $items ) . '</ul><p><a class="button" href="' . esc_url( $url ) . '">' . esc_html__( 'Đã hiểu, ẩn thông báo', 'flatsome-block-manager' ) . '</a></p></div>';
+		return '<div class="notice notice-warning"><p><strong>' . esc_html__( 'Block Manager 2.0: content still uses v1 elements', 'flatsome-block-manager' ) . '</strong></p><ul style="list-style:disc;padding-left:20px">' . implode( '', $items ) . '</ul><p><a class="button" href="' . esc_url( $url ) . '">' . esc_html__( 'Got it, dismiss', 'flatsome-block-manager' ) . '</a></p></div>';
 	}
 
 	public static function notice() {
-		echo self::notice_html(); // phpcs:ignore WordPress.Security.EscapeOutput -- đã escape trong notice_html().
+		echo self::notice_html(); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in notice_html().
 	}
 
 	public static function dismiss() {
 		if ( ! current_user_can( 'edit_pages' ) ) {
-			wp_die( esc_html__( 'Không đủ quyền.', 'flatsome-block-manager' ), 403 );
+			wp_die( esc_html__( 'You are not allowed to do this.', 'flatsome-block-manager' ), 403 );
 		}
 		check_admin_referer( 'fbm_v1_dismiss' );
 		$report              = get_option( self::REPORT, array() );

@@ -1,11 +1,11 @@
 /**
- * Animated Showcase UX Block: kịch bản mỗi bước (.fbm-as__item)
- *   1. ảnh trái trượt mượt vào (.is-s1)  2. cùng lúc chữ hiện từng ký tự, gõ xong khi ảnh trái dừng (.is-s2)
- *   3. ảnh trái vừa vào xong → ảnh phải trượt từ dưới lên thay chữ ngay (.is-s3)
- *   4. đẩy lần 1: ảnh thứ ba vào bên phải, ảnh phải sang trái (.is-s4)
- *   5. đẩy lần 2: ảnh trái ban đầu vào lại từ bên phải, ảnh thứ ba sang trái (.is-s5) → về như ban đầu
- * Mỗi bước chạy 2 lượt rồi sang bước kế; hết thì quay lại bước đầu, lặp mãi. Hiệu ứng nằm ở CSS, JS chỉ hẹn giờ đổi class.
- * Dừng khi cuộn khỏi màn hình / ẩn tab; máy bật "giảm chuyển động" thì giữ trạng thái tĩnh.
+ * Animated Showcase UX Block: per-step sequence (.fbm-as__item)
+ *   1. the left image glides in (.is-s1)  2. meanwhile the text types out, finishing when the left image stops (.is-s2)
+ *   3. once the left image is in → the right image slides up and replaces the text (.is-s3)
+ *   4. push 1: the third image enters on the right, the right image moves left (.is-s4)
+ *   5. push 2: the original left image re-enters from the right, the third image moves left (.is-s5) → back to the start
+ * Each step runs twice, then the next step; after the last it returns to the first, forever. Effects live in CSS; JS only times the class changes.
+ * Pauses when scrolled off screen / tab hidden; with "reduced motion" it stays static.
  * API cho editor.js: window.fbmAnimatedShowcase.init( root ) → { focus, setStatic, refresh }.
  */
 ( () => {
@@ -34,7 +34,7 @@
 		};
 		const at = ( ms, fn ) => timers.push( setTimeout( fn, ms ) );
 
-		// Về đầu kịch bản tức thì (không chạy ngược hiệu ứng).
+		// Jump to the start of the sequence instantly (no reverse animation).
 		const reset = ( item ) => {
 			item.classList.add( 'is-resetting' );
 			item.classList.remove( ...STEPS );
@@ -69,12 +69,12 @@
 			const d = num( root.dataset.duration, 700, 300, 2000 );
 			const g = num( root.dataset.delay, 1200, 200, 4000 );
 			const chars = item.querySelectorAll( '.fbm-as__char' ).length;
-			const enter = d * 1.5; // Ảnh trái vào (khớp calc( var(--fbm-as-dur) * 1.5 ) trong CSS).
-			// Chữ gõ song song lúc ảnh trái trượt và hiện đủ khi ảnh trái dừng: mỗi ký tự tối đa 60 ms.
+			const enter = d * 1.5; // Left image entrance (matches calc( var(--fbm-as-dur) * 1.5 ) in CSS).
+			// Text types while the left image slides and is complete when it stops: at most 60 ms per character.
 			const per = chars ? Math.min( 60, ( enter - d / 2 ) / chars ) : 0;
 			item.style.setProperty( '--fbm-as-char', per + 'ms' );
 			const t1 = 50;
-			const t3 = t1 + enter; // Ảnh phải vào ngay khi ảnh trái vào xong.
+			const t3 = t1 + enter; // The right image enters as soon as the left image is in.
 			const t4 = t3 + d + g;
 			const t5 = t4 + d + g;
 			const end = t5 + d + g;
@@ -82,7 +82,7 @@
 			at( t3, () => item.classList.add( 'is-s3' ) );
 			at( t4, () => item.classList.add( 'is-s4' ) );
 			at( t5, () => item.classList.add( 'is-s5' ) );
-			// Hết lượt: mờ đi, rồi chạy lại (lượt 2) hoặc sang bước kế.
+			// End of a run: fade out, then replay (run 2) or move to the next step.
 			at( end, () => item.classList.add( 'is-out' ) );
 			at( end + d / 2, () => {
 				cycle++;
@@ -113,7 +113,7 @@
 		} );
 
 		root.fbmAnimated = {
-			// Canvas: chỉ lặp bước đang chọn (-1: chạy cả danh sách).
+			// Canvas: loop only the selected step (-1: play the whole list).
 			focus: ( i ) => {
 				if ( i !== focus ) {
 					focus = i;
@@ -141,7 +141,7 @@
 
 	window.fbmAnimatedShowcase = { init };
 
-	// Khởi tạo khối mới chèn vào trang; khối có bước / chữ vừa đổi (canvas UX Builder) thì chạy lại từ đầu.
+	// Initialize blocks newly inserted into the page; blocks whose steps / text just changed (UX Builder canvas) restart from the beginning.
 	let queued = 0;
 	const dirty = new Set();
 	const flush = () => {

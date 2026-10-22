@@ -1,11 +1,11 @@
 /**
- * Canvas UX Builder (chỉ nạp trong iframe canvas): Animated Showcase chạy kịch bản như ngoài site; chọn một bước
- * (cây bên trái hoặc bấm trên canvas) thì chỉ lặp bước đó để xem trước; bỏ chọn thì chạy cả danh sách.
- * Ảnh / chữ của bước là template Angular nên đổi option là canvas vẽ lại ngay; controller theo dõi option qua digest
- * của $rootScope và chạy lại kịch bản (view.js refresh).
+ * UX Builder canvas (loaded only in the canvas iframe): Animated Showcase runs its sequence as on the site; selecting a step
+ * (left tree or click on the canvas) loops just that step for preview; deselecting runs the whole list.
+ * Step images / text are Angular templates, so option changes redraw the canvas instantly; the controller watches options through the
+ * $rootScope digest and restarts the sequence (view.js refresh).
  *
- * Dựa vào API nội bộ của UX Builder (UxBuilder.controller, service app / targets). Thiếu thứ gì thì khối hiện tĩnh
- * (ảnh trái + chữ của bước đang chọn hoặc bước đầu), không lỗi script.
+ * Relies on UX Builder internal APIs (UxBuilder.controller, app / targets services). If anything is missing the block shows statically
+ * (left image + text of the selected or first step), with no script errors.
  */
 ( () => {
 	const TAG = 'fbm_animated_showcase';
@@ -20,7 +20,7 @@
 		const later = ( fn ) => $timeout( fn, 0, false );
 		if ( el ) {
 			el.dataset.fbmAsCanvas = '1';
-			// Các bước xếp chồng: chỉ bước đang hiện nhận chuột của UX Builder.
+			// Steps are stacked: only the visible step receives UX Builder pointer events.
 			el.addEventListener( 'fbm-as:change', ( e ) => {
 				try {
 					targets.disable( shortcode.children );
@@ -44,7 +44,7 @@
 			} )
 		);
 
-		// Option của khung và của từng bước (ảnh, chữ): đổi là chạy lại kịch bản để thấy ngay.
+		// Frame and step options (images, text): any change restarts the sequence so it shows instantly.
 		const snapshot = () => {
 			const o = shortcode.options || {};
 			return JSON.stringify( [ o.duration, o.stepDelay, o.imageRatio, o.imageSize, shortcode.children.map( ( c ) => c.options ) ] );
@@ -75,10 +75,10 @@
 			window.UxBuilder.controller( TAG, AnimatedCanvas );
 		}
 	} catch ( e ) {
-		// Flatsome đổi API nội bộ: dùng chế độ tĩnh bên dưới.
+		// Flatsome changed its internal API: use the static mode below.
 	}
 
-	// Chế độ tĩnh cho khối controller không nhận: không chạy kịch bản, hiện bước đang chọn (mặc định bước đầu).
+	// Static mode for blocks the controller did not pick up: no sequence, shows the selected step (first by default).
 	const fallback = () =>
 		document.querySelectorAll( '.fbm-as' ).forEach( ( root ) => {
 			if ( root.dataset.fbmAsCanvas ) {
@@ -95,7 +95,7 @@
 		} );
 	let queued = 0;
 	const start = () => {
-		setTimeout( fallback, 0 ); // Một nhịp cho controller (nếu có) nhận khối trước.
+		setTimeout( fallback, 0 ); // One tick so the controller (if any) can claim the block first.
 		new MutationObserver( () => {
 			if ( ! queued ) {
 				queued = setTimeout( () => {

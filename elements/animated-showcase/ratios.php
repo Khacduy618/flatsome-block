@@ -1,7 +1,7 @@
 <?php
 /**
- * Tỉ lệ khung của mỗi phần (trái / phải): khoá → nhãn + chiều cao / chiều rộng. Khoá không phải số (UX Builder so sánh
- * bằng ===). Dùng chung cho builder.php (nhãn, bảng tra trong template canvas) và render.php của bước.
+ * Frame ratio of each part (left / right): key → label + height / width. Keys are not numeric (UX Builder compares
+ * with ===). Shared by builder.php (labels, canvas template lookup) and the step's render.php.
  */
 defined( 'ABSPATH' ) || exit;
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * [fbm_avatar_stack]: ảnh đại diện xếp chồng + sao (.star-rating của Flatsome/WooCommerce) + chữ đánh giá.
- * Chưa chọn ảnh: người biên tập thấy 4 vòng tròn giữ chỗ, khách không thấy.
- * Biến có sẵn: $atts, $content, $tag.
+ * [fbm_avatar_stack]: overlapping avatars + stars (Flatsome/WooCommerce .star-rating) + rating text.
+ * No images picked: editors see 4 placeholder circles, guests see nothing.
+ * Variables provided: $atts, $content, $tag.
  */
 defined( 'ABSPATH' ) || exit;
 
@@ -12,7 +12,7 @@ $a = shortcode_atts(
 		'ids'         => '',
 		'show_rating' => 'true',
 		'rating'      => '4.9',
-		'text'        => 'Hơn 2.000 khách hàng hài lòng',
+		'text'        => '2,000+ happy customers',
 		'size'        => '44',
 		'overlap'     => '12',
 		'align'       => 'left',
@@ -35,7 +35,7 @@ $fbm_rating = 'false' !== $a['show_rating'];
 $fbm_ghosts = ! $fbm_imgs && FBM\Placeholder::visible();
 
 if ( ! $fbm_imgs && ! $fbm_rating && '' === $fbm_text ) {
-	echo FBM\Placeholder::empty( __( 'Avatar Stack: chọn ảnh, bật số sao hoặc nhập chữ.', 'flatsome-block-manager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo FBM\Placeholder::empty( __( 'Avatar Stack: pick images, turn on the rating or enter text.', 'flatsome-block-manager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	return;
 }
 
@@ -60,7 +60,7 @@ $fbm_pct     = rtrim( rtrim( number_format( $fbm_score / 5 * 100, 1, '.', '' ), 
 					echo $fbm_img; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image.
 				}
 				if ( $fbm_ghosts ) {
-					echo str_repeat( '<span class="fbm-avatars__img fbm-avatars__img--empty"><i class="icon-user"></i></span>', 4 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup cố định.
+					echo str_repeat( '<span class="fbm-avatars__img fbm-avatars__img--empty"><i class="icon-user"></i></span>', 4 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup.
 				}
 				?>
 			</div>
@@ -68,7 +68,7 @@ $fbm_pct     = rtrim( rtrim( number_format( $fbm_score / 5 * 100, 1, '.', '' ), 
 		<div class="fbm-avatars__meta">
 			<?php if ( $fbm_rating ) : ?>
 				<div class="fbm-avatars__rating">
-					<div class="star-rating" role="img" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: rating */ __( 'Được đánh giá %s trên 5', 'flatsome-block-manager' ), $fbm_score_s ) ); ?>"><span style="width:<?php echo esc_attr( $fbm_pct ); ?>%"></span></div>
+					<div class="star-rating" role="img" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: rating */ __( 'Rated %s out of 5', 'flatsome-block-manager' ), $fbm_score_s ) ); ?>"><span style="width:<?php echo esc_attr( $fbm_pct ); ?>%"></span></div>
 					<strong class="fbm-avatars__score"><?php echo esc_html( $fbm_score_s ); ?>/5</strong>
 				</div>
 			<?php endif; ?>
