@@ -220,7 +220,7 @@ final class Upgrade {
 		foreach ( $report['used'] as $tag => $count ) {
 			if ( self::SLIDER_TAG === $tag ) {
 				/* translators: 1: v1 tag, 2: number of places */
-				$text = __( '[%1$s] (%2$d nơi) đã chuyển sang element Products [fbm_products]. Kiểu thẻ, màu và bo góc của v1 không còn.', 'flatsome-block-manager' );
+				$text = __( '[%1$s] (%2$d nơi) đã chuyển sang element Products của Flatsome [ux_products].', 'flatsome-block-manager' );
 			} elseif ( in_array( $tag, (array) $report['tags'], true ) ) {
 				/* translators: 1: v1 tag, 2: number of places */
 				$text = __( '[%1$s] (%2$d nơi) không còn trong v2: khách thấy trống, người biên tập thấy khung nét đứt.', 'flatsome-block-manager' );
