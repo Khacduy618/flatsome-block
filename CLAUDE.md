@@ -10,6 +10,7 @@ Sau khi hoàn thành bất kỳ nhiệm vụ lập trình, chỉnh sửa hoặc 
 ## Rules
 1. **Tuyệt đối ngắn gọn**: Đi thẳng vào trọng tâm, không giải thích dài dòng hay thêm lời dẫn rườm rà ngoài bảng.
 2. **Súc tích**: Nội dung trong bảng tối đa 1-2 dòng mỗi hàng.
+3. **Language Policy**: Always use English for all code, UI labels, option headings, control titles, comments, docblocks, presets, and demo text. Do not use Vietnamese in element options, UI controls, or source code.
 
 
 ## WordPress, WooCommerce & Flatsome Development Rules
