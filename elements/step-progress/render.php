@@ -12,6 +12,8 @@ $a = shortcode_atts(
 	array(
 		'_id'          => 'ux-sp-' . wp_rand( 1000, 9999 ),
 		'style'        => 'segmented',
+		'height'       => '',
+		'bar_height'   => '',
 		'labels'       => '',
 		'target_class' => '.step-item',
 		'active_color' => '',
@@ -28,12 +30,19 @@ $unique_id = ! empty( $a['_id'] ) ? sanitize_html_class( $a['_id'] ) : 'ux-sp-' 
 $color_var = ! empty( $a['active_color'] ) ? esc_attr( $a['active_color'] ) : 'var(--primary-color, var(--fs-color-primary, #1d1d1f))';
 $style     = in_array( $a['style'], array( 'segmented', 'slider', 'fill_up', 'numbered', 'dot' ), true ) ? $a['style'] : 'segmented';
 
-$inline_styles = sprintf(
-	'--ux-sp-color: %s; max-width: %s; margin-top: %s;',
-	$color_var,
-	esc_attr( $a['max_width'] ),
-	esc_attr( $a['margin_top'] )
+$styles_array = array(
+	'--ux-sp-color: ' . $color_var,
+	'max-width: ' . esc_attr( $a['max_width'] ),
+	'margin-top: ' . esc_attr( $a['margin_top'] ),
 );
+
+$height_val = ! empty( $a['height'] ) ? trim( (string) $a['height'] ) : ( ! empty( $a['bar_height'] ) ? trim( (string) $a['bar_height'] ) : '' );
+if ( '' !== $height_val ) {
+	$height_css     = is_numeric( $height_val ) ? $height_val . 'px' : $height_val;
+	$styles_array[] = '--ux-sp-height: ' . esc_attr( $height_css );
+}
+
+$inline_styles = implode( '; ', $styles_array ) . ';';
 
 $wrap_classes = array(
 	'ux-step-progress',

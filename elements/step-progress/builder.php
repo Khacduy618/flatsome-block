@@ -20,6 +20,16 @@ return array(
 						'dot'       => __( 'Minimal Dots', 'flatsome-block-manager' ),
 					),
 				),
+				'height'       => array(
+					'type'        => 'scrubfield',
+					'heading'     => __( 'Bar Height / Stroke', 'flatsome-block-manager' ),
+					'description' => __( 'Height or stroke thickness of the progress bar / track line (e.g. 6px, 8px). Default is 6px (or 3px for numbered/dot).', 'flatsome-block-manager' ),
+					'default'     => '',
+					'placeholder' => '6px',
+					'min'         => 1,
+					'max'         => 40,
+					'step'        => 1,
+				),
 				'labels'       => array(
 					'type'        => 'textfield',
 					'heading'     => __( 'Step Labels', 'flatsome-block-manager' ),
