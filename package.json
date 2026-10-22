@@ -2,7 +2,7 @@
   "name": "flatsome-block-manager",
   "version": "2.0.0",
   "private": true,
-  "description": "Admin UI (3 tab danh sách) cho Flatsome Block Manager",
+  "description": "Admin UI (3 list tabs) for Flatsome Block Manager",
   "scripts": {
     "build": "wp-scripts build admin=./assets/admin-src/index.js --output-path=build",
     "start": "wp-scripts start admin=./assets/admin-src/index.js --output-path=build",

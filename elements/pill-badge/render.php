@@ -1,14 +1,14 @@
 <?php
 /**
- * [fbm_pill_badge]: nhãn bo tròn có chấm màu (tuỳ chọn nhấp nháy). Màu chỉ qua token (tones.php).
- * Biến có sẵn: $atts, $content, $tag.
+ * [fbm_pill_badge]: rounded label with a colored dot (optionally pulsing). Colors only through tokens (tones.php).
+ * Variables provided: $atts, $content, $tag.
  */
 defined( 'ABSPATH' ) || exit;
 
 $a = shortcode_atts(
 	array(
 		'_id'        => 'fbm-pill-' . wp_rand(),
-		'text'       => 'Mới ra mắt',
+		'text'       => 'New arrival',
 		'link'       => '',
 		'target'     => '',
 		'tone'       => 'primary',
@@ -25,7 +25,7 @@ $a = shortcode_atts(
 
 $fbm_text = trim( $a['text'] );
 if ( '' === $fbm_text ) {
-	echo FBM\Placeholder::empty( __( 'Pill Badge: chưa nhập chữ.', 'flatsome-block-manager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo FBM\Placeholder::empty( __( 'Pill Badge: enter some text.', 'flatsome-block-manager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	return;
 }
 
@@ -52,7 +52,7 @@ $fbm_el  = '' !== $fbm_url ? 'a' : 'span';
 $fbm_rel = '_blank' === $a['target'] ? ' target="_blank" rel="noopener"' : '';
 ?>
 <div id="<?php echo esc_attr( sanitize_html_class( $a['_id'] ) ); ?>" class="<?php echo esc_attr( implode( ' ', array_filter( $wrap ) ) ); ?>">
-	<<?php echo $fbm_el; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- a | span. ?> class="<?php echo esc_attr( implode( ' ', $pill ) ); ?>"<?php echo '' !== $fbm_url ? ' href="' . $fbm_url . '"' . $fbm_rel : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- esc_url ở trên. ?>>
+	<<?php echo $fbm_el; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- a | span. ?> class="<?php echo esc_attr( implode( ' ', $pill ) ); ?>"<?php echo '' !== $fbm_url ? ' href="' . $fbm_url . '"' . $fbm_rel : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- esc_url above.?>>
 		<?php if ( $fbm_dot ) : ?>
 			<span class="fbm-pill__dot" aria-hidden="true"></span>
 		<?php endif; ?>

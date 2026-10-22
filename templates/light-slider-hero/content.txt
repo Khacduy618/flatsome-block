@@ -1,0 +1,31 @@
+[section padding="0px"]
+
+[fbm_light_slider columns="1" gap="0" speed="600" bullets="false" timer="5000"]
+
+[ux_banner height="540px" height__sm="420px" class="bg-primary-color"]
+[text_box width="75" width__sm="90" position_x="50" position_y="50" text_align="center"]
+<h2 class="h2-title">Handcrafted Leather Goods</h2>
+<p>Made one piece at a time from vegetable-tanned leather.</p>
+[button text="Shop the collection" color="primary" style="shade" size="large" radius="99" depth="2" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="540px" height__sm="420px" class="bg-secondary-color"]
+[text_box width="75" width__sm="90" position_x="50" position_y="50" text_align="center"]
+<h2 class="h2-title">Straps Made for Your Watch</h2>
+<p>Choose the leather, color and stitching. We cut it to fit.</p>
+[button text="Customize a strap" color="secondary" style="shade" size="large" radius="99" depth="2" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="540px" height__sm="420px" class="bg-success-color"]
+[text_box width="75" width__sm="90" position_x="50" position_y="50" text_align="center"]
+<h2 class="h2-title">Built to Age Beautifully</h2>
+<p>Every scratch and fold becomes part of its story.</p>
+[button text="Our craft" color="primary" style="shade" size="large" radius="99" depth="2" link="#"]
+[/text_box]
+[/ux_banner]
+
+[/fbm_light_slider]
+
+[/section]

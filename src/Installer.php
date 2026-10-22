@@ -1,6 +1,6 @@
 <?php
 /**
- * Tạo / nâng cấp bảng DB của plugin.
+ * Creates / upgrades the plugin's DB table.
  *
  * @package FBM
  */

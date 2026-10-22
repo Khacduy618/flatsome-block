@@ -42,6 +42,11 @@ Sau khi hoàn thành bất kỳ nhiệm vụ lập trình, chỉnh sửa hoặc 
   - Nếu Block chứa thành phần UI đặc thù (Card, Badge, Pricing Box, Testimonial Item, Accordion, Stat, Floating Box...) chưa có Element tương ứng, BẮT BUỘC phải code thêm Custom UX Builder Element mới (`add_ux_builder_shortcode` + Render file) với đầy đủ `options` chỉnh sửa trực quan, sau đó mới nhúng shortcode của Element đó vào Preset `ux_block`.
   - **CẤM** nhồi nhét HTML phức tạp nhiều tầng vào trong `[ux_text]`.
 
+  ## UX Block → Import Template → Section Preset (Mandatory)
+- **Mỗi UX Block do plugin tạo (seed trong `inc/Blocks/`) BẮT BUỘC có một template tương ứng** trong `templates/<slug>/` gồm `meta.php` (`name`, `order`, `post_types` = `page`, `blocks`, `product`), `content.txt`, `thumb.svg` (wireframe `currentColor`, có `width`/`height`).
+- `content.txt` phải có **đúng một gốc `[section]…[/section]`**: `src/Templates.php` tự đăng ký template đó vừa ở **Add Content › Import** vừa làm **preset của element Section** (filter `ux_builder_shortcode_data_section`), chèn được ở mọi vị trí, không giới hạn số lần. Không viết thêm code đăng ký riêng.
+- Template là bản sạch của block: màu theo schema theme (`bg-*-color`), không inline style, ảnh để trống, chữ mẫu tiếng Anh; chạy `validate_template.py` trước khi xong.
+
   ## 4. AJAX & Performance Optimization Rules
 - **Lazy Load By Default**: Các tính năng nặng (Product Tabs AJAX, Infinite Scroll, Complex Sliders) bắt buộc phải chia tách rõ: Tab đầu pre-render HTML trực tiếp, các tab sau load dạng khung chờ và gọi AJAX kèm Nonce bảo mật.
 - **Client Caching**: Dữ liệu trả về từ AJAX phải được cache tạm ở phía Client (JS memory/dataset) để tránh gọi lặp lại request khi người dùng chuyển đổi qua lại giữa các tab.

@@ -1,9 +1,9 @@
 #!/bin/sh
-# Đóng gói plugin thành dist/flatsome-block-manager.zip để upload ở Plugins > Add New > Upload Plugin.
-# Chạy sau `npm run build` (build/ phải có sẵn).
+# Packages the plugin as dist/flatsome-block-manager.zip for Plugins > Add New > Upload Plugin.
+# Run after `npm run build` (build/ must exist).
 set -e
 cd "$(dirname "$0")/.."
-[ -f build/admin.js ] || { echo "Thiếu build/. Chạy: npm install && npm run build"; exit 1; }
+[ -f build/admin.js ] || { echo "Missing build/. Run: npm install && npm run build"; exit 1; }
 
 NAME=flatsome-block-manager
 STAGE=$(mktemp -d)
@@ -14,4 +14,4 @@ rsync -a ./ "$STAGE/$NAME/" \
 rm -f "dist/$NAME.zip"
 ( cd "$STAGE" && zip -qr -X "$OLDPWD/dist/$NAME.zip" "$NAME" )
 rm -rf "$STAGE"
-echo "Đã tạo dist/$NAME.zip ($(du -h "dist/$NAME.zip" | cut -f1))"
+echo "Created dist/$NAME.zip ($(du -h "dist/$NAME.zip" | cut -f1))"

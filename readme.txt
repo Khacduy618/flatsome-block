@@ -4,54 +4,56 @@ Requires PHP: 7.4
 Stable tag: 2.0.0
 License: GPLv2 or later
 
-Danh sách UX Blocks, element của plugin và element của Flatsome; mỗi dòng Bật / Ẩn / Tắt. Kèm 6 element WooCommerce viết sẵn và 10 block mẫu trong UX Builder › Import.
+Lists UX Blocks, plugin elements and Flatsome elements, each with On / Hidden / Off. Ships custom UX Builder elements, preset UX Blocks and Import templates.
 
-== Cài đặt ==
+== Installation ==
 
-1. Plugins > Add New > Upload Plugin > chọn flatsome-block-manager.zip > Install Now > Activate.
-2. Theme Flatsome (hoặc child theme) phải đang bật.
-3. Mở menu "Block Manager" (ngay dưới menu Flatsome).
-4. Tab "Element Flatsome" cần mở UX Builder một lần để plugin đọc danh sách element của theme.
+1. Plugins > Add New > Upload Plugin > choose flatsome-block-manager.zip > Install Now > Activate.
+2. The Flatsome theme (or a child theme) must be active.
+3. Open the "Block Manager" menu (right below the Flatsome menu).
+4. The "Flatsome Elements" tab needs UX Builder to be opened once so the plugin can read the theme's element list.
 
-== Bật / Ẩn / Tắt ==
+== On / Hidden / Off ==
 
-* Bật: dùng bình thường.
-* Ẩn: không có trong Add elements của UX Builder (với UX Block: không có trong ô chọn của element Block). Chỗ đã dùng vẫn hiển thị.
-* Tắt: như Ẩn, và không hiển thị ngoài site. Người biên tập thấy khung nét đứt ở chỗ đó.
+* On: normal use.
+* Hidden: not listed in UX Builder's Add elements (for UX Blocks: not offered by the Block element picker). Existing uses still render.
+* Off: like Hidden, and nothing renders on the site. Editors see a dashed placeholder in its place.
 
-Element khung trang (Section, Row, Column, Grid, Stack, Text, Block) luôn Bật.
-Tắt một thứ đang được dùng thì plugin hỏi lại trước.
-Tạo, sửa, xoá UX Block vẫn làm ở menu UX Blocks của Flatsome.
+Layout elements (Section, Row, Column, Grid, Stack, Text, Block) are always On.
+Turning off something that is in use asks for confirmation first.
+UX Blocks are still created, edited and deleted from Flatsome's UX Blocks menu.
 
-== Element viết sẵn ==
+== Built-in elements ==
 
-* Products [fbm_products]: slider / lưới sản phẩm WooCommerce; nguồn mới, nổi bật, giảm giá, bán chạy, đánh giá cao, chọn tay, cross-sell, upsell, liên quan.
-* Product Attributes [handdn_product_attributes]: bảng thuộc tính của sản phẩm.
-* Product Compare [fbm_product_compare]: bảng so sánh 2–4 sản phẩm.
-* Reviews [fbm_reviews]: khung bọc widget Judge.me (cần plugin Judge.me).
-* Before / After [fbm_before_after] và Before / After Carousel [fbm_ba_carousel].
-* Nút "Customize this strap in 3D": tự gắn vào trang sản phẩm có meta 3D-link.
+* Light Slider [fbm_light_slider]: zero-library infinite slider for banners and images (alias [fbm_light_carousel]).
+* Smart Product Tabs Slider [uxb_smart_product_slider]: WooCommerce product tabs; the first tab renders on the server, the others load over AJAX.
+* Animated Showcase [fbm_animated_showcase] with Showcase Step [fbm_showcase_step].
+* Bento Card [fbm_bento_card], Pill Badge [fbm_pill_badge], Avatar Stack [fbm_avatar_stack].
+* Step Progress Bar [ux_step_progress].
 
-Element dùng markup và class của Flatsome / WooCommerce nên tự theo màu và CSS của site. CSS/JS riêng chỉ nạp khi element có trên trang.
+Elements use Flatsome / WooCommerce markup and classes, so they follow the site's colors and CSS. Their CSS/JS only loads when the element is on the page.
 
-== Nâng cấp từ 1.x ==
+== Templates and preset UX Blocks ==
 
-* UX Block đang tắt (hoặc đang bị hẹn giờ giấu) chuyển thành Tắt. Hẹn giờ bị bỏ.
-* Trình viết element bằng code của 1.x bị gỡ cùng dữ liệu của nó (element tự viết, phiên bản, file trong uploads/fbm-elements).
-* [fbm_product_slider] chạy tiếp bằng Products. Kiểu thẻ, màu, bo góc của 1.x không còn.
-* Tag 1.x không còn: khách thấy trống, người biên tập thấy khung nét đứt. Admin hiện một thông báo liệt kê các tag này.
+Every UX Block the plugin seeds has a matching template in templates/<slug>/. Each template is available in UX Builder › Add Content › Import ("Insert a template", empty pages only) and as a preset of the Section element (Add elements › Section), which can be inserted anywhere, any number of times.
 
-== Gỡ plugin ==
+== Upgrading from 1.x ==
 
-Xoá trạng thái Bật / Ẩn / Tắt, danh sách element đã ghi và chỉ mục nơi dùng. UX Block và nội dung trang được giữ nguyên.
+* UX Blocks that were disabled (or hidden by a schedule) become Off. Schedules are dropped.
+* The 1.x code-based element editor is removed together with its data (custom elements, versions, files in uploads/fbm-elements).
+* Removed 1.x tags: guests see nothing, editors see a dashed placeholder. The admin shows a notice listing these tags.
+
+== Uninstall ==
+
+Deletes the On / Hidden / Off states, the recorded element list and the usage index. UX Blocks and page content are kept.
 
 == Changelog ==
 
 = 2.0.0 =
-* Viết lại: admin còn 3 tab danh sách (UX Blocks · Element plugin · Element Flatsome), mỗi dòng Bật / Ẩn / Tắt.
-* Thêm element Products, Product Compare, Reviews (Judge.me); chuyển Product Attributes, nút 3D, Before / After sang cấu trúc mới.
-* Thêm 10 block mẫu HANDDN trong UX Builder › Import.
-* Bỏ trình viết code, sandbox, phiên bản, xuất/nhập, Gutenberg, trang Cài đặt, hẹn giờ.
+* Rewrite: the admin is now 3 list tabs (UX Blocks · Plugin elements · Flatsome elements), each row On / Hidden / Off.
+* Added Light Slider, Smart Product Tabs Slider, Animated Showcase, Bento Card, Pill Badge, Avatar Stack and Step Progress Bar.
+* Added preset UX Blocks with matching Import templates, also registered as Section presets.
+* Removed the code editor, sandbox, versions, export/import, Gutenberg support, the Settings page and schedules.
 
 = 1.0.0 =
-* Phát hành đầu tiên.
+* First release.

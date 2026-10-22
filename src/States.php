@@ -1,11 +1,11 @@
 <?php
 /**
- * Bật / Ẩn / Tắt cho element UX Builder.
+ * On / Hidden / Off for UX Builder elements.
  *
- * - Ẩn: element không có trong Add elements (cờ `hidden` của UX Builder); chỗ đã dùng vẫn hiển thị.
- * - Tắt: như Ẩn, và shortcode không hiển thị ngoài site (người biên tập thấy khung nét đứt).
+ * - Hidden: not listed in Add elements (UX Builder `hidden` flag); existing uses still render.
+ * - Off: like Hidden, and the shortcode renders nothing on the site (editors see a dashed placeholder).
  *
- * Option chỉ lưu tag khác "on".
+ * The option stores only tags that are not "on".
  *
  * @package FBM
  */
@@ -20,7 +20,7 @@ final class States {
 
 	const VALID = array( 'on', 'hidden', 'off' );
 
-	/** Element khung trang: tắt sẽ làm vỡ bố cục mọi trang. */
+	/** Layout elements: turning them off would break every page layout. */
 	const LOCKED = array( 'section', 'row', 'row_inner', 'col', 'col_inner', 'col_grid', 'ux_stack', 'text', 'block', '_root' );
 
 	/** @var Catalog */
@@ -56,16 +56,16 @@ final class States {
 		$state = (string) $state;
 
 		if ( ! in_array( $state, self::VALID, true ) ) {
-			return new \WP_Error( 'fbm_bad_state', __( 'Trạng thái không hợp lệ.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'fbm_bad_state', __( 'Invalid state.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
 		}
 		if ( in_array( $tag, self::LOCKED, true ) ) {
-			return new \WP_Error( 'fbm_locked', __( 'Element khung trang luôn bật.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'fbm_locked', __( 'Layout elements are always on.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
 		}
 		if ( 'hidden' === $state && in_array( $tag, Catalog::VIRTUAL, true ) ) {
-			return new \WP_Error( 'fbm_bad_state', __( 'Mục này không phải element nên chỉ có Bật / Tắt.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'fbm_bad_state', __( 'This item is not an element, so it can only be On / Off.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
 		}
 		if ( ! $this->catalog->has( $tag ) ) {
-			return new \WP_Error( 'fbm_unknown_tag', __( 'Không có element này.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'fbm_unknown_tag', __( 'Unknown element.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
 		}
 
 		$all = $this->all();

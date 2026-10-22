@@ -3,8 +3,8 @@ defined( 'ABSPATH' ) || exit;
 
 $fbm_o = 'shortcode.options.';
 
-// Canvas: khung là template Angular (đổi option thấy ngay); mỗi bước là element con có template riêng.
-// Cùng markup với render.php; view.js chạy kịch bản, editor.js nối kịch bản với bước đang chọn trong UX Builder.
+// Canvas: the frame is an Angular template (option changes show instantly); each step is a child element with its own template.
+// Same markup as render.php; view.js runs the sequence, editor.js links it to the step selected in UX Builder.
 $fbm_template = '<section class="fbm-as relative {{ ' . $fbm_o . 'class }} {{ ' . $fbm_o . 'visibility }}"'
 	. ' style="--fbm-as-dur: {{ ' . $fbm_o . 'duration || 700 }}ms" data-duration="{{ ' . $fbm_o . 'duration || 700 }}" data-delay="{{ ' . $fbm_o . 'stepDelay || 1200 }}"'
 	. ' aria-label="{{ ' . $fbm_o . 'title || \'Animated Showcase\' }}">'
@@ -18,7 +18,7 @@ $fbm_template = '<section class="fbm-as relative {{ ' . $fbm_o . 'class }} {{ ' 
 return array(
 	'type'     => 'container',
 	'allow'    => array( 'fbm_showcase_step' ),
-	'wrap'     => false, // Một phần tử gốc section.fbm-as.
+	'wrap'     => false, // One root node: section.fbm-as.
 	'info'     => '{{ shortcode.children.length }} steps',
 	'template' => $fbm_template,
 	'presets'  => array(

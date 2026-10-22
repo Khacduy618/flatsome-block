@@ -1,13 +1,13 @@
 <?php
 /**
- * Màu nhấn dùng chung cho Pill Badge: khoá => nhãn. Mỗi khoá ánh xạ sang một token của theme/HANDDN
- * trong pill-badge.css (`.fbm-pill--<khoá>`), không có ô chọn màu tự do (spec mục 4.2).
+ * Shared accent colors for Pill Badge: key => label. Each key maps to a theme/HANDDN token
+ * in pill-badge.css (`.fbm-pill--<key>`); there is no free color picker (spec section 4.2).
  */
 defined( 'ABSPATH' ) || exit;
 
 return array(
-	'primary' => __( 'Màu chính', 'flatsome-block-manager' ),
-	'success' => __( 'Thành công', 'flatsome-block-manager' ),
-	'alert'   => __( 'Cảnh báo', 'flatsome-block-manager' ),
-	'muted'   => __( 'Trung tính', 'flatsome-block-manager' ),
+	'primary' => __( 'Primary', 'flatsome-block-manager' ),
+	'success' => __( 'Success', 'flatsome-block-manager' ),
+	'alert'   => __( 'Alert', 'flatsome-block-manager' ),
+	'muted'   => __( 'Muted', 'flatsome-block-manager' ),
 );

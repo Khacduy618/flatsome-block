@@ -1,7 +1,7 @@
 <?php
 /**
- * Bootstrap v2: kiểm tra yêu cầu, rồi khởi động các service nhỏ.
- * Không có module, cài đặt hay chỗ nhập code.
+ * v2 bootstrap: checks requirements, then starts the small services.
+ * No modules, settings or code input.
  *
  * @package FBM
  */

@@ -1,0 +1,123 @@
+[section padding="40px" padding__sm="24px"]
+
+[row v_align="equal"]
+
+[col span="3" span__md="6" span__sm="12"]
+
+[fbm_light_slider columns="1" gap="0" arrows="false" bullets="false" pause_hover="false"]
+
+[ux_banner height="300px" class="bg-primary-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Vegetable-tanned 1</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="300px" class="bg-secondary-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Vegetable-tanned 2</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="300px" class="bg-success-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Vegetable-tanned 3</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[/fbm_light_slider]
+
+[/col]
+
+[col span="3" span__md="6" span__sm="12"]
+
+[fbm_light_slider columns="1" gap="0" arrows="false" bullets="false" pause_hover="false"]
+
+[ux_banner height="300px" class="bg-secondary-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Hand-stitched 1</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="300px" class="bg-success-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Hand-stitched 2</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="300px" class="bg-primary-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Hand-stitched 3</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[/fbm_light_slider]
+
+[/col]
+
+[col span="3" span__md="6" span__sm="12"]
+
+[fbm_light_slider columns="1" gap="0" arrows="false" bullets="false" pause_hover="false"]
+
+[ux_banner height="300px" class="bg-success-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Watch Straps 1</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="300px" class="bg-primary-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Watch Straps 2</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="300px" class="bg-secondary-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Watch Straps 3</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[/fbm_light_slider]
+
+[/col]
+
+[col span="3" span__md="6" span__sm="12"]
+
+[fbm_light_slider columns="1" gap="0" arrows="false" bullets="false" pause_hover="false"]
+
+[ux_banner height="300px" class="bg-primary-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Leather Care 1</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="300px" class="bg-secondary-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Leather Care 2</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[ux_banner height="300px" class="bg-success-color"]
+[text_box width="80" position_x="5" position_y="100" text_align="left"]
+<h3>Leather Care 3</h3>
+[button text="Discover" color="white" style="outline" size="small" radius="99" link="#"]
+[/text_box]
+[/ux_banner]
+
+[/fbm_light_slider]
+
+[/col]
+
+[/row]
+
+[/section]

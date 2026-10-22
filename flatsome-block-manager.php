@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Flatsome Block Manager
-Description: Danh sách UX Blocks, element của plugin và element của Flatsome; mỗi dòng Bật / Ẩn / Tắt. Kèm element WooCommerce viết sẵn và 10 block mẫu cho UX Builder.
+Description: Lists UX Blocks, plugin elements and Flatsome elements, each with On / Hidden / Off. Ships custom UX Builder elements, preset UX Blocks and Import templates.
 Version: 2.0.0
 Author: khacduy
 License: GPLv2 or later
@@ -11,7 +11,7 @@ Requires PHP: 7.4
 Text Domain: flatsome-block-manager
 */
 
-//bắt đầu cho các đoạn code này ở bên dưới
+// Plugin bootstrap below.
 
 defined( 'ABSPATH' ) || exit;
 
@@ -32,5 +32,5 @@ require_once FBM_DIR . 'inc/Blocks/light-slider-block.php';
 
 register_activation_hook( __FILE__, array( 'FBM\\Installer', 'activate' ) );
 
-// Flatsome đăng ký CPT `blocks` khi theme được nạp, nên khởi động sau after_setup_theme.
+// Flatsome registers the `blocks` CPT when the theme loads, so start after after_setup_theme.
 add_action( 'after_setup_theme', array( 'FBM\\Plugin', 'start' ), 20 );

@@ -1,6 +1,6 @@
 <?php
 /**
- * Bảng {prefix}fbm_block_usage.
+ * Table {prefix}fbm_block_usage.
  *
  * source_type: post | postmeta | theme_mod | widget
  *
@@ -100,7 +100,7 @@ final class UsageRepository {
 	}
 
 	/**
-	 * Danh sách nơi dùng, đã kèm nhãn + link để hiển thị.
+	 * Usage list, with labels and links ready to display.
 	 */
 	public function for_block( $block_id ) {
 		global $wpdb;

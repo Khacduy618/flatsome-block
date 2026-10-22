@@ -1,6 +1,6 @@
 <?php
 /**
- * Menu "Block Manager" và app React 3 tab (build/admin.js).
+ * "Block Manager" menu and the 3-tab React app (build/admin.js).
  *
  * @package FBM
  */
@@ -23,7 +23,7 @@ final class Page {
 	}
 
 	public function menu() {
-		// Vị trí 59: ngay dưới menu Flatsome, như v1.
+		// Position 59: right below the Flatsome menu, as in v1.
 		$this->hook = (string) add_menu_page(
 			__( 'Block Manager', 'flatsome-block-manager' ),
 			__( 'Block Manager', 'flatsome-block-manager' ),
@@ -36,8 +36,8 @@ final class Page {
 	}
 
 	public function render() {
-		echo '<div class="wrap fbm-wrap"><div id="fbm-app" class="fbm-app"><p>' . esc_html__( 'Đang tải Block Manager…', 'flatsome-block-manager' ) . '</p></div>';
-		echo '<noscript>' . esc_html__( 'Block Manager cần JavaScript.', 'flatsome-block-manager' ) . '</noscript></div>';
+		echo '<div class="wrap fbm-wrap"><div id="fbm-app" class="fbm-app"><p>' . esc_html__( 'Loading Block Manager…', 'flatsome-block-manager' ) . '</p></div>';
+		echo '<noscript>' . esc_html__( 'Block Manager requires JavaScript.', 'flatsome-block-manager' ) . '</noscript></div>';
 	}
 
 	public function enqueue( $hook ) {
@@ -106,13 +106,13 @@ final class Page {
 	public function action_links( $links ) {
 		array_unshift(
 			$links,
-			sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=' . self::SLUG ) ), esc_html__( 'Mở Block Manager', 'flatsome-block-manager' ) )
+			sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'admin.php?page=' . self::SLUG ) ), esc_html__( 'Open Block Manager', 'flatsome-block-manager' ) )
 		);
 		return $links;
 	}
 
 	/**
-	 * Link mở UX Builder trên một trang có sẵn, để Catalog ghi lại danh sách element.
+	 * Link that opens UX Builder on an existing page, so Catalog can record the element list.
 	 */
 	public static function ux_builder_url() {
 		$ids = get_posts(

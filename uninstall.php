@@ -1,7 +1,7 @@
 <?php
 /**
- * Gỡ plugin: xoá trạng thái Bật / Ẩn / Tắt, danh sách element đã ghi, chỉ mục nơi dùng.
- * UX Block của Flatsome (post type `blocks`) và nội dung trang luôn được giữ nguyên.
+ * Uninstall: deletes On / Hidden / Off states, the recorded element list and the usage index.
+ * Flatsome UX Blocks (post type `blocks`) and page content are always kept.
  *
  * @package FBM
  */
@@ -17,6 +17,6 @@ delete_transient( 'fbm_element_usage' );
 delete_post_meta_by_key( '_fbm_state' );
 $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}fbm_block_usage" ); // phpcs:ignore
 
-// Cron của v1 nếu gỡ khi chưa từng chạy bản nâng cấp.
+// v1 cron hooks, in case the plugin is removed before the upgrade ever ran.
 wp_unschedule_hook( 'fbm_cleanup_sandbox' );
 wp_unschedule_hook( 'fbm_visibility_boundary' );

@@ -1,4 +1,4 @@
-/* Pill Badge: hình dạng + chấm; màu chỉ qua token theme/HANDDN (spec 4.1). */
+/* Pill Badge: shape + dot; colors only through theme/HANDDN tokens (spec 4.1). */
 .fbm-pill-wrap {
 	margin-bottom: 1em;
 }

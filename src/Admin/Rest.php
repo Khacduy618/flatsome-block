@@ -1,10 +1,10 @@
 <?php
 /**
- * REST fbm/v2: danh sách 3 tab, đổi trạng thái, dựng chỉ mục nơi dùng.
+ * REST fbm/v2: lists for the 3 tabs, state changes, usage index rebuild.
  *
- * Chỉ nhận: tag đã biết (Catalog / Registry / trạng thái ảo) hoặc ID post type `blocks`,
- * cùng 1 trong 3 trạng thái. Mọi tham số khác bị bỏ qua. Element cần manage_options,
- * UX Block cần edit_pages. Nonce: cookie auth của WP (X-WP-Nonce).
+ * Accepts only: known tags (Catalog / Registry / virtual states) or IDs of post type `blocks`,
+ * with one of the 3 states. Any other parameter is ignored. Elements require manage_options,
+ * UX Blocks require edit_pages. Nonce: WP cookie auth (X-WP-Nonce).
  *
  * @package FBM
  */
@@ -112,7 +112,7 @@ final class Rest {
 		);
 	}
 
-	/** UX Block: edit_pages. Element plugin / Flatsome: manage_options. */
+	/** UX Blocks: edit_pages. Plugin / Flatsome elements: manage_options. */
 	public function can_type( \WP_REST_Request $request ) {
 		return current_user_can( 'ux_block' === $request->get_param( 'type' ) ? 'edit_pages' : 'manage_options' );
 	}
@@ -151,7 +151,7 @@ final class Rest {
 			$r  = $this->blocks->set( $id, $state );
 		} else {
 			$id = (string) $request->get_param( 'id' );
-			$r  = $this->belongs( $type, $id ) ? $this->states->set( $id, $state ) : new \WP_Error( 'fbm_unknown_tag', __( 'Không có element này.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
+			$r  = $this->belongs( $type, $id ) ? $this->states->set( $id, $state ) : new \WP_Error( 'fbm_unknown_tag', __( 'Unknown element.', 'flatsome-block-manager' ), array( 'status' => 400 ) );
 		}
 		if ( is_wp_error( $r ) ) {
 			return $r;
@@ -169,7 +169,7 @@ final class Rest {
 	}
 
 	/**
-	 * Tag thuộc đúng tab. Tag khung trang luôn đi tiếp để States trả lỗi "khoá".
+	 * The tag belongs to this tab. Layout tags always pass so States can return the "locked" error.
 	 */
 	private function belongs( $type, $tag ) {
 		if ( in_array( $tag, States::LOCKED, true ) ) {

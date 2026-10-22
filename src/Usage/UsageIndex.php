@@ -1,7 +1,7 @@
 <?php
 /**
- * Đếm nơi dùng: UX Block (bảng chỉ mục của v1, cập nhật khi lưu) và element (đếm theo tag, có cache).
- * Chỉ để hiển thị cột "N nơi" và hỏi lại trước khi Tắt.
+ * Usage counts: UX Blocks (v1 index table, updated on save) and elements (counted by tag, cached).
+ * Only used for the "N places" column and the confirmation before turning Off.
  *
  * @package FBM
  */
@@ -89,7 +89,7 @@ final class UsageIndex {
 	}
 
 	/**
-	 * Số bài viết / trang / UX Block có chứa mỗi shortcode (mỗi bài đếm 1 lần cho mỗi tag).
+	 * Number of posts / pages / UX Blocks containing each shortcode (each post counts once per tag).
 	 *
 	 * @return array<string, int>
 	 */

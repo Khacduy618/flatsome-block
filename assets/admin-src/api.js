@@ -1,5 +1,5 @@
 /**
- * Gọi REST /fbm/v2. apiFetch của WP tự gắn nonce (X-WP-Nonce).
+ * Calls REST /fbm/v2. WP apiFetch adds the nonce (X-WP-Nonce).
  */
 import apiFetch from '@wordpress/api-fetch';
 
@@ -20,5 +20,5 @@ export function errorMessage( error ) {
 	if ( ! error ) {
 		return '';
 	}
-	return error.message || 'Có lỗi xảy ra. Thử tải lại trang.';
+	return error.message || 'Something went wrong. Try reloading the page.';
 }

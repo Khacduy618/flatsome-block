@@ -285,7 +285,7 @@ function uxb_register_smart_product_slider_element() {
 				'animate_speed'  => array(
 					'type'        => 'slider',
 					'heading'     => __( 'Animate Speed (Override)', 'flatsome-block-manager' ),
-					'description' => __( 'Tốc độ hiệu ứng xuất hiện riêng cho tab này (giây)', 'flatsome-block-manager' ),
+					'description' => __( 'Entrance animation speed for this tab (seconds)', 'flatsome-block-manager' ),
 					'param_name'  => 'animate_speed',
 					'default'     => '',
 					'min'         => 0.1,

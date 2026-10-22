@@ -2,11 +2,11 @@
 defined( 'ABSPATH' ) || exit;
 
 $fbm_advanced = require $commons . 'advanced.php';
-unset( $fbm_advanced['options']['visibility'] ); // Bước bị ẩn theo màn hình sẽ để lại một lượt trống trong vòng lặp.
+unset( $fbm_advanced['options']['visibility'] ); // A step hidden per device would leave an empty turn in the loop.
 
 $fbm_o = 'shortcode.options.';
 
-// Bảng tra tỉ lệ cho template canvas: {'1-1': 1, '4-3': 0.75, …}[tỉ lệ của element cha].
+// Ratio lookup for the canvas template: {'1-1': 1, '4-3': 0.75, …}[parent element ratio].
 $fbm_map = array();
 foreach ( require dirname( __DIR__ ) . '/animated-showcase/ratios.php' as $fbm_key => $fbm_r ) {
 	$fbm_map[] = '\'' . $fbm_key . '\': ' . $fbm_r['value'];
@@ -16,8 +16,8 @@ $fbm_img = static function ( $key, $slot ) use ( $fbm_o ) {
 	return '<img class="fbm-as__img fbm-as__img--' . $slot . '" draggable="false" ng-if="' . $fbm_o . $key . 'Image" wp-attachment="' . $fbm_o . $key . 'Image" wp-attachment-size="shortcode.parent.options.imageSize || \'large\'">';
 };
 
-// Cùng markup với render.php. Chữ tách từng ký tự bằng ng-repeat để hiệu ứng gõ chữ chạy được cả trong canvas;
-// temp-image là ô "chưa có ảnh" của canvas Flatsome.
+// Same markup as render.php. Text is split per character with ng-repeat so the typing effect also runs in the canvas;
+// temp-image is the Flatsome canvas "no image yet" box.
 $fbm_template = '<div class="fbm-as__item {{ ' . $fbm_o . 'class }}" ng-class="{\'is-current\': shortcode.index === 0}">'
 	. '<div class="fbm-as__stage" style="--fbm-as-ratio: {{ {' . implode( ', ', $fbm_map ) . '}[shortcode.parent.options.imageRatio] || 1 }}">'
 	. '<div class="fbm-as__part fbm-as__part--left">'
@@ -38,7 +38,7 @@ $fbm_template = '<div class="fbm-as__item {{ ' . $fbm_o . 'class }}" ng-class="{
 return array(
 	'require'  => array( 'fbm_animated_showcase' ),
 	'allow_in' => array( 'fbm_animated_showcase' ),
-	'wrap'     => false, // Output có đúng 1 phần tử gốc: div.fbm-as__item.
+	'wrap'     => false, // Output has exactly one root node: div.fbm-as__item.
 	'info'     => '{{ text_content }}',
 	'template' => $fbm_template,
 	'options'  => array(
